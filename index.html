@@ -1,0 +1,425 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <title>Glowbeast — Active Beauty for Those Who Sweat</title>
+  <meta name="description" content="Active beauty for those who sweat — the Beasts. Discover Glowbeast's solution lineup for heat, hydration, elasticity, recovery, and more." />
+  <meta name="theme-color" content="#000000" />
+  <link rel="icon" href="assets/logo.svg" type="image/svg+xml" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=Playfair+Display:ital,wght@1,400;1,600&family=Inter:wght@400;500;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+
+  <!-- =========================================================
+       Hero (Figma 2120:3)
+       ========================================================= -->
+  <section class="hero" id="top" data-node-id="3089:3">
+    <img class="hero-bg" src="assets/hero-bg.png" alt="" role="presentation" />
+
+    <!-- iPhone status bar mockup (Figma 2120:31) -->
+    <div class="status-bar" aria-hidden="true" data-node-id="2120:31">
+      <span class="status-time">9:41</span>
+      <div class="status-icons">
+        <svg class="s-signal" viewBox="0 0 18 10" xmlns="http://www.w3.org/2000/svg">
+          <rect x="0"  y="6" width="3" height="4"  rx="0.5" fill="#fff"/>
+          <rect x="5"  y="4" width="3" height="6"  rx="0.5" fill="#fff"/>
+          <rect x="10" y="2" width="3" height="8"  rx="0.5" fill="#fff"/>
+          <rect x="15" y="0" width="3" height="10" rx="0.5" fill="#fff"/>
+        </svg>
+        <svg class="s-wifi" viewBox="0 0 16 11" xmlns="http://www.w3.org/2000/svg" fill="#fff">
+          <path d="M8 11a1.3 1.3 0 1 0 0-2.6 1.3 1.3 0 0 0 0 2.6z"/>
+          <path d="M4.7 7.8a4.7 4.7 0 0 1 6.6 0l-1.1 1.1a3.1 3.1 0 0 0-4.4 0L4.7 7.8z"/>
+          <path d="M1.8 4.9a8.7 8.7 0 0 1 12.4 0l-1.1 1.1a7.1 7.1 0 0 0-10.2 0L1.8 4.9z"/>
+        </svg>
+        <svg class="s-battery" viewBox="0 0 26 12" xmlns="http://www.w3.org/2000/svg">
+          <rect x="0.5" y="0.5" width="22" height="11" rx="2.8" ry="2.8" fill="none" stroke="#fff" stroke-opacity="0.55"/>
+          <rect x="2"   y="2"   width="19" height="8"  rx="1.2" fill="#fff"/>
+          <rect x="23"  y="4"   width="1.5" height="4" rx="0.5" fill="#fff" fill-opacity="0.55"/>
+        </svg>
+      </div>
+    </div>
+
+    <nav class="nav" aria-label="Primary">
+      <div class="nav-inner">
+        <a href="#top" aria-label="Glowbeast home">
+          <img class="nav-logo" src="assets/logo.svg" alt="Glowbeast" />
+        </a>
+        <div class="nav-menu" role="menubar">
+          <a href="#top" role="menuitem">ABOUT</a>
+          <a href="lineup.html" role="menuitem">LINEUP</a>
+        </div>
+      </div>
+    </nav>
+
+    <!-- drop 1st ("glow like a") — sits BEHIND the foreground cutout (model). -->
+    <div class="hero-wordmark" role="img" aria-label="glow like a">
+      <img class="hero-wordmark__layer hero-wordmark__layer--1" src="assets/drop%201st.svg" alt="" aria-hidden="true" />
+    </div>
+
+    <!-- Foreground cutout (model + ring elements). -->
+    <img class="hero-bg-front" src="assets/hero-bg-front.png" alt="" role="presentation" />
+
+    <!-- drop 2nd ("BEAST") — sits IN FRONT of the foreground cutout (top of Z stack). -->
+    <img class="hero-wordmark__layer hero-wordmark__layer--2" src="assets/drop%202nd.svg" alt="BEAST" />
+
+    <img class="hero-chevron" src="assets/chevron-down.svg" alt="" role="presentation" aria-hidden="true" />
+  </section>
+
+  <!-- =========================================================
+       After the sweat: (Figma 3089:49) — sticky stacking cards
+       ========================================================= -->
+  <section class="section section--black after-sweat" data-node-id="3089:49">
+    <h2 class="section-title" data-scroll-reveal="typing">After the
+sweat:</h2>
+
+    <div class="stacking-cards" role="list">
+      <article class="stack-card stack-card--first" role="listitem" data-stacking-cards-item data-reveal-item data-node-id="3089:51">
+        <div class="stack-card__inner">
+          <div class="stack-card__heading">
+            <p class="stack-card__num">01.</p>
+            <h3 class="stack-card__title">HEAT
+SPIKES</h3>
+          </div>
+          <p class="stack-card__desc">Collagen breaks,<br />Aging begins.</p>
+          <div class="stack-card__img">
+            <img src="assets/heat-spikes.gif" alt="" />
+          </div>
+        </div>
+      </article>
+
+      <article class="stack-card" role="listitem" data-stacking-cards-item data-reveal-item data-node-id="3089:188">
+        <div class="stack-card__inner">
+          <div class="stack-card__heading">
+            <p class="stack-card__num">02.</p>
+            <h3 class="stack-card__title">SWEAT
+DRAINS</h3>
+          </div>
+          <p class="stack-card__desc">Moisture gone. Amino Acid gone. Electrolyte gone.</p>
+          <div class="stack-card__img">
+            <img src="assets/sweat-drains.png" alt="" />
+          </div>
+        </div>
+      </article>
+
+      <article class="stack-card" role="listitem" data-stacking-cards-item data-reveal-item data-node-id="3089:195">
+        <div class="stack-card__inner">
+          <div class="stack-card__heading">
+            <p class="stack-card__num">03.</p>
+            <h3 class="stack-card__title">BACTERIA
+PARTY</h3>
+          </div>
+          <p class="stack-card__desc">They multiply, mingle, and break out.</p>
+          <div class="stack-card__img">
+            <img src="assets/bacteria.png" alt="" onerror="this.style.opacity='0';this.parentElement.classList.add('is-placeholder')" />
+          </div>
+        </div>
+      </article>
+
+      <article class="stack-card" role="listitem" data-stacking-cards-item data-reveal-item data-node-id="3089:202">
+        <div class="stack-card__inner">
+          <div class="stack-card__heading">
+            <p class="stack-card__num">04.</p>
+            <h3 class="stack-card__title">ELASTICITY
+DROPS</h3>
+          </div>
+          <p class="stack-card__desc">Every workout, skin sags.</p>
+          <div class="stack-card__img">
+            <img src="assets/elasticity.png" alt="" onerror="this.style.opacity='0';this.parentElement.classList.add('is-placeholder')" />
+          </div>
+        </div>
+      </article>
+    </div>
+  </section>
+
+  <!-- =========================================================
+       That's where we start: (Figma 2120:62)
+       ========================================================= -->
+  <section class="section section--white mission" data-node-id="3089:72">
+    <h2 class="section-title" data-scroll-reveal="typing">That&rsquo;s where
+we start:</h2>
+
+    <div class="mission-center" data-reveal-item>
+      <img class="mission-wordmark" src="assets/logo.svg" alt="glow like a beast" />
+      <p class="mission-statement">
+        <em>is</em> <strong>active beauty</strong> for those<br />
+        who sweat — the Beasts.
+      </p>
+    </div>
+
+    <p class="mission-belief" data-reveal-item>
+      We believe sweat is not something to hide.<br />
+      We believe sweat turns into confidence,<br />
+      and confidence becomes real beauty.
+    </p>
+  </section>
+
+  <!-- =========================================================
+       The Beast Solution: (Figma 3089:87)
+       ========================================================= -->
+  <section class="section section--black solution" data-node-id="3089:87">
+    <h2 class="section-title" data-scroll-reveal="typing">The Beast
+Solution:</h2>
+
+    <div class="scroll-x" role="list">
+      <article class="category-card" role="listitem" data-reveal-item data-node-id="3584:314">
+        <img class="cat-bg" src="assets/category-1.png" alt="" />
+        <div class="cat-content">
+          <h3 class="cat-title">SOOTHING</h3>
+          <p class="cat-subtitle" lang="ko">진정</p>
+        </div>
+        <p class="cat-ingredients">Yellow cica, Eucalyptol,<br />Xylitol, Erythritol</p>
+      </article>
+
+      <article class="category-card" role="listitem" data-reveal-item data-node-id="3584:319">
+        <img class="cat-bg" src="assets/category-2.png" alt="" />
+        <div class="cat-content">
+          <h3 class="cat-title">HYDRATION</h3>
+          <p class="cat-subtitle" lang="ko">수분</p>
+        </div>
+        <p class="cat-ingredients">AMINO-NF, Acetyl, Glutamine</p>
+      </article>
+
+      <article class="category-card" role="listitem" data-reveal-item data-node-id="3584:324">
+        <img class="cat-bg" src="assets/category-3.png" alt="" />
+        <div class="cat-content">
+          <h3 class="cat-title">ELASTICITY</h3>
+          <p class="cat-subtitle" lang="ko">탄력</p>
+        </div>
+        <p class="cat-ingredients">PoreTect&trade;</p>
+      </article>
+
+      <article class="category-card" role="listitem" data-reveal-item data-node-id="3584:329">
+        <img class="cat-bg" src="assets/category-4.png" alt="" />
+        <div class="cat-content">
+          <h3 class="cat-title">RECOVERY</h3>
+          <p class="cat-subtitle" lang="ko">회복</p>
+        </div>
+        <p class="cat-ingredients">Aqua Ceramide</p>
+      </article>
+
+      <article class="category-card" role="listitem" data-reveal-item data-node-id="3584:334">
+        <img class="cat-bg" src="assets/category-5.png" alt="" />
+        <div class="cat-content">
+          <h3 class="cat-title">PURIFYING</h3>
+          <p class="cat-subtitle" lang="ko">향균향염</p>
+        </div>
+        <p class="cat-ingredients">Yellow cica</p>
+      </article>
+
+      <article class="category-card" role="listitem" data-reveal-item data-node-id="3584:339">
+        <img class="cat-bg" src="assets/category-6.png" alt="" />
+        <div class="cat-content">
+          <h3 class="cat-title">ANTIOXIDANT</h3>
+          <p class="cat-subtitle" lang="ko">항산화</p>
+        </div>
+        <p class="cat-ingredients">Acai berry</p>
+      </article>
+    </div>
+
+    <a class="btn-yellow solution-cta" href="lineup.html" data-node-id="3105:410">
+      INSIDE THE LINEUP
+    </a>
+  </section>
+
+  <!-- =========================================================
+       Hey Beast there, (Figma 3089:140) — standalone signup section
+       ========================================================= -->
+  <section class="section section--black signup-section" data-node-id="3089:140">
+    <h2 class="section-title" data-scroll-reveal="typing">Hey
+Beast there,</h2>
+
+    <div class="signup-block" data-reveal-item>
+      <p class="signup-lead">
+        You sweat too? Good!<br />
+        Train with us &amp; glow together!
+      </p>
+      <form class="signup-form" action="#" method="post" onsubmit="event.preventDefault(); alert('Thanks! We will be in touch.');" novalidate>
+        <label class="sr-only" for="signup-contact">Phone or Email</label>
+        <input class="signup-input" id="signup-contact" type="text" name="contact" placeholder="Phone or Email" autocomplete="email" />
+      </form>
+      <a class="btn-yellow signup-cta" href="#" data-node-id="3089:147">GET FIRST ACCESS</a>
+    </div>
+  </section>
+
+  <!-- =========================================================
+       Footer (Figma 3255:70) — simplified: logo + email + 2-col text + bottom row
+       ========================================================= -->
+  <footer class="site-footer" data-node-id="3255:70">
+    <div class="site-footer-inner">
+      <div class="footer-logo-block" data-node-id="3255:72">
+        <img class="footer-logo" src="assets/footer-logo.png" alt="Glowbeast" data-node-id="3255:73" />
+        <a class="footer-email" href="mailto:hello@glowbeast.co" data-node-id="3255:80">hello@glowbeast.co</a>
+      </div>
+
+      <div class="footer-text" data-node-id="3255:81">
+        <nav class="footer-menu" aria-label="Footer" data-node-id="3255:82">
+          <a href="#top">ABOUT</a>
+          <a href="lineup.html">LINEUP</a>
+          <a href="mailto:hello@glowbeast.co">SEND AN EMAIL</a>
+        </nav>
+        <address class="footer-addr" data-node-id="3255:86">
+          GRANDE CLIP PTE. LTD.<br />
+          1 RAFFLES PLACE,<br />
+          #36-02, ONE RAFFLES PLACE,<br />
+          SINGAPORE 048616
+        </address>
+      </div>
+
+      <div class="footer-bottom" data-node-id="3255:87">
+        <div class="legal">
+          <p class="legal-copy">2026 glowbeast All rights reserved.</p>
+          <p class="legal-links">
+            <span>Terms of Service</span>
+            <span class="sep" aria-hidden="true"></span>
+            <span>Privacy Policy</span>
+          </p>
+        </div>
+        <div class="footer-socials">
+          <a href="#" aria-label="Instagram"><img src="assets/icon-instagram.svg" alt="" /></a>
+          <a href="#" aria-label="Amazon"><img src="assets/icon-amazon.svg" alt="" /></a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    document.querySelectorAll('.scroll-x').forEach((el) => {
+      let isDown = false, startX = 0, startScroll = 0, moved = false;
+      el.addEventListener('mousedown', (e) => {
+        isDown = true; moved = false;
+        startX = e.pageX;
+        startScroll = el.scrollLeft;
+        el.classList.add('grabbing');
+      });
+      el.addEventListener('mousemove', (e) => {
+        if (!isDown) return;
+        const dx = e.pageX - startX;
+        if (Math.abs(dx) > 4) moved = true;
+        el.scrollLeft = startScroll - dx;
+      });
+      const end = () => { isDown = false; el.classList.remove('grabbing'); };
+      el.addEventListener('mouseup', end);
+      el.addEventListener('mouseleave', end);
+      el.addEventListener('click', (e) => {
+        if (moved) { e.preventDefault(); e.stopPropagation(); }
+      }, true);
+    });
+  </script>
+
+  <script>
+    // Scroll-driven typewriter reveal for [data-scroll-reveal="typing"].
+    // Splits text into per-char spans, then toggles visibility based on
+    // scroll progress. Long trigger range (top: 100vh -> 20vh) so the
+    // typing motion is clearly perceptible. Bidirectional.
+    (function () {
+      const targets = document.querySelectorAll('[data-scroll-reveal="typing"]');
+      if (!targets.length) return;
+      if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+
+      // Split each target's text into char spans (newlines become <br>).
+      const items = [];
+      targets.forEach((el) => {
+        const text = el.textContent;
+        el.textContent = '';
+        const chars = [];
+        for (const c of text) {
+          if (c === '\n') {
+            el.appendChild(document.createElement('br'));
+          } else {
+            const span = document.createElement('span');
+            span.className = 'ch';
+            span.textContent = c;
+            el.appendChild(span);
+            chars.push(span);
+          }
+        }
+        items.push({ el, chars, staggered: false });
+      });
+
+      // When a title finishes typing, stagger-reveal the rest of its section.
+      function triggerStagger(titleEl) {
+        const section = titleEl.closest('section');
+        if (!section) return;
+        const reveals = section.querySelectorAll('[data-reveal-item]');
+        reveals.forEach((node, i) => {
+          setTimeout(() => node.classList.add('is-revealed'), i * 120);
+        });
+      }
+
+      let ticking = false;
+      function update() {
+        const vh = window.innerHeight;
+        const startY = vh * 1.0;   // start when section enters viewport
+        const endY = vh * 0.2;     // fully typed near top of viewport
+        const span = startY - endY;
+        items.forEach((item) => {
+          const top = item.el.getBoundingClientRect().top;
+          const raw = (startY - top) / span;
+          const p = Math.min(1, Math.max(0, raw));
+          const visibleCount = Math.round(p * item.chars.length);
+          for (let i = 0; i < item.chars.length; i++) {
+            const shouldShow = i < visibleCount;
+            const isShown = item.chars[i].classList.contains('is-visible');
+            if (shouldShow !== isShown) item.chars[i].classList.toggle('is-visible', shouldShow);
+          }
+          if (p >= 1 && !item.staggered) {
+            item.staggered = true;
+            triggerStagger(item.el);
+          }
+        });
+        ticking = false;
+      }
+      function onScroll() {
+        if (!ticking) { requestAnimationFrame(update); ticking = true; }
+      }
+      window.addEventListener('scroll', onScroll, { passive: true });
+      window.addEventListener('resize', onScroll);
+      update();
+    })();
+  </script>
+
+  <script>
+    // Footer logo entry — fade + scale-in via IntersectionObserver, fires once.
+    (function () {
+      const logo = document.querySelector('.footer-logo');
+      if (!logo) return;
+      if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+        logo.classList.add('is-revealed');
+        return;
+      }
+      const io = new IntersectionObserver((entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            logo.classList.add('is-revealed');
+            io.disconnect();
+          }
+        });
+      }, { threshold: 0.3 });
+      io.observe(logo);
+    })();
+  </script>
+
+  <script>
+    // Hero wordmark: 2-layer sequential "drop & thud" on page entry.
+    // Layer 1 ("glow like a") drops at 0.3s, Layer 2 ("BEAST") drops at 0.7s.
+    // No IO needed — Hero is the first viewport-visible section.
+    (function () {
+      const layers = document.querySelectorAll('.hero-wordmark__layer');
+      if (!layers.length) return;
+      if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+        layers.forEach((l) => { l.style.opacity = '1'; l.style.transform = 'none'; });
+        return;
+      }
+      // Defer one frame so initial CSS state paints before animation starts.
+      requestAnimationFrame(() => {
+        layers.forEach((l) => l.classList.add('is-dropped'));
+      });
+    })();
+  </script>
+
+</body>
+</html>
