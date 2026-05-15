@@ -343,10 +343,10 @@ button { border: 0; background: none; font: inherit; cursor: pointer; color: inh
    a vertical squash + bounce. Acceleration is baked into keyframe %s so the
    outer timing-function stays linear (CSS keyframes can't ease per-stop). */
 .hero-wordmark__layer--1.is-dropped {
-  animation: drop-thud-1 0.42s linear 0.3s forwards;
+  animation: drop-thud-1 0.28s linear 0.18s forwards;
 }
 .hero-wordmark__layer--2.is-dropped {
-  animation: drop-thud-2 0.52s linear 0.7s forwards;
+  animation: drop-thud-2 0.36s linear 0.46s forwards;
 }
 @keyframes drop-thud-1 {
   0%   { opacity: 0;   transform: translate3d(0, -50%, 0); }
