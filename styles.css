@@ -302,7 +302,7 @@ button { border: 0; background: none; font: inherit; cursor: pointer; color: inh
   to   { opacity: 1; }
 }
 /* Foreground cutout — overlays the wordmarks so they land behind the subject.
-   Drops from above with a heavy 쿵 (squash + rebound) on page entry. */
+   Slides in from above on page entry (no bounce, no squash). */
 .hero-bg-front {
   position: absolute;
   inset: 0;
@@ -313,19 +313,14 @@ button { border: 0; background: none; font: inherit; cursor: pointer; color: inh
   z-index: 3;
   opacity: 0;
   transform: translate3d(0, -100%, 0);
-  transform-origin: center bottom;
   will-change: opacity, transform;
 }
 .hero-bg-front.is-dropping {
-  animation: hero-front-drop 0.50s linear 0s forwards;
+  animation: hero-front-drop 0.55s cubic-bezier(0.33, 0, 0.5, 1) 0s forwards;
 }
 @keyframes hero-front-drop {
-  0%   { opacity: 0;   transform: translate3d(0, -100%, 0) scaleY(1); }
-  30%  { opacity: 0.6; transform: translate3d(0,  -55%, 0) scaleY(1); }
-  50%  { opacity: 1;   transform: translate3d(0,    0,  0) scaleY(0.85); }
-  70%  { opacity: 1;   transform: translate3d(0,   -4%, 0) scaleY(1.08); }
-  88%  { opacity: 1;   transform: translate3d(0,    0,  0) scaleY(0.97); }
-  100% { opacity: 1;   transform: translate3d(0,    0,  0) scaleY(1); }
+  from { opacity: 0; transform: translate3d(0, -100%, 0); }
+  to   { opacity: 1; transform: translate3d(0,    0,  0); }
 }
 @media (prefers-reduced-motion: reduce) {
   .hero-bg,
