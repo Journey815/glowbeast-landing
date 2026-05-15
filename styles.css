@@ -303,17 +303,29 @@ button { border: 0; background: none; font: inherit; cursor: pointer; color: inh
   z-index: 3;
   will-change: transform;
 }
-.hero-bg-front.is-bouncing {
-  animation: hero-front-bounce 0.22s linear forwards;
+.hero-bg-front.is-bouncing--soft {
+  animation: hero-front-bounce-soft 0.18s linear forwards;
 }
-@keyframes hero-front-bounce {
+.hero-bg-front.is-bouncing--heavy {
+  animation: hero-front-bounce-heavy 0.22s linear forwards;
+}
+/* Light bounce — sync with "glow like a" landing */
+@keyframes hero-front-bounce-soft {
   0%   { transform: translate3d(0,  0, 0); }
-  45%  { transform: translate3d(0,  5px, 0); }   /* impact compression */
-  72%  { transform: translate3d(0, -2px, 0); }   /* small rebound */
+  45%  { transform: translate3d(0,  3px, 0); }
+  72%  { transform: translate3d(0, -1px, 0); }
+  100% { transform: translate3d(0,  0, 0); }
+}
+/* Heavy bounce — sync with BEAST landing */
+@keyframes hero-front-bounce-heavy {
+  0%   { transform: translate3d(0,  0, 0); }
+  45%  { transform: translate3d(0,  5px, 0); }
+  72%  { transform: translate3d(0, -2px, 0); }
   100% { transform: translate3d(0,  0, 0); }
 }
 @media (prefers-reduced-motion: reduce) {
-  .hero-bg-front.is-bouncing { animation: none; }
+  .hero-bg-front.is-bouncing--soft,
+  .hero-bg-front.is-bouncing--heavy { animation: none; }
 }
 /* Hero wordmarks — 2 separate layers with different Z stacking.
    drop 1st ("glow like a", yellow): sits BEHIND .hero-bg-front (z:2) — partially hidden by model.
