@@ -281,7 +281,8 @@ button { border: 0; background: none; font: inherit; cursor: pointer; color: inh
 }
 /* Hero assets (1206×2631) are pre-cropped to match the 402×877 hero aspect
    (≈ 0.458). `object-fit: cover` fills the hero without further offset — the
-   composition (gloves at corners, model centered) is baked into the asset. */
+   composition (gloves at corners, model centered) is baked into the asset.
+   Background fades in shortly after the foreground cutout starts falling. */
 .hero-bg {
   position: absolute;
   inset: 0;
@@ -290,9 +291,18 @@ button { border: 0; background: none; font: inherit; cursor: pointer; color: inh
   object-fit: cover;
   pointer-events: none;
   z-index: 1;
+  opacity: 0;
+  will-change: opacity;
+}
+.hero-bg.is-fading-in {
+  animation: hero-bg-fadein 0.50s linear 0.20s forwards;
+}
+@keyframes hero-bg-fadein {
+  from { opacity: 0; }
+  to   { opacity: 1; }
 }
 /* Foreground cutout — overlays the wordmarks so they land behind the subject.
-   Bounces once in sync with BEAST landing (impact vibration). */
+   Drops from above with a heavy 쿵 (squash + rebound) on page entry. */
 .hero-bg-front {
   position: absolute;
   inset: 0;
@@ -301,31 +311,29 @@ button { border: 0; background: none; font: inherit; cursor: pointer; color: inh
   object-fit: cover;
   pointer-events: none;
   z-index: 3;
-  will-change: transform;
+  opacity: 0;
+  transform: translate3d(0, -100%, 0);
+  transform-origin: center bottom;
+  will-change: opacity, transform;
 }
-.hero-bg-front.is-bouncing--soft {
-  animation: hero-front-bounce-soft 0.18s linear forwards;
+.hero-bg-front.is-dropping {
+  animation: hero-front-drop 0.50s linear 0s forwards;
 }
-.hero-bg-front.is-bouncing--heavy {
-  animation: hero-front-bounce-heavy 0.22s linear forwards;
-}
-/* Light bounce — sync with "glow like a" landing */
-@keyframes hero-front-bounce-soft {
-  0%   { transform: translate3d(0,  0, 0); }
-  45%  { transform: translate3d(0,  3px, 0); }
-  72%  { transform: translate3d(0, -1px, 0); }
-  100% { transform: translate3d(0,  0, 0); }
-}
-/* Heavy bounce — sync with BEAST landing */
-@keyframes hero-front-bounce-heavy {
-  0%   { transform: translate3d(0,  0, 0); }
-  45%  { transform: translate3d(0,  5px, 0); }
-  72%  { transform: translate3d(0, -2px, 0); }
-  100% { transform: translate3d(0,  0, 0); }
+@keyframes hero-front-drop {
+  0%   { opacity: 0;   transform: translate3d(0, -100%, 0) scaleY(1); }
+  30%  { opacity: 0.6; transform: translate3d(0,  -55%, 0) scaleY(1); }
+  50%  { opacity: 1;   transform: translate3d(0,    0,  0) scaleY(0.85); }
+  70%  { opacity: 1;   transform: translate3d(0,   -4%, 0) scaleY(1.08); }
+  88%  { opacity: 1;   transform: translate3d(0,    0,  0) scaleY(0.97); }
+  100% { opacity: 1;   transform: translate3d(0,    0,  0) scaleY(1); }
 }
 @media (prefers-reduced-motion: reduce) {
-  .hero-bg-front.is-bouncing--soft,
-  .hero-bg-front.is-bouncing--heavy { animation: none; }
+  .hero-bg,
+  .hero-bg-front {
+    opacity: 1;
+    transform: none;
+    animation: none;
+  }
 }
 /* Hero wordmarks — 2 separate layers with different Z stacking.
    drop 1st ("glow like a", yellow): sits BEHIND .hero-bg-front (z:2) — partially hidden by model.
@@ -369,10 +377,10 @@ button { border: 0; background: none; font: inherit; cursor: pointer; color: inh
    a vertical squash + bounce. Acceleration is baked into keyframe %s so the
    outer timing-function stays linear (CSS keyframes can't ease per-stop). */
 .hero-wordmark__layer--1.is-dropped {
-  animation: drop-thud-1 0.28s linear 0.18s forwards;
+  animation: drop-thud-1 0.28s linear 0.85s forwards;
 }
 .hero-wordmark__layer--2.is-dropped {
-  animation: drop-thud-2 0.36s linear 0.46s forwards;
+  animation: drop-thud-2 0.36s linear 1.13s forwards;
 }
 @keyframes drop-thud-1 {
   0%   { opacity: 0;   transform: translate3d(0, -50%, 0); }

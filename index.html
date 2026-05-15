@@ -414,27 +414,31 @@ Beast there,</h2>
   </script>
 
   <script>
-    // Hero wordmark: 2-layer sequential "drop & thud" on page entry.
-    // Layer 1 ("glow like a") drops at 0.3s, Layer 2 ("BEAST") drops at 0.7s.
-    // No IO needed — Hero is the first viewport-visible section.
+    // Hero entry choreography on page load:
+    //   t=0.00s  foreground cutout (person) drops with 쿵 squash + rebound
+    //   t=0.20s  background dissolves in (fade)
+    //   t=0.85s  "glow like a" wordmark drops 툭
+    //   t=1.13s  "BEAST" wordmark drops 툭 (existing squash)
+    // All delays live in CSS animation-delay; JS just attaches trigger classes
+    // in the same requestAnimationFrame tick so timings share one baseline.
     (function () {
       const layers = document.querySelectorAll('.hero-wordmark__layer');
+      const front  = document.querySelector('.hero-bg-front');
+      const bg     = document.querySelector('.hero-bg');
       if (!layers.length) return;
+
       if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
         layers.forEach((l) => { l.style.opacity = '1'; l.style.transform = 'none'; });
+        if (front) { front.style.opacity = '1'; front.style.transform = 'none'; }
+        if (bg)    { bg.style.opacity = '1'; }
         return;
       }
+
       // Defer one frame so initial CSS state paints before animation starts.
       requestAnimationFrame(() => {
+        if (front) front.classList.add('is-dropping');
+        if (bg)    bg.classList.add('is-fading-in');
         layers.forEach((l) => l.classList.add('is-dropped'));
-        // Sync foreground cutout bounce with each wordmark landing.
-        // glow like a: delay 180ms + 280ms × 68% ≈ 370ms (light bounce)
-        // BEAST     : delay 460ms + 360ms × 62% ≈ 683ms (heavy bounce)
-        const front = document.querySelector('.hero-bg-front');
-        if (front) {
-          setTimeout(() => front.classList.add('is-bouncing--soft'),  370);
-          setTimeout(() => front.classList.add('is-bouncing--heavy'), 683);
-        }
       });
     })();
   </script>
