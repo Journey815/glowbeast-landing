@@ -12,51 +12,119 @@
   <link href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=Playfair+Display:ital,wght@1,400;1,600&family=Inter:wght@400;500;700&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="styles.css" />
 </head>
-<body>
+<body class="lineup-page">
 
-  <div class="lineup-shell">
-
-    <header class="lineup-header">
-      <a href="index.html" aria-label="Back to Glowbeast home">
-        <img class="brand" src="assets/logo.svg" alt="Glowbeast" />
-      </a>
-      <nav aria-label="Primary">
-        <a href="index.html" style="font-weight:700;font-size:14px;letter-spacing:-0.056px;">HOME</a>
-      </nav>
-    </header>
-
-    <main class="lineup-main">
-      <h1 class="lineup-title">The
-Lineup:</h1>
-
-      <div class="lineup-placeholder">
-        <h3>Product Lineup Coming Soon</h3>
-        <p>
-          This page will showcase the full Glowbeast product lineup<br />
-          once the Figma design is finalized.
-        </p>
-        <a href="index.html" class="back-link">&larr; Back to home</a>
+  <!-- ========================================================= -->
+  <!-- Header chrome: iPhone status bar mockup + nav              -->
+  <!-- ========================================================= -->
+  <header class="lineup-chrome" data-node-id="2889:282">
+    <div class="status-bar" aria-hidden="true" data-node-id="2889:304">
+      <span class="status-time">9:41</span>
+      <div class="status-icons">
+        <svg class="s-signal" viewBox="0 0 18 10" xmlns="http://www.w3.org/2000/svg">
+          <rect x="0"  y="6" width="3" height="4"  rx="0.5" fill="#fff"/>
+          <rect x="5"  y="4" width="3" height="6"  rx="0.5" fill="#fff"/>
+          <rect x="10" y="2" width="3" height="8"  rx="0.5" fill="#fff"/>
+          <rect x="15" y="0" width="3" height="10" rx="0.5" fill="#fff"/>
+        </svg>
+        <svg class="s-wifi" viewBox="0 0 16 11" xmlns="http://www.w3.org/2000/svg" fill="#fff">
+          <path d="M8 11a1.3 1.3 0 1 0 0-2.6 1.3 1.3 0 0 0 0 2.6z"/>
+          <path d="M4.7 7.8a4.7 4.7 0 0 1 6.6 0l-1.1 1.1a3.1 3.1 0 0 0-4.4 0L4.7 7.8z"/>
+          <path d="M1.8 4.9a8.7 8.7 0 0 1 12.4 0l-1.1 1.1a7.1 7.1 0 0 0-10.2 0L1.8 4.9z"/>
+        </svg>
+        <svg class="s-battery" viewBox="0 0 26 12" xmlns="http://www.w3.org/2000/svg">
+          <rect x="0.5" y="0.5" width="22" height="11" rx="2.8" ry="2.8" fill="none" stroke="#fff" stroke-opacity="0.55"/>
+          <rect x="2"   y="2"   width="19" height="8"  rx="1.2" fill="#fff"/>
+          <rect x="23"  y="4"   width="1.5" height="4" rx="0.5" fill="#fff" fill-opacity="0.55"/>
+        </svg>
       </div>
-    </main>
+    </div>
 
-  </div>
+    <nav class="nav" aria-label="Primary" data-node-id="2889:284">
+      <div class="nav-inner">
+        <a href="index.html" aria-label="Glowbeast home">
+          <img class="nav-logo" src="assets/logo.svg" alt="Glowbeast" />
+        </a>
+        <div class="nav-menu" role="menubar">
+          <a href="index.html" role="menuitem">ABOUT</a>
+          <a href="lineup.html" role="menuitem" aria-current="page">LINEUP</a>
+          <button class="nav-lang" type="button" aria-label="Switch language">
+            EN
+            <svg viewBox="0 0 12 8" aria-hidden="true">
+              <path d="M1 1.5 L6 6.5 L11 1.5" stroke="currentColor" stroke-width="1.6" fill="none" stroke-linecap="round" stroke-linejoin="round" />
+            </svg>
+          </button>
+        </div>
+      </div>
+    </nav>
+  </header>
 
-  <!-- =========================================================
-       Footer — shared with index.html
-       ========================================================= -->
+  <main class="lineup-main">
+
+    <!-- ========================================================= -->
+    <!-- Product 1: THE LAST SET (Figma 2889:283)                  -->
+    <!-- ========================================================= -->
+    <section class="product" data-node-id="2889:283">
+      <div class="product-image-stack product-image-stack--last-set" data-node-id="3601:460">
+        <img class="bottle-base" src="assets/glowbeast/crumpled%20bottle.png" alt="THE LAST SET cleanser bottle" data-node-id="3585:448" />
+        <div class="bottle-overlay" data-node-id="3585:443">
+          <img src="assets/glowbeast/clean%20bottle.png" alt="" aria-hidden="true" />
+        </div>
+      </div>
+
+      <div class="product-info">
+        <h2 class="product-name" data-node-id="3585:450">THE LAST SET</h2>
+        <p class="product-sub-en" data-node-id="3585:455">ACAI SMOOTHIE CLEANSER</p>
+        <p class="product-sub-ko" data-node-id="3585:454">더 라스트 세트 아사이 스무디 클렌저</p>
+        <hr class="product-divider" />
+        <p class="product-desc" data-node-id="3600:458">
+          A soft, smoothie-like cleanser that gently exfoliates and helps lift away dull buildup. Replenishes moisture lost to sweat to support the skin barrier.
+        </p>
+        <hr class="product-divider" />
+      </div>
+    </section>
+
+    <!-- ========================================================= -->
+    <!-- Product 2: COOL DOWN (Figma 3617:38)                      -->
+    <!-- ========================================================= -->
+    <section class="product" data-node-id="3617:38">
+      <div class="product-image-stack product-image-stack--cool-down" data-node-id="3621:64">
+        <img class="bottle-base" src="assets/glowbeast/crumpled%20bottle%20-%20spray.png" alt="COOL DOWN slushy spray bottle" data-node-id="3621:66" />
+        <div class="bottle-overlay" data-node-id="3621:63">
+          <img src="assets/glowbeast/clean%20bottle%20-%20spray.png" alt="" aria-hidden="true" />
+        </div>
+      </div>
+
+      <div class="product-info">
+        <h2 class="product-name" data-node-id="3621:70">COOL DOWN</h2>
+        <p class="product-sub-en" data-node-id="3621:71">SLUSHY SPRAY</p>
+        <p class="product-sub-ko" data-node-id="3621:72">쿨 다운 슬러시 스프레이</p>
+        <hr class="product-divider" />
+        <p class="product-desc" data-node-id="3621:74">
+          A refreshing post-exercise mist powered by Yellow CICA™ Complex, AMINO-MF and Eucalyptol.
+        </p>
+        <hr class="product-divider" />
+      </div>
+    </section>
+
+  </main>
+
+  <!-- ========================================================= -->
+  <!-- Footer — shared with index.html                            -->
+  <!-- ========================================================= -->
   <footer class="site-footer">
     <div class="site-footer-inner">
-      <div>
+      <div class="footer-logo-block">
         <img class="footer-logo" src="assets/footer-logo.png" alt="Glowbeast" />
         <a class="footer-email" href="mailto:hello@glowbeast.co">hello@glowbeast.co</a>
       </div>
 
-      <div class="footer-columns">
-        <nav class="fcol-nav" aria-label="Footer">
+      <div class="footer-text">
+        <nav class="footer-menu" aria-label="Footer">
           <a href="index.html">ABOUT</a>
           <a href="lineup.html">LINEUP</a>
         </nav>
-        <address class="fcol-addr">
+        <address class="footer-addr">
           GRANDE CLIP PTE. LTD.<br />
           1 RAFFLES PLACE,<br />
           #36-02, ONE RAFFLES PLACE,<br />

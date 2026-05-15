@@ -893,62 +893,172 @@ button { border: 0; background: none; font: inherit; cursor: pointer; color: inh
    Page 2 — Lineup (skeleton)
    ========================================================= */
 
-.lineup-shell {
+/* Lineup body — page-scoped overrides so hero-positioned chrome (.status-bar,
+   .nav) flow normally at the top instead of overlaying a hero section. */
+.lineup-page {
   background: var(--bg-black);
   color: var(--text-white);
-  padding: 40px var(--gutter) 0;
   min-height: 100vh;
 }
-.lineup-header {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 16px 0 40px;
+.lineup-page .status-bar,
+.lineup-page .nav {
+  position: relative;
+  inset: auto;
 }
-.lineup-header .brand { height: 32px; }
+
+/* Language toggle button — Figma 2889:299. Visual only, no functionality. */
+.nav-lang {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 5.5px 6px;
+  background: transparent;
+  border: 0;
+  cursor: pointer;
+  font-family: var(--font-body);
+  font-weight: 700;
+  font-size: 14px;
+  letter-spacing: -0.056px;
+  color: var(--text-white);
+  line-height: 1.5;
+}
+.nav-lang svg {
+  width: 10px;
+  height: 7px;
+  display: block;
+}
+
+/* Main column. Single product per row, centered, 370px content max. */
 .lineup-main {
   display: flex;
   flex-direction: column;
-  gap: 24px;
-  padding: 60px 0 120px;
-}
-.lineup-title {
-  font-family: var(--font-display);
-  font-style: italic;
-  font-size: 48px;
-  line-height: 1;
-  margin: 0 0 40px;
-}
-.lineup-placeholder {
-  border: 1px dashed var(--text-white-40);
-  padding: 80px 24px;
-  text-align: center;
-  border-radius: 4px;
-}
-.lineup-placeholder h3 {
-  font-family: var(--font-heading);
-  font-size: 20px;
-  margin: 0 0 12px;
-}
-.lineup-placeholder p {
-  color: var(--text-white-70);
-  margin: 0 0 24px;
-  font-size: 14px;
-  line-height: 1.6;
-}
-.back-link {
-  display: inline-flex;
   align-items: center;
-  gap: 8px;
-  padding: 12px 0;
-  font-family: var(--font-body);
-  font-size: 14px;
-  color: var(--text-white);
-  text-decoration: none;
-  border-bottom: 1px solid var(--text-white-40);
-  align-self: flex-start;
 }
-.back-link:hover { border-color: var(--text-white); }
+
+/* Per-product section. 40px top/bottom padding matches Figma 2889:283. */
+.product {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 24px;
+  padding: 40px 16px;
+  width: 100%;
+}
+
+/* Composite bottle visual — two layered images positioned per Figma. */
+.product-image-stack {
+  position: relative;
+  flex-shrink: 0;
+}
+.product-image-stack .bottle-base {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  pointer-events: none;
+}
+.product-image-stack .bottle-overlay {
+  position: absolute;
+  overflow: hidden;
+  pointer-events: none;
+}
+/* Overlay assets are pre-cropped to match the slot aspect (clean bottle 0.916,
+   clean bottle - spray 0.725) so a plain object-fit: cover suffices. */
+.product-image-stack .bottle-overlay img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+/* THE LAST SET — Figma 3601:460 / 3585:443.
+   Container 187×352; overlay slot 186×203 (aspect 0.916) anchored at y=149. */
+.product-image-stack--last-set {
+  width: 187px;
+  height: 352px;
+}
+.product-image-stack--last-set .bottle-overlay {
+  top: 149px;
+  left: 0.5px;
+  width: 186px;
+  height: 203px;
+}
+
+/* COOL DOWN — Figma 3621:64 / 3621:63.
+   Container 100×372; bottle base 100×370 anchored top-right (image is 2px taller
+   than the bottom row reserved for the overlay tip). Overlay 100×138 at y=234. */
+.product-image-stack--cool-down {
+  width: 100px;
+  height: 372px;
+}
+.product-image-stack--cool-down .bottle-base {
+  inset: auto 0 2px 0;
+  width: 100px;
+  height: 370px;
+}
+.product-image-stack--cool-down .bottle-overlay {
+  left: 0;
+  top: 234px;
+  width: 100px;
+  height: 138px;
+}
+
+/* Text block — centered, fixed 370px column to match Figma 3600:459. */
+.product-info {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+  width: 370px;
+  max-width: 100%;
+}
+.product-name {
+  font-family: var(--font-heading);
+  font-weight: 900;
+  font-size: 32px;
+  line-height: 30px;
+  letter-spacing: -0.64px;
+  color: var(--text-white);
+  text-align: center;
+  margin: 0;
+}
+.product-sub-en {
+  font-family: var(--font-system);
+  font-size: 14px;
+  line-height: 14px;
+  letter-spacing: 0.28px;
+  color: var(--text-white);
+  text-align: center;
+  margin: 0;
+}
+.product-sub-ko {
+  font-family: var(--font-heading);
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 14px;
+  letter-spacing: -0.28px;
+  color: var(--text-white);
+  text-align: center;
+  margin: 0;
+}
+.product-divider {
+  width: 369px;
+  max-width: 100%;
+  border: 0;
+  border-top: 1px solid var(--text-white-40);
+  margin: 0;
+}
+.product-desc {
+  font-family: var(--font-system);
+  font-size: 14px;
+  line-height: 16px;
+  letter-spacing: -0.28px;
+  color: #999;
+  text-align: center;
+  margin: 0;
+  padding: 0 1px;
+}
 
 /* =========================================================
    Utilities
