@@ -427,6 +427,10 @@ Beast there,</h2>
       // Defer one frame so initial CSS state paints before animation starts.
       requestAnimationFrame(() => {
         layers.forEach((l) => l.classList.add('is-dropped'));
+        // Sync foreground cutout bounce with BEAST landing.
+        // BEAST: delay 460ms + duration 360ms × 62% (impact keyframe) ≈ 683ms
+        const front = document.querySelector('.hero-bg-front');
+        if (front) setTimeout(() => front.classList.add('is-bouncing'), 683);
       });
     })();
   </script>

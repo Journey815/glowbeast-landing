@@ -291,7 +291,8 @@ button { border: 0; background: none; font: inherit; cursor: pointer; color: inh
   pointer-events: none;
   z-index: 1;
 }
-/* Foreground cutout — overlays the wordmarks so they land behind the subject. */
+/* Foreground cutout — overlays the wordmarks so they land behind the subject.
+   Bounces once in sync with BEAST landing (impact vibration). */
 .hero-bg-front {
   position: absolute;
   inset: 0;
@@ -300,6 +301,19 @@ button { border: 0; background: none; font: inherit; cursor: pointer; color: inh
   object-fit: cover;
   pointer-events: none;
   z-index: 3;
+  will-change: transform;
+}
+.hero-bg-front.is-bouncing {
+  animation: hero-front-bounce 0.22s linear forwards;
+}
+@keyframes hero-front-bounce {
+  0%   { transform: translate3d(0,  0, 0); }
+  45%  { transform: translate3d(0,  5px, 0); }   /* impact compression */
+  72%  { transform: translate3d(0, -2px, 0); }   /* small rebound */
+  100% { transform: translate3d(0,  0, 0); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .hero-bg-front.is-bouncing { animation: none; }
 }
 /* Hero wordmarks — 2 separate layers with different Z stacking.
    drop 1st ("glow like a", yellow): sits BEHIND .hero-bg-front (z:2) — partially hidden by model.
