@@ -237,13 +237,23 @@ Beast there,</h2>
         You sweat too? Good!<br />
         Train with us &amp; glow together!
       </p>
-      <form class="signup-form" action="#" method="post" onsubmit="event.preventDefault(); alert('Thanks! We will be in touch.');" novalidate>
-        <label class="sr-only" for="signup-contact">Phone or Email</label>
-        <input class="signup-input" id="signup-contact" type="text" name="contact" placeholder="Phone or Email" autocomplete="email" />
+      <form class="signup-form" id="signup-form" action="#" method="post" novalidate>
+        <label class="sr-only" for="signup-contact">Email</label>
+        <input class="signup-input" id="signup-contact" type="email" name="email" placeholder="Phone or Email" autocomplete="email" required />
+        <button class="btn-yellow signup-cta" type="submit" data-node-id="3089:147">GET FIRST ACCESS</button>
       </form>
-      <a class="btn-yellow signup-cta" href="#" data-node-id="3089:147">GET FIRST ACCESS</a>
     </div>
   </section>
+
+  <!-- Signup success modal — shown after valid email submit -->
+  <div class="modal" id="signup-modal" role="dialog" aria-modal="true" aria-labelledby="signup-modal-title" hidden>
+    <div class="modal__backdrop" data-modal-close></div>
+    <div class="modal__card">
+      <p class="modal__title" id="signup-modal-title">등록되었습니다</p>
+      <p class="modal__body">Welcome, Beast.<br/>First access 메일을 보내드릴게요.</p>
+      <button class="btn-yellow modal__cta" type="button" data-modal-close>OK</button>
+    </div>
+  </div>
 
   <!-- =========================================================
        Footer (Figma 3255:70) — simplified: logo + email + 2-col text + bottom row
@@ -417,6 +427,49 @@ Beast there,</h2>
       // Defer one frame so initial CSS state paints before animation starts.
       requestAnimationFrame(() => {
         layers.forEach((l) => l.classList.add('is-dropped'));
+      });
+    })();
+  </script>
+
+  <script>
+    // Signup form: validate email → show success modal. Pure native validation
+    // for errors (setCustomValidity), custom modal only for success.
+    (function () {
+      const form  = document.getElementById('signup-form');
+      const input = document.getElementById('signup-contact');
+      const modal = document.getElementById('signup-modal');
+      if (!form || !input || !modal) return;
+
+      const EMAIL = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+      const openModal = () => {
+        modal.hidden = false;
+        const cta = modal.querySelector('.modal__cta');
+        if (cta) cta.focus();
+      };
+      const closeModal = () => {
+        modal.hidden = true;
+        input.focus();
+      };
+
+      form.addEventListener('submit', (e) => {
+        e.preventDefault();
+        const v = (input.value || '').trim();
+        if (!EMAIL.test(v)) {
+          input.setCustomValidity('이메일 형식으로 입력해주세요');
+          input.reportValidity();
+          input.addEventListener('input', () => input.setCustomValidity(''), { once: true });
+          return;
+        }
+        openModal();
+        form.reset();
+      });
+
+      modal.addEventListener('click', (e) => {
+        if (e.target.closest('[data-modal-close]')) closeModal();
+      });
+      document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape' && !modal.hidden) closeModal();
       });
     })();
   </script>

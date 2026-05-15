@@ -89,8 +89,6 @@ button { border: 0; background: none; font: inherit; cursor: pointer; color: inh
   padding: 16px;
   color: #fff;
   pointer-events: none;
-  -webkit-backdrop-filter: blur(24px);
-  backdrop-filter: blur(24px);
 }
 .status-time {
   font-family: var(--font-system);
@@ -1132,4 +1130,56 @@ button { border: 0; background: none; font: inherit; cursor: pointer; color: inh
   .section-title { font-size: 96px; }
   .after-sweat .section-title { font-size: 120px; }
   .stack-card__title { font-size: 120px; }
+}
+
+/* =========================================================
+   Signup success modal — fires after valid email submit.
+   ========================================================= */
+.modal[hidden] { display: none; }
+.modal {
+  position: fixed;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  z-index: 200;
+}
+.modal__backdrop {
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.8);
+  cursor: pointer;
+}
+.modal__card {
+  position: relative;
+  background: var(--bg-white);
+  border: 1px solid var(--bg-black);
+  width: min(360px, calc(100vw - 48px));
+  padding: 32px 28px 24px;
+  text-align: center;
+  animation: modal-pop 220ms cubic-bezier(.2,.8,.2,1) forwards;
+}
+.modal__title {
+  font-family: var(--font-display);
+  font-size: 24px;
+  letter-spacing: -0.02em;
+  line-height: 1.2;
+  margin-bottom: 12px;
+}
+.modal__body {
+  font-family: var(--font-system);
+  font-size: 14px;
+  color: rgba(0, 0, 0, 0.6);
+  line-height: 1.6;
+  margin-bottom: 24px;
+}
+.modal__cta {
+  display: inline-flex;
+  min-width: 120px;
+}
+@keyframes modal-pop {
+  from { opacity: 0; transform: scale(0.92); }
+  to   { opacity: 1; transform: scale(1); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .modal__card { animation: none; }
 }
