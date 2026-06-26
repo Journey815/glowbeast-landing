@@ -6,10 +6,21 @@
   <title>Lineup — Glowbeast</title>
   <meta name="description" content="The Glowbeast lineup — Beast-grade active beauty products for people who sweat." />
   <meta name="theme-color" content="#000000" />
-  <link rel="icon" href="assets/logo.svg" type="image/svg+xml" />
+  <link rel="icon" href="assets/favicon.png" type="image/png" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=Playfair+Display:ital,wght@1,400;1,600&family=Inter:wght@400;500;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.css" />
+  <script>
+    (function(d) {
+      var config = {
+        kitId: 'mma0jnp',
+        scriptTimeout: 3000,
+        async: true
+      },
+      h=d.documentElement,t=setTimeout(function(){h.className=h.className.replace(/\bwf-loading\b/g,"")+" wf-inactive";},config.scriptTimeout),tk=d.createElement("script"),f=false,s=d.getElementsByTagName("script")[0],a;h.className+=" wf-loading";tk.src='https://use.typekit.net/'+config.kitId+'.js';tk.async=true;tk.onload=tk.onreadystatechange=function(){a=this.readyState;if(f||a&&a!="complete"&&a!="loaded")return;f=true;clearTimeout(t);try{Typekit.load(config)}catch(e){}};s.parentNode.insertBefore(tk,s)
+    })(document);
+  </script>
   <link rel="stylesheet" href="styles.css" />
 </head>
 <body class="lineup-page">
@@ -42,18 +53,15 @@
 
     <nav class="nav" aria-label="Primary" data-node-id="2889:284">
       <div class="nav-inner">
-        <a href="index.html" aria-label="Glowbeast home">
-          <img class="nav-logo" src="assets/logo.svg" alt="Glowbeast" />
+        <a href="index.html" aria-label="Glowbeast home" class="nav-logo-link">
+          <span class="nav-logo-flip">
+            <img class="nav-logo nav-logo--front" src="assets/Logo%20KR.png" alt="Glowbeast" />
+            <img class="nav-logo nav-logo--back" src="assets/logo.svg" alt="" aria-hidden="true" />
+          </span>
         </a>
         <div class="nav-menu" role="menubar">
-          <a href="index.html" role="menuitem">ABOUT</a>
-          <a href="lineup.html" role="menuitem" aria-current="page">LINEUP</a>
-          <button class="nav-lang" type="button" aria-label="Switch language">
-            EN
-            <svg viewBox="0 0 12 8" aria-hidden="true">
-              <path d="M1 1.5 L6 6.5 L11 1.5" stroke="currentColor" stroke-width="1.6" fill="none" stroke-linecap="round" stroke-linejoin="round" />
-            </svg>
-          </button>
+          <a href="about.html" role="menuitem">ABOUT</a>
+          <a href="lineup.html" role="menuitem" aria-current="page">PRODUCT</a>
         </div>
       </div>
     </nav>
@@ -62,9 +70,14 @@
   <main class="lineup-main">
 
     <!-- ========================================================= -->
+    <!-- Page title (Figma 3869:190 / 3869:188)                    -->
+    <!-- ========================================================= -->
+    <h1 class="lineup-title" data-scroll-reveal="typing" data-node-id="3869:188">Lineup:</h1>
+
+    <!-- ========================================================= -->
     <!-- Product 1: THE LAST SET (Figma 2889:283)                  -->
     <!-- ========================================================= -->
-    <section class="product" data-node-id="2889:283">
+    <section class="product" data-reveal-item data-node-id="2889:283">
       <div class="product-image-stack product-image-stack--last-set" data-node-id="3601:460">
         <img class="bottle-base" src="assets/glowbeast/crumpled%20bottle.png" alt="THE LAST SET cleanser bottle" data-node-id="3585:448" />
         <div class="bottle-overlay" data-node-id="3585:443">
@@ -80,6 +93,8 @@
         <p class="product-desc" data-node-id="3600:458">
           A soft, smoothie-like cleanser that gently exfoliates and helps lift away dull buildup. Replenishes moisture lost to sweat to support the skin barrier.
         </p>
+        <button class="product-ingredients-toggle" type="button" aria-expanded="false" aria-controls="ing-last-set">Ingredients</button>
+        <div class="product-ingredients" id="ing-last-set" hidden>Glycerin, Water, Sodium Cocoyl Glycinate, Silica, Lauryl Hydroxysultaine, Coco-Glucoside, Vitis Vinifera (Grape) Seed Powder, Chlorella Vulgaris Extract, Euterpe Oleracea Fruit Extract, Quillaja Saponaria Bark Extract, Hydroxypropyl Starch Phosphate, Sodium Lauroyl Glutamate, Decyl Glucoside, Caprylyl Glycol, Citric Acid, Cellulose, Dextrin, Acrylates/C10-30 Alkyl Acrylate Crosspolymer, Polyquaternium-7, Glucose, Sodium Cocoyl Isethionate, Sodium Chloride, Caprylic/Capric Triglyceride, Butylene Glycol, 1,2-Hexanediol, Fructooligosaccharides, Fructose, Sodium Phytate, Hydrogenated Lecithin, Ceramide NP, Ethylhexylglycerin, Butyl Avocadate, Dipotassium Phosphate, Acetyl Glutamine, Tocopherol, Cellulose Gum, Sodium Stearoyl Glutamate, Sodium Benzoate, Fragrance(Parfum), Gardenia Florida Fruit Extract</div>
         <hr class="product-divider" />
       </div>
     </section>
@@ -87,7 +102,7 @@
     <!-- ========================================================= -->
     <!-- Product 2: COOL DOWN (Figma 3617:38)                      -->
     <!-- ========================================================= -->
-    <section class="product" data-node-id="3617:38">
+    <section class="product" data-reveal-item data-node-id="3617:38">
       <div class="product-image-stack product-image-stack--cool-down" data-node-id="3621:64">
         <img class="bottle-base" src="assets/glowbeast/crumpled%20bottle%20-%20spray.png" alt="COOL DOWN slushy spray bottle" data-node-id="3621:66" />
         <div class="bottle-overlay" data-node-id="3621:63">
@@ -102,6 +117,32 @@
         <hr class="product-divider" />
         <p class="product-desc" data-node-id="3621:74">
           A refreshing post-exercise mist powered by Yellow CICA™ Complex, AMINO-MF and Eucalyptol.
+        </p>
+        <button class="product-ingredients-toggle" type="button" aria-expanded="false" aria-controls="ing-cool-down">Ingredients</button>
+        <div class="product-ingredients" id="ing-cool-down" hidden>Water, Propanediol, Glycerin, Erythritol, Glycereth-26, Xylitol, 2,3-Butanediol, 1,2-Hexanediol, Streptococcus Thermophilus Ferment, Lotus Corniculatus Seed Extract, Aloe Barbadensis Leaf Extract, Centella Asiatica Extract, Dioscorea Japonica Root Extract, Laminaria Japonica Extract, Ulmus Davidiana Root Extract, Viola Mandshurica Flower Extract, Citrus Limon (Lemon) Peel Oil, Pyrus Malus (Apple) Juice, Citrus Nobilis (Mandarin Orange) Peel Oil, Cynanchum Atratum Extract, Citrus Aurantium Dulcis (Orange) Peel Oil, Cymbopogon Schoenanthus Oil, Althaea Rosea Flower Extract, Pentylene Glycol, Butylene Glycol, Panthenol, Hydroxyethyl Urea, Gellan Gum, PPG-13-Decyltetradeceth-24, Calcium Chloride, Glyceryl Glucoside, Sodium Citrate, Ethylhexylglycerin, Allantoin, Citric Acid, Glucose, Tocopherol, Eucalyptol, Caprylic/Capric Triglyceride, Phosphatidylcholine, Ceramide NP, Glycine, Glutamic Acid, Serine, Alanine, Lysine, Arginine, Proline, Threonine, Limonene, Citral</div>
+        <hr class="product-divider" />
+      </div>
+    </section>
+
+    <!-- ========================================================= -->
+    <!-- Product 3: WHAT'S NEXT? — next-drop teaser (Figma 4914:1803) -->
+    <!-- ========================================================= -->
+    <section class="product product--next" data-reveal-item data-node-id="4914:1803">
+      <div class="product-image-stack product-next__symbol" aria-hidden="true">
+        <svg viewBox="0 0 120 200" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Undecided next product">
+          <!-- dashed bottle silhouette: cap, neck, body -->
+          <path d="M46 8 H74 V20 H46 Z M52 20 H68 V32 C68 32 88 40 88 70 V176 C88 188 80 192 70 192 H50 C40 192 32 188 32 176 V70 C32 40 52 32 52 32 Z"
+                stroke="rgba(255,255,255,0.5)" stroke-width="2" stroke-dasharray="6 7" stroke-linejoin="round" />
+          <text x="60" y="130" text-anchor="middle" font-family="'Helvetica Neue Condensed','Archivo Black',Impact,sans-serif" font-weight="900" font-size="68" fill="rgba(255,255,255,0.4)">?</text>
+        </svg>
+      </div>
+
+      <div class="product-info">
+        <h2 class="product-name" data-node-id="4914:1809">WHAT&rsquo;S NEXT?</h2>
+        <a class="btn-yellow product-next-cta" href="mailto:official@glowbeast.co?subject=My%20next%20Glowbeast%20idea">DROP YOUR IDEA!</a>
+        <hr class="product-divider" />
+        <p class="product-desc" data-node-id="4914:1813">
+          Tell us what sucks about your workout.<br />The top answer becomes our next product.
         </p>
         <hr class="product-divider" />
       </div>
@@ -121,25 +162,43 @@
 
       <div class="footer-text">
         <nav class="footer-menu" aria-label="Footer">
-          <a href="index.html">ABOUT</a>
+          <a href="about.html">ABOUT</a>
           <a href="lineup.html">LINEUP</a>
+          <a href="mailto:hello@glowbeast.co">SEND AN EMAIL</a>
         </nav>
         <address class="footer-addr">
-          GRANDE CLIP PTE. LTD.<br />
-          1 RAFFLES PLACE,<br />
-          #36-02, ONE RAFFLES PLACE,<br />
-          SINGAPORE 048616
+          <strong class="footer-addr__co">Grande Clip Korea, LLC.</strong><br />
+          14-4, Garosu-gil,<br />
+          Gangnam-gu, Seoul, Korea
         </address>
+      </div>
+
+      <!-- PC footer signup (Figma 4757:1232) — hidden on mobile via CSS.
+           Modal logic mirrors index.html. -->
+      <div class="footer-signup">
+        <p class="footer-signup__lead">
+          HEY BEAST THERE, YOU SWEAT TOO? GOOD!<br />
+          TRAIN WITH US &amp; GLOW TOGETHER!
+        </p>
+        <form class="footer-signup__form" id="footer-signup-form" action="#" method="post" novalidate>
+          <label class="sr-only" for="footer-signup-contact">Email</label>
+          <input class="footer-signup__input" id="footer-signup-contact" type="email" name="email" placeholder="PHONE OR EMAIL" autocomplete="email" required />
+          <button class="footer-signup__cta" type="submit" aria-label="Submit">
+            <svg viewBox="0 0 32 32" aria-hidden="true" focusable="false">
+              <path d="M12 8 L20 16 L12 24" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round" />
+            </svg>
+          </button>
+        </form>
       </div>
 
       <div class="footer-bottom">
         <div class="legal">
-          2026 glowbeast All rights reserved.
-          <div class="small">
-            <span>Terms of Service</span>
+          <p class="legal-copy">2026 GRANDE CLIP KOREA, LLC.</p>
+          <p class="legal-links">
+            <span>TERMS OF SERVICE</span>
             <span class="sep" aria-hidden="true"></span>
-            <span>Privacy Policy</span>
-          </div>
+            <span>PRIVACY POLICY</span>
+          </p>
         </div>
         <div class="footer-socials">
           <a href="#" aria-label="Instagram"><img src="assets/icon-instagram.svg" alt="" /></a>
@@ -148,6 +207,217 @@
       </div>
     </div>
   </footer>
+
+  <!-- Signup success modal — shown after valid email submit (PC footer form) -->
+  <div class="modal" id="signup-modal" role="dialog" aria-modal="true" aria-labelledby="signup-modal-title" hidden>
+    <div class="modal__backdrop" data-modal-close></div>
+    <div class="modal__card">
+      <p class="modal__title" id="signup-modal-title">등록되었습니다</p>
+      <p class="modal__body">Welcome, Beast.<br/>First access 메일을 보내드릴게요.</p>
+      <button class="btn-yellow modal__cta" type="button" data-modal-close>OK</button>
+    </div>
+  </div>
+
+  <!-- =========================================================
+       Interactions — unified baseline (matches index.html home)
+       1) Typewriter reveal for [data-scroll-reveal="typing"]
+       2) Stagger fade-up for [data-reveal-item] siblings of typing title
+       3) Footer logo IntersectionObserver intro
+       ========================================================= -->
+  <script>
+    (function () {
+      const REDUCE = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+      // ---------- Typewriter reveal ----------
+      const targets = document.querySelectorAll('[data-scroll-reveal="typing"]');
+      const items = [];
+      targets.forEach((el) => {
+        const text = el.textContent;
+        el.textContent = '';
+        const chars = [];
+        for (const c of text) {
+          if (c === '\n') {
+            el.appendChild(document.createElement('br'));
+          } else {
+            const span = document.createElement('span');
+            span.className = 'ch';
+            span.textContent = c;
+            el.appendChild(span);
+            chars.push(span);
+          }
+        }
+        items.push({ el, chars, staggered: false });
+      });
+
+      function triggerStagger(titleEl) {
+        const section = titleEl.closest('main') || document;
+        const reveals = section.querySelectorAll('[data-reveal-item]');
+        reveals.forEach((node, i) => {
+          setTimeout(() => node.classList.add('is-revealed'), i * 120);
+        });
+      }
+
+      if (items.length && !REDUCE) {
+        let ticking = false;
+        function update() {
+          const vh = window.innerHeight;
+          const startY = vh * 1.0;
+          const endY = vh * 0.2;
+          const span = startY - endY;
+          items.forEach((item) => {
+            const top = item.el.getBoundingClientRect().top;
+            const raw = (startY - top) / span;
+            const p = Math.min(1, Math.max(0, raw));
+            const visibleCount = Math.round(p * item.chars.length);
+            for (let i = 0; i < item.chars.length; i++) {
+              const shouldShow = i < visibleCount;
+              const isShown = item.chars[i].classList.contains('is-visible');
+              if (shouldShow !== isShown) item.chars[i].classList.toggle('is-visible', shouldShow);
+            }
+            if (p >= 1 && !item.staggered) {
+              item.staggered = true;
+              triggerStagger(item.el);
+            }
+          });
+          ticking = false;
+        }
+        window.addEventListener('scroll', () => {
+          if (!ticking) { requestAnimationFrame(update); ticking = true; }
+        }, { passive: true });
+        window.addEventListener('resize', update);
+        update();
+      } else if (items.length && REDUCE) {
+        items.forEach(({ chars }) => chars.forEach((c) => c.classList.add('is-visible')));
+        document.querySelectorAll('[data-reveal-item]').forEach((n) => n.classList.add('is-revealed'));
+      }
+
+      // ---------- Scroll-linked bottle reveal (clean → crumpled) ----------
+      // Each .product-image-stack has its own per-card scroll window. Progress
+      // ramps 0→1 as the page scroll passes through that window, clipping the
+      // .bottle-overlay (clean bottle) from the top down to reveal the
+      // .bottle-base (crumpled bottle) behind.
+      //
+      // Window: startScroll = max(0, absTop - vh*0.3),  endScroll = absTop + h*0.3.
+      // max(0, …) guarantees the first card sits at progress=0 on page load
+      // even though it's above the fold — earlier rect.top-only formula gave
+      // progress ≈ 0.6 at load and hid the clean bottle.
+      const bottleOverlays = document.querySelectorAll('.product-image-stack .bottle-overlay');
+      if (bottleOverlays.length && !REDUCE) {
+        const stackData = [];
+        function recordStacks() {
+          stackData.length = 0;
+          bottleOverlays.forEach((overlay) => {
+            const stack = overlay.closest('.product-image-stack');
+            if (!stack) return;
+            const rect = stack.getBoundingClientRect();
+            stackData.push({
+              overlay,
+              absTop: rect.top + window.scrollY,
+              height: stack.offsetHeight,
+            });
+          });
+        }
+        let bTicking = false;
+        function updateBottleReveal() {
+          const vh = window.innerHeight;
+          const scrollY = window.scrollY;
+          stackData.forEach(({ overlay, absTop, height }) => {
+            const startScroll = Math.max(0, absTop - vh * 0.3);
+            const endScroll = absTop + height * 0.3;
+            const range = endScroll - startScroll;
+            if (range <= 0) return;
+            const raw = (scrollY - startScroll) / range;
+            const progress = Math.min(1, Math.max(0, raw));
+            overlay.style.setProperty('--reveal-progress', progress.toFixed(3));
+          });
+          bTicking = false;
+        }
+        recordStacks();
+        window.addEventListener('load', () => { recordStacks(); updateBottleReveal(); });
+        window.addEventListener('resize', () => { recordStacks(); updateBottleReveal(); });
+        window.addEventListener('scroll', () => {
+          if (!bTicking) { requestAnimationFrame(updateBottleReveal); bTicking = true; }
+        }, { passive: true });
+        updateBottleReveal();
+      } else if (bottleOverlays.length && REDUCE) {
+        bottleOverlays.forEach((o) => o.style.setProperty('--reveal-progress', '0'));
+      }
+
+      // ---------- Footer logo intro ----------
+      const footerLogo = document.querySelector('.footer-logo');
+      if (footerLogo) {
+        if (REDUCE) {
+          footerLogo.classList.add('is-revealed');
+        } else {
+          const flio = new IntersectionObserver((entries) => {
+            entries.forEach((entry) => {
+              if (entry.isIntersecting) {
+                footerLogo.classList.add('is-revealed');
+                flio.disconnect();
+              }
+            });
+          }, { threshold: 0.3 });
+          flio.observe(footerLogo);
+        }
+      }
+
+      // ---------- Ingredients accordion ----------
+      // Click "Ingredients" to expand/collapse the full list under each product.
+      document.querySelectorAll('.product-ingredients-toggle').forEach((btn) => {
+        const panel = document.getElementById(btn.getAttribute('aria-controls'));
+        if (!panel) return;
+        panel.hidden = false; // JS takes over; CSS keeps it collapsed until .is-open
+        btn.addEventListener('click', () => {
+          const open = panel.classList.toggle('is-open');
+          btn.setAttribute('aria-expanded', String(open));
+        });
+      });
+    })();
+  </script>
+
+  <script>
+    // Signup form (PC footer): validate email → success modal. Mirrors index.html.
+    (function () {
+      const modal = document.getElementById('signup-modal');
+      if (!modal) return;
+      const EMAIL = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+      let lastInput = null;
+      const openModal = () => {
+        modal.hidden = false;
+        const cta = modal.querySelector('.modal__cta');
+        if (cta) cta.focus();
+      };
+      const closeModal = () => {
+        modal.hidden = true;
+        if (lastInput) lastInput.focus();
+      };
+      function attachForm(formId, inputId) {
+        const form  = document.getElementById(formId);
+        const input = document.getElementById(inputId);
+        if (!form || !input) return;
+        form.addEventListener('submit', (e) => {
+          e.preventDefault();
+          const v = (input.value || '').trim();
+          if (!EMAIL.test(v)) {
+            input.setCustomValidity('이메일 형식으로 입력해주세요');
+            input.reportValidity();
+            input.addEventListener('input', () => input.setCustomValidity(''), { once: true });
+            return;
+          }
+          lastInput = input;
+          openModal();
+          form.reset();
+        });
+      }
+      attachForm('footer-signup-form', 'footer-signup-contact');
+      modal.addEventListener('click', (e) => {
+        if (e.target.closest('[data-modal-close]')) closeModal();
+      });
+      document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape' && !modal.hidden) closeModal();
+      });
+    })();
+  </script>
 
 </body>
 </html>

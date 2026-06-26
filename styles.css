@@ -47,6 +47,20 @@
   --gutter: 16px;
   --section-pad-y: 120px;
   --section-gap: 80px;
+
+  /* Apple-influenced body cadence (ref: references/DESIGN-apple.md).
+     Applied only to paragraph copy — UI/captions keep 14px Glowbeast cadence. */
+  --text-body-size: 17px;
+  --text-body-leading: 1.47;
+  --text-body-tracking: -0.374px;
+
+  /* Single product shadow — reserved for product imagery only.
+     Apple's exact value; never used on cards, buttons, or text. */
+  --shadow-product: rgba(0, 0, 0, 0.22) 3px 5px 30px 0;
+
+  /* Radius scale — pill kept absent intentionally (Glowbeast raw geometry). */
+  --radius-card: 18px;
+  --radius-sm: 8px;
 }
 
 * { box-sizing: border-box; }
@@ -124,6 +138,37 @@ button { border: 0; background: none; font: inherit; cursor: pointer; color: inh
   width: 100%;
 }
 .nav-logo { height: 32px; width: auto; }
+/* Logo flip — EN logo.svg ↔ KR Logo KR.png, rotateY 카드 플립 (~3s/면) */
+.nav-logo-link { perspective: 600px; display: inline-block; }
+.nav-logo-flip {
+  position: relative;
+  display: inline-block;
+  width: 46px;            /* EN 32×1.44≈46, KR 32×1.35≈43 — 46 기준 */
+  height: 32px;
+  transform-style: preserve-3d;
+  /* 1s lead-in showing KR (front), then flip; thereafter 3s per face.
+     `both` fill holds the 0% (KR) pose during the 1s delay. */
+  animation: nav-logo-flip 6s infinite 1s both;
+  will-change: transform;
+}
+.nav-logo--front,
+.nav-logo--back {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 32px;
+  width: auto;
+  -webkit-backface-visibility: hidden;
+  backface-visibility: hidden;
+}
+.nav-logo--back { transform: rotateY(180deg); }
+@keyframes nav-logo-flip {
+  0%   { transform: rotateY(0deg); }    /* KR (held through the 1s lead-in) */
+  8%   { transform: rotateY(180deg); }  /* flip KR → EN */
+  50%  { transform: rotateY(180deg); }  /* hold EN (~3s) */
+  58%  { transform: rotateY(360deg); }  /* flip EN → KR */
+  100% { transform: rotateY(360deg); }  /* hold KR (~3s), loops to 0deg seamlessly */
+}
 .nav-menu {
   display: flex;
   align-items: center;
@@ -159,8 +204,10 @@ button { border: 0; background: none; font: inherit; cursor: pointer; color: inh
   padding: var(--section-pad-y) var(--gutter);
   width: 100%;
 }
-.section--white { background: var(--bg-white); color: var(--text-black); border-top: 1px solid var(--bg-black); }
-.section--black { background: var(--bg-black); color: var(--text-white); border-top: 1px solid var(--bg-black); }
+/* Tiles touch edge-to-edge — the surface color change IS the divider.
+   (Apple "alternating tile" principle, ref: references/DESIGN-apple.md) */
+.section--white { background: var(--bg-white); color: var(--text-black); }
+.section--black { background: var(--bg-black); color: var(--text-white); }
 
 .section-title {
   font-family: var(--font-display);
@@ -277,12 +324,27 @@ button { border: 0; background: none; font: inherit; cursor: pointer; color: inh
   width: 100%;
   height: 877px;
   overflow: hidden;
-  background: #111;
+  background: #000;
+}
+/* Hero motion video (replaces the static bg/cutout/wordmark layers). Fills the
+   hero on mobile (portrait source covers the portrait hero); on PC it is
+   letterboxed (contain) so the vertical frame isn't cropped. */
+.hero-video {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  background: #000;
+  pointer-events: none;
+  z-index: 0;
 }
 /* Hero assets (1206×2631) are pre-cropped to match the 402×877 hero aspect
    (≈ 0.458). `object-fit: cover` fills the hero without further offset — the
    composition (gloves at corners, model centered) is baked into the asset.
-   Background fades in shortly after the foreground cutout starts falling. */
+   Foreground cutout (.hero-bg-front) is fully visible from page entry. Only
+   wordmarks drop in; background (.hero-bg = Figma `hero-bg-behind`) fades in
+   after wordmarks land (t≈1.5s) — "스윽" reveal. */
 .hero-bg {
   position: absolute;
   inset: 0;
@@ -295,14 +357,15 @@ button { border: 0; background: none; font: inherit; cursor: pointer; color: inh
   will-change: opacity;
 }
 .hero-bg.is-fading-in {
-  animation: hero-bg-fadein 0.50s linear 0.20s forwards;
+  animation: hero-bg-fadein 0.80s ease 1.50s forwards;
 }
 @keyframes hero-bg-fadein {
   from { opacity: 0; }
   to   { opacity: 1; }
 }
-/* Foreground cutout — overlays the wordmarks so they land behind the subject.
-   Slides in from above on page entry (no bounce, no squash). */
+/* Foreground cutout (Figma `hero-bg-front`) — overlays the wordmarks so they
+   land behind the subject. On page entry: fades in (opacity 0→1) while
+   dropping 50px from above (translate -50px → 0). Wordmarks land afterwards. */
 .hero-bg-front {
   position: absolute;
   inset: 0;
@@ -312,14 +375,14 @@ button { border: 0; background: none; font: inherit; cursor: pointer; color: inh
   pointer-events: none;
   z-index: 3;
   opacity: 0;
-  transform: translate3d(0, -100%, 0);
+  transform: translate3d(0, -50px, 0);
   will-change: opacity, transform;
 }
 .hero-bg-front.is-dropping {
-  animation: hero-front-drop 0.55s cubic-bezier(0.33, 0, 0.5, 1) 0s forwards;
+  animation: hero-front-drop 0.45s cubic-bezier(0.7, 0, 0.84, 0) 0s forwards;
 }
 @keyframes hero-front-drop {
-  from { opacity: 0; transform: translate3d(0, -100%, 0); }
+  from { opacity: 0; transform: translate3d(0, -50px, 0); }
   to   { opacity: 1; transform: translate3d(0,    0,  0); }
 }
 @media (prefers-reduced-motion: reduce) {
@@ -422,48 +485,67 @@ button { border: 0; background: none; font: inherit; cursor: pointer; color: inh
    (Inspired by x2ycreative.com Services interaction)
    ========================================================= */
 
-.after-sweat { padding-bottom: 0; }
-.after-sweat .section-title { margin-bottom: 60px; }
+.after-sweat { padding: 0; }
+
+/* Pinned-stage sticky stack (mobile). The stage stays fixed to the viewport for
+   the whole .workout-track scroll length while the cards slide up into a pile
+   (positions driven by JS scroll progress). The title sits pinned at the top of
+   the stage. When the track ends the stage un-pins, so the ENTIRE pile (title +
+   all stacked cards) lifts up together — no per-card cover-while-leaving. PC
+   dissolves these wrappers (display:contents) and keeps its own sticky grid. */
+.workout-track { position: relative; }
+.workout-stage {
+  position: sticky;
+  top: 0;
+  height: 100vh;
+  overflow: hidden;
+  padding: 0 var(--gutter);
+  box-sizing: border-box;
+}
+.workout-stage .section-title {
+  position: relative;
+  margin: 0;
+  padding: 56px 0 20px;
+}
 
 .stacking-cards {
-  display: flex;
-  flex-direction: column;
+  position: relative;
   width: 100%;
 }
 
 .stack-card {
-  position: sticky;
+  position: absolute;
+  left: 0;
+  right: 0;
   top: 0;
-  width: 100%;
   background: var(--bg-black);
-  display: flex;
-  justify-content: flex-end;
+  will-change: transform;
 }
-.stack-card--first { border-top: 1px solid var(--text-white); }
 
 .stack-card__inner {
   width: 100%;
-  padding: 40px 0 120px;
+  padding: 12px 0; /* Figma 4757:911 — py-12 per row */
   display: flex;
   flex-direction: column;
   align-items: flex-end;
-  gap: 12px;
+  gap: 24px; /* Figma 4757:911 gap-24 between heading / desc / image (open) */
   border-top: 1px solid var(--text-white);
 }
-.stack-card--first .stack-card__inner { border-top: 0; } /* outer border already drawn */
+.stack-card:last-child .stack-card__inner { border-bottom: 1px solid var(--text-white); }
 
-/* Mobile: number on its own line, then the title (which itself wraps to two lines).
-   Same wrapper is restyled inline on PC for "01. HEAT SPIKES" single-line. */
+/* Heading: single horizontal row — title (one line) + superscript num, then the
+   small KR subtitle to its right. Dimmed to 40% until the card is open. */
 .stack-card__heading {
   width: 100%;
   display: flex;
-  flex-direction: column;
-  gap: 12px;
+  flex-direction: row;
+  align-items: flex-start;
+  gap: 4px;
+  opacity: 0.4;
+  transition: opacity 320ms ease;
 }
+.stack-card.is-open .stack-card__heading { opacity: 1; }
 
-/* Number label and title (Figma 3089:54 sync — 32px / 30px line, color tints):
-   numbers in #777 muted grey, titles in white, descriptions in #999. */
-.stack-card__num,
 .stack-card__title {
   font-family: var(--font-heading);
   font-weight: 900;
@@ -471,28 +553,69 @@ button { border: 0; background: none; font: inherit; cursor: pointer; color: inh
   line-height: 30px;
   letter-spacing: -0.02em;
   margin: 0;
-  width: 100%;
-  text-align: left;
-  white-space: pre-line;
+  color: var(--text-white);
+  white-space: nowrap;
+  flex: 0 0 auto;
+}
+/* Superscript index (Figma — Roboto Condensed Regular, raised) */
+.stack-card__num {
+  font-weight: 400;
+  font-size: 0.5em;
+  vertical-align: super;
+  margin-left: 4px;
   color: var(--text-white);
 }
-.stack-card__num { color: #777; }
-/* Description: fixed 185px wide (Figma) — narrow column anchored to the right side. */
+
+/* Korean subtitle — Pretendard Medium 12px, sits right of the title and wraps. */
+.stack-card__kr {
+  font-family: 'Pretendard', 'Noto Sans KR', 'Apple SD Gothic Neo', sans-serif;
+  font-weight: 500;
+  font-size: 12px;
+  line-height: 1.25;
+  margin: 5px 0 0; /* nudge KR down to better align with the title cap height */
+  color: var(--text-white);
+  flex: 0 1 auto;
+  min-width: 0;
+  align-self: flex-start;
+}
+
+/* Body (description + image). Always occupies its full height (so the layout
+   never reflows → no scroll jumps), but stays invisible until its card becomes
+   the active one, then fades + slides in — the "opening" animation that plays
+   when you scroll to a card. Pile cards above keep it hidden (and are covered
+   anyway); below cards keep it hidden so only their heading row shows. */
+.stack-card__body {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 24px;
+  opacity: 0;
+  transform: translateY(16px);
+  transition: opacity 450ms ease, transform 520ms cubic-bezier(0.2, 0.7, 0.2, 1);
+}
+.stack-card.is-open .stack-card__body {
+  opacity: 1;
+  transform: none;
+}
+
+/* Description — full-width, Helvetica Neue Regular 16px / #999 (Figma 4877:609). */
 .stack-card__desc {
   font-family: var(--font-body);
   font-weight: 400;
   font-size: 16px;
-  line-height: 1.4;
+  line-height: 1.3;
+  letter-spacing: 0;
   margin: 0;
-  width: 185px;
-  max-width: 100%;
+  width: 100%;
   text-align: left;
   color: #999;
   opacity: 1;
+  white-space: nowrap; /* keep each description on one line (mobile) */
 }
 
 .stack-card__img {
-  height: 480px;
+  height: 368px; /* Figma 4877:607 */
   width: 100%;
   background: #1a1a1a;
   overflow: hidden;
@@ -512,9 +635,10 @@ button { border: 0; background: none; font: inherit; cursor: pointer; color: inh
   object-fit: cover;
 }
 
-/* Reduce motion: disable sticky stacking */
+/* Reduce motion: headings bright, bodies shown without the slide/fade. */
 @media (prefers-reduced-motion: reduce) {
-  .stack-card { position: static; top: auto; }
+  .stack-card__heading { opacity: 1; }
+  .stack-card__body { opacity: 1; transform: none; transition: none; }
 }
 
 /* =========================================================
@@ -557,8 +681,9 @@ button { border: 0; background: none; font: inherit; cursor: pointer; color: inh
 }
 .mission-belief {
   font-family: var(--font-body);
-  font-size: 14px;
-  line-height: 20px;
+  font-size: var(--text-body-size);
+  line-height: var(--text-body-leading);
+  letter-spacing: var(--text-body-tracking);
   opacity: 0.7;
   text-align: center;
   margin: 0;
@@ -568,20 +693,87 @@ button { border: 0; background: none; font: inherit; cursor: pointer; color: inh
    Page 1 — "The Beast Solution:"
    ========================================================= */
 
-.solution .section-title { color: var(--text-white); }
+/* Full-bleed brand-video feature section: 800px tall, video cover background,
+   title pinned near the top, the 6 category blocks whooshing across the centre. */
 .solution {
+  position: relative;
+  height: 800px;
+  padding: 0;
+  overflow: hidden;
+}
+.solution-video {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  z-index: 0;
+}
+.solution .section-title {
+  position: relative;
+  z-index: 2;
+  margin: 120px 0 0;          /* title top spacing per spec */
+  padding: 0 var(--gutter);
+  color: var(--text-white);
+}
+
+/* Text labels — a separate layer in front that whooshes across right→left. */
+.solution-labels {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  pointer-events: none;       /* decorative text — never blocks the CTA */
+}
+.solution-labeltrack {
+  display: flex;
+  align-items: center;
+  width: max-content;
+  animation: solution-whoosh 12s infinite;
+  will-change: transform;
+}
+.solution-label {
+  flex: 0 0 100vw;            /* one full screen-width per category, text centred */
   display: flex;
   flex-direction: column;
-  gap: 80px;
-  align-items: stretch;
+  align-items: center;
+  gap: 8px;
+  text-align: center;
+  white-space: nowrap;
+  text-shadow: 0 2px 18px rgba(0, 0, 0, 0.45); /* legible over the video */
 }
-.solution .scroll-x {
-  padding-bottom: 8px;
-  gap: 12px;
-  margin-right: calc(var(--gutter) * -1);
+/* Each label whooshes to the centre, holds (잠깐 멈춤), then whooshes to the next.
+   translateX is in % of the track (12 slots) so it's size-independent: one slot
+   = 100%/12 ≈ 8.333%; six steps = −50% (clones make the loop seamless). The
+   cubic-bezier on each hold→move segment makes the pass snappy. */
+@keyframes solution-whoosh {
+  0%      { transform: translateX(0); }
+  11.66%  { transform: translateX(0);          animation-timing-function: cubic-bezier(0.7, 0, 0.3, 1); }
+  16.66%  { transform: translateX(-8.333%); }
+  28.33%  { transform: translateX(-8.333%);    animation-timing-function: cubic-bezier(0.7, 0, 0.3, 1); }
+  33.33%  { transform: translateX(-16.666%); }
+  45%     { transform: translateX(-16.666%);   animation-timing-function: cubic-bezier(0.7, 0, 0.3, 1); }
+  50%     { transform: translateX(-25%); }
+  61.66%  { transform: translateX(-25%);        animation-timing-function: cubic-bezier(0.7, 0, 0.3, 1); }
+  66.66%  { transform: translateX(-33.333%); }
+  78.33%  { transform: translateX(-33.333%);    animation-timing-function: cubic-bezier(0.7, 0, 0.3, 1); }
+  83.33%  { transform: translateX(-41.666%); }
+  95%     { transform: translateX(-41.666%);    animation-timing-function: cubic-bezier(0.7, 0, 0.3, 1); }
+  100%    { transform: translateX(-50%); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .solution-layer { animation: none; opacity: 0; }
+  .solution-layer:nth-of-type(1) { opacity: 1; }
+  .solution-labeltrack { animation: none; }
 }
 .solution-cta {
-  align-self: center;
+  position: absolute;
+  left: 50%;
+  bottom: 48px;
+  transform: translateX(-50%);
+  z-index: 2;
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -595,87 +787,185 @@ button { border: 0; background: none; font: inherit; cursor: pointer; color: inh
   min-height: 50px;
   text-decoration: none;
 }
-.category-card {
-  width: 308px;
-  height: 306px;
-  border: 1px solid var(--bg-black);
-  background: var(--bg-black);
+
+/* Each card = one 180×240 graphic+text panel, laid flush in the sliding track.
+   The window rounds/clips the overall view, so cards themselves are square. */
+.solution-card {
   position: relative;
+  flex: 0 0 180px;
+  width: 180px;
+  height: 240px;
   overflow: hidden;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  padding: 24px 16px;
-  text-align: center;
-  color: var(--text-white);
+  isolation: isolate; /* keep the overlay blend local to the card */
+  color: #000;
+  background-color: #5ed53e;
+  background-repeat: no-repeat;
+  background-size: 100% 100%;
+  background-position: 50% 50%;
 }
-.category-card .cat-bg {
+
+/* Flowing gradient: pan the oversized gradient back and forth, each card on its
+   own cadence so the row feels alive rather than synced. */
+@keyframes solution-flow {
+  0%, 100% { background-position: 0% 50%; }
+  50%      { background-position: 100% 50%; }
+}
+.solution-card:nth-child(2n) { animation-duration: 10.6s; animation-delay: -3.1s; }
+.solution-card:nth-child(3n) { animation-duration: 8.2s;  animation-delay: -5.4s; }
+.solution-card:nth-child(5n) { animation-duration: 11.3s; animation-delay: -1.7s; }
+
+/* Abstract moving light & shadow: free-floating bright and dark blobs that drift,
+   rotate and swell along irregular paths. Two layers (::before/::after) with
+   different durations never re-sync, so the light/dark pattern feels organic.
+   `overlay` blend keeps the theme hue. */
+.solution-card::before,
+.solution-card::after {
+  content: "";
   position: absolute;
-  inset: 0;
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  opacity: 0.9;
-  transform-origin: center;
-  /* Slight base scale so asymmetric scale + translate never expose card edges */
-  animation: blob-pulse 9s ease-in-out infinite;
+  inset: -40%;
+  z-index: 0;
+  pointer-events: none;
+  mix-blend-mode: overlay;
   will-change: transform;
 }
-
-/* Organic, non-synchronous "energy" motion: each card breathes on its own
-   timing so the 6 cards together feel alive instead of marching in sync. */
-@keyframes blob-pulse {
-  0%, 100% { transform: scale(1.08, 1.08) translate(0%, 0%)     rotate(0deg); }
-  20%      { transform: scale(1.14, 1.04) translate(-1%, -1.5%) rotate(2deg); }
-  40%      { transform: scale(1.05, 1.12) translate(1.5%, 1%)   rotate(-1.5deg); }
-  60%      { transform: scale(1.12, 1.06) translate(-0.5%, 1.5%) rotate(1deg); }
-  80%      { transform: scale(1.06, 1.10) translate(1%, -1%)    rotate(-2deg); }
+.solution-card::before {
+  background:
+    radial-gradient(36% 36% at 28% 30%, rgba(255, 255, 255, 1) 0%, rgba(255, 255, 255, 0) 62%),
+    radial-gradient(42% 42% at 74% 74%, rgba(0, 0, 0, 0.95) 0%, rgba(0, 0, 0, 0) 66%);
+  animation: solution-blob-a 9s ease-in-out infinite;
 }
-.category-card:nth-child(1) .cat-bg { animation-duration:  8.5s; animation-delay: -0.4s; }
-.category-card:nth-child(2) .cat-bg { animation-duration: 10.2s; animation-delay: -2.1s; }
-.category-card:nth-child(3) .cat-bg { animation-duration:  7.8s; animation-delay: -4.5s; }
-.category-card:nth-child(4) .cat-bg { animation-duration: 11.4s; animation-delay: -1.3s; }
-.category-card:nth-child(5) .cat-bg { animation-duration:  9.1s; animation-delay: -3.7s; }
-.category-card:nth-child(6) .cat-bg { animation-duration:  8.0s; animation-delay: -5.2s; }
-
-@media (prefers-reduced-motion: reduce) {
-  .category-card .cat-bg { animation: none; }
+.solution-card::after {
+  background:
+    radial-gradient(34% 34% at 74% 22%, rgba(255, 255, 255, 0.98) 0%, rgba(255, 255, 255, 0) 62%),
+    radial-gradient(40% 40% at 24% 78%, rgba(0, 0, 0, 0.9) 0%, rgba(0, 0, 0, 0) 66%);
+  animation: solution-blob-b 12.5s ease-in-out infinite;
 }
-.category-card .cat-content {
-  position: relative;
-  z-index: 1;
+@keyframes solution-blob-a {
+  0%   { transform: translate(-14%, -9%)  rotate(0deg)   scale(1.05); }
+  30%  { transform: translate(11%, -13%)  rotate(46deg)  scale(1.24); }
+  62%  { transform: translate(-9%, 13%)   rotate(-34deg) scale(1.12); }
+  100% { transform: translate(-14%, -9%)  rotate(0deg)   scale(1.05); }
+}
+@keyframes solution-blob-b {
+  0%   { transform: translate(12%, 11%)   rotate(0deg)   scale(1.1); }
+  35%  { transform: translate(-13%, 7%)   rotate(-56deg) scale(1.28); }
+  68%  { transform: translate(9%, -12%)   rotate(38deg)  scale(1.04); }
+  100% { transform: translate(12%, 11%)   rotate(0deg)   scale(1.1); }
+}
+.solution-card:nth-child(2n)::before { animation-duration: 10.4s; animation-delay: -3.2s; }
+.solution-card:nth-child(2n)::after  { animation-duration: 9.6s;  animation-delay: -5s; }
+.solution-card:nth-child(3n)::before { animation-duration: 7.8s;  animation-delay: -4.4s; }
+.solution-card:nth-child(3n)::after  { animation-duration: 13.7s; animation-delay: -2.1s; }
+.solution-card:nth-child(5n)::before { animation-duration: 11.2s; animation-delay: -1.3s; }
+
+/* Per-category aurora palettes — each card reads clearly as ONE theme colour
+   (recreated in CSS so they can animate). Kept light enough for black text. */
+/* Thermal-camera look — a white-hot core blooms out through the saturated theme
+   hue into near-black edges, so each card has strong value (brightness) contrast.
+   The bright spot sits slightly above centre; the label centres over it. */
+.solution-card--soothing { /* 진정 — green */
+  background-color: #051208;
+  background-image:
+    radial-gradient(68% 58% at 50% 44%,
+      #ffffff 0%, #e6ffa6 9%, #9cff3a 22%, #34e23f 40%, #119a3a 58%, #0a4f23 76%, #051208 100%);
+}
+.solution-card--hydration { /* 수분 — sky blue */
+  background-color: #040f1f;
+  background-image:
+    radial-gradient(68% 58% at 50% 44%,
+      #ffffff 0%, #c6f0ff 9%, #5fd0ff 22%, #28a6f7 40%, #1f6fe6 58%, #103a86 76%, #040f1f 100%);
+}
+.solution-card--elasticity { /* 탄력 — red */
+  background-color: #1c0405;
+  background-image:
+    radial-gradient(68% 58% at 50% 44%,
+      #ffffff 0%, #ffe7b0 9%, #ff9a4a 22%, #ff5236 40%, #e51d3a 58%, #780f22 76%, #1c0405 100%);
+}
+.solution-card--recovery { /* 회복 — yellow */
+  background-color: #1c1404;
+  background-image:
+    radial-gradient(68% 58% at 50% 44%,
+      #ffffff 0%, #fff6bf 9%, #ffe35a 22%, #ffc81f 40%, #ff9e12 58%, #8a5a0c 76%, #1c1404 100%);
+}
+.solution-card--purifying { /* 항균항염 — orange */
+  background-color: #1c0e04;
+  background-image:
+    radial-gradient(68% 58% at 50% 44%,
+      #ffffff 0%, #ffeaa0 9%, #ffc04a 22%, #ff8a1f 40%, #ff5512 58%, #8a3308 76%, #1c0e04 100%);
+}
+.solution-card--antioxidant { /* 항산화 — purple */
+  background-color: #100420;
+  background-image:
+    radial-gradient(68% 58% at 50% 44%,
+      #ffffff 0%, #f0d6ff 9%, #c98bff 22%, #9a4ce8 40%, #6c2fd6 58%, #340f7a 76%, #100420 100%);
+}
+
+.solution-card__txt {
+  position: absolute;
+  top: 42px;
+  left: 0;
+  right: 0;
+  z-index: 2;
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 8px;
+  gap: 1.8px;
+  text-align: center;
 }
-.category-card .cat-title {
+.solution-card__title {
   font-family: var(--font-heading);
   font-weight: 900;
-  font-size: 40px;
+  font-size: 40px;          /* match live .cat-title */
   line-height: 1;
-  color: var(--bg-black);
+  color: #fff;
+  margin: 0;
+  white-space: nowrap;
+}
+.solution-card__kr {
+  font-family: 'Pretendard', 'Noto Sans KR', 'Apple SD Gothic Neo', sans-serif;
+  font-weight: 700;
+  font-size: 20px;          /* match live .cat-subtitle */
+  letter-spacing: -0.2px;
+  color: #fff;
   margin: 0;
 }
-.category-card .cat-subtitle {
-  font-family: "Pretendard", "Apple SD Gothic Neo", system-ui, sans-serif;
-  font-style: normal;
-  font-weight: 400;
-  font-size: 17px;
-  color: var(--bg-black);
-  margin: 0;
-}
-.category-card .cat-ingredients {
+.solution-card__ing {
   font-family: var(--font-body);
-  font-size: 12px;
-  color: var(--text-white);
+  font-size: 13px;
+  line-height: 1.5;
+  letter-spacing: 0.2px;
+  color: #fff;
   opacity: 0.7;
-  margin: 24px 0 0 0;
+  text-align: center;
+  margin: 14px 0 0;
+}
+/* Film grain over the gradient (injected per card by the coverflow JS). Sits
+   above the gradient + blobs (z 0) and below the text (z 2). */
+.solution-card__grain {
   position: absolute;
-  bottom: 24px;
-  left: 0;
-  right: 0;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+  /* Fluted vertical ribs (the attached "color-development" look) — fine vertical
+     light→dark→light lines that read as ridged glass over the flowing colour —
+     plus a faint film grain on top. */
+  background-image:
+    repeating-linear-gradient(90deg,
+      rgba(255, 255, 255, 0.55) 0,
+      rgba(0, 0, 0, 0.55) 1.8px,
+      rgba(255, 255, 255, 0.55) 3.6px),
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='1' stitchTiles='stitch'/%3E%3CfeColorMatrix type='matrix' values='0 0 0 0 1  0 0 0 0 1  0 0 0 0 1  0 0 0 0.7 -0.12'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  background-size: auto, 30px 30px;
+  background-repeat: repeat, repeat;
+  opacity: 0.5;
+  mix-blend-mode: overlay;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .solution-card,
+  .solution-card::before,
+  .solution-card::after { animation: none; }
+  .solution-card { transition: none; }
 }
 
 /* =========================================================
@@ -698,8 +988,9 @@ button { border: 0; background: none; font: inherit; cursor: pointer; color: inh
 }
 .signup-lead {
   font-family: var(--font-body);
-  font-size: 14px;
-  line-height: 1.4;
+  font-size: var(--text-body-size);
+  line-height: var(--text-body-leading);
+  letter-spacing: var(--text-body-tracking);
   color: var(--text-white);
   margin: 0;
 }
@@ -828,6 +1119,8 @@ button { border: 0; background: none; font: inherit; cursor: pointer; color: inh
   text-decoration: underline;
   white-space: nowrap;
 }
+/* SEND AN EMAIL — bold, no underline (Figma 4757:1226) */
+.footer-menu a:last-child { text-decoration: none; }
 .footer-addr {
   font-style: normal;
   font-weight: 300;
@@ -836,6 +1129,11 @@ button { border: 0; background: none; font: inherit; cursor: pointer; color: inh
   color: var(--text-white);
   letter-spacing: 0.02em;
   text-align: right;
+}
+/* Company line — bold + uppercase (Figma 4757:1227) */
+.footer-addr__co {
+  font-weight: 700;
+  text-transform: uppercase;
 }
 
 /* Bottom row: copyright/legal (left) + socials (right) */
@@ -889,6 +1187,66 @@ button { border: 0; background: none; font: inherit; cursor: pointer; color: inh
 }
 .footer-socials img { width: 100%; height: 100%; }
 
+/* PC-only footer signup column (Figma 3250:38). Hidden on mobile — the
+   standalone .signup-section handles signup on small screens. */
+.footer-signup {
+  display: none;
+}
+.footer-signup__lead {
+  font-family: var(--font-body);
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 1.4;
+  color: var(--text-white);
+  margin: 0;
+  text-transform: uppercase;
+}
+.footer-signup__form {
+  display: flex;
+  align-items: stretch;
+  background: #fff;
+  border: 1px solid #fff;
+  height: 49px;
+  width: 100%;
+}
+.footer-signup__input {
+  flex: 1 1 auto;
+  min-width: 0;
+  border: 0;
+  background: transparent;
+  padding: 0 16px;
+  font-family: var(--font-body);
+  font-weight: 400;
+  font-size: 14px;
+  color: #000;
+  outline: none;
+}
+.footer-signup__input::placeholder {
+  color: #000;
+  opacity: 0.6;
+  text-transform: uppercase;
+}
+.footer-signup__cta {
+  flex: 0 0 auto;
+  width: 48px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: transparent;
+  border: 0;
+  color: #000;
+  cursor: pointer;
+  padding: 0;
+}
+.footer-signup__cta svg {
+  width: 32px;
+  height: 32px;
+  display: block;
+}
+@media (hover: hover) and (pointer: fine) {
+  .footer-signup__cta:hover { background: rgba(0, 0, 0, 0.08); }
+}
+
 /* =========================================================
    Page 2 — Lineup (skeleton)
    ========================================================= */
@@ -906,33 +1264,25 @@ button { border: 0; background: none; font: inherit; cursor: pointer; color: inh
   inset: auto;
 }
 
-/* Language toggle button — Figma 2889:299. Visual only, no functionality. */
-.nav-lang {
-  display: inline-flex;
-  align-items: center;
-  gap: 4px;
-  padding: 5.5px 6px;
-  background: transparent;
-  border: 0;
-  cursor: pointer;
-  font-family: var(--font-body);
-  font-weight: 700;
-  font-size: 14px;
-  letter-spacing: -0.056px;
-  color: var(--text-white);
-  line-height: 1.5;
-}
-.nav-lang svg {
-  width: 10px;
-  height: 7px;
-  display: block;
-}
-
 /* Main column. Single product per row, centered, 370px content max. */
 .lineup-main {
   display: flex;
   flex-direction: column;
-  align-items: center;
+  align-items: stretch;
+}
+
+/* Lineup page title (Figma 3869:188) — Juana italic 48px, white.
+   Sits between nav and first product, full-bleed with 16px gutter. */
+.lineup-title {
+  font-family: var(--font-display);
+  font-style: italic;
+  font-weight: 400;
+  font-size: 48px;
+  line-height: 48px;
+  color: var(--text-white);
+  margin: 0;
+  padding: 100px 16px 0;
+  text-align: left;
 }
 
 /* Per-product section. 40px top/bottom padding matches Figma 2889:283. */
@@ -960,48 +1310,67 @@ button { border: 0; background: none; font: inherit; cursor: pointer; color: inh
 }
 .product-image-stack .bottle-overlay {
   position: absolute;
+  inset: 0;
   overflow: hidden;
   pointer-events: none;
+  /* Scroll-linked reveal: clip from the top down as the card scrolls through
+     the viewport. At progress=0 (page entry) the clean bottle fully covers
+     the crumpled base; clip ramps up to 1 to reveal the crumpled layer. */
+  clip-path: inset(calc(var(--reveal-progress, 0) * 100%) 0 0 0);
+  -webkit-clip-path: inset(calc(var(--reveal-progress, 0) * 100%) 0 0 0);
+  will-change: clip-path;
 }
-/* Overlay assets are pre-cropped to match the slot aspect (clean bottle 0.916,
-   clean bottle - spray 0.725) so a plain object-fit: cover suffices. */
+/* Both base (crumpled) and overlay (clean) assets are full-stack aspect
+   (Figma re-exported 2026-05). object-fit: contain preserves the bottle
+   shape end-to-end with no cropping. */
 .product-image-stack .bottle-overlay img {
   width: 100%;
   height: 100%;
-  object-fit: cover;
+  object-fit: contain;
   display: block;
 }
 
 /* THE LAST SET — Figma 3601:460 / 3585:443.
-   Container 187×352; overlay slot 186×203 (aspect 0.916) anchored at y=149. */
+   Container 187×352; both bottle layers cover the full stack. */
 .product-image-stack--last-set {
   width: 187px;
   height: 352px;
 }
-.product-image-stack--last-set .bottle-overlay {
-  top: 149px;
-  left: 0.5px;
-  width: 186px;
-  height: 203px;
-}
 
 /* COOL DOWN — Figma 3621:64 / 3621:63.
-   Container 100×372; bottle base 100×370 anchored top-right (image is 2px taller
-   than the bottom row reserved for the overlay tip). Overlay 100×138 at y=234. */
+   Container 100×372; both bottle layers cover the full stack. */
 .product-image-stack--cool-down {
   width: 100px;
   height: 372px;
 }
-.product-image-stack--cool-down .bottle-base {
-  inset: auto 0 2px 0;
-  width: 100px;
-  height: 370px;
+
+/* WHAT'S NEXT? teaser — dashed "undecided bottle" placeholder + idea CTA. */
+.product-next__symbol {
+  width: 150px;
+  height: 352px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
-.product-image-stack--cool-down .bottle-overlay {
-  left: 0;
-  top: 234px;
-  width: 100px;
-  height: 138px;
+.product-next__symbol svg {
+  width: 116px;
+  height: auto;
+  display: block;
+}
+.product-next-cta {
+  align-self: center;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--accent-yellow);
+  color: var(--bg-black);
+  font-family: var(--font-body);
+  font-weight: 700;
+  font-size: 17px;
+  letter-spacing: -0.34px;
+  text-decoration: none;
+  padding: 12px 24px;
+  min-height: 50px;
 }
 
 /* Text block — centered, fixed 370px column to match Figma 3600:459. */
@@ -1033,7 +1402,8 @@ button { border: 0; background: none; font: inherit; cursor: pointer; color: inh
   margin: 0;
 }
 .product-sub-ko {
-  font-family: var(--font-heading);
+  font-family: 'Pretendard', 'Pretendard Variable', 'Noto Sans KR', 'Apple SD Gothic Neo', sans-serif;
+  font-style: normal;
   font-weight: 400;
   font-size: 14px;
   line-height: 14px;
@@ -1058,6 +1428,94 @@ button { border: 0; background: none; font: inherit; cursor: pointer; color: inh
   text-align: center;
   margin: 0;
   padding: 0 1px;
+}
+
+/* Ingredients accordion (Figma 4805:1472) — "Ingredients" toggle reveals the
+   full INCI list. Collapsed by default; .is-open expands it. */
+.product-ingredients-toggle {
+  display: block;
+  margin: 0 auto;
+  padding: 0;
+  background: none;
+  border: 0;
+  cursor: pointer;
+  font-family: var(--font-system);
+  font-size: 14px;
+  line-height: 16px;
+  letter-spacing: -0.28px;
+  color: var(--text-white);
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+.product-ingredients {
+  width: 370px;
+  max-width: 100%;
+  font-family: var(--font-system);
+  font-size: 14px;
+  line-height: 16px;
+  letter-spacing: -0.28px;
+  color: #999;
+  text-align: center;
+  max-height: 0;
+  opacity: 0;
+  overflow: hidden;
+  margin-top: -16px; /* cancel .product-info gap while collapsed */
+  transition: max-height 450ms ease, opacity 320ms ease, margin-top 450ms ease;
+}
+.product-ingredients.is-open {
+  max-height: 900px;
+  opacity: 1;
+  margin-top: 0;
+}
+
+/* Lineup PC layout (Figma 4805:563) — products laid out as a 3-column row
+   (COOL DOWN → THE LAST SET → WHAT'S NEXT), title spanning its own row above.
+   Columns flex/shrink to fit narrower desktops; cap at 370px each. */
+@media (min-width: 768px) {
+  .lineup-main {
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: flex-start;
+    column-gap: clamp(24px, 4.6vw, 59px);
+    row-gap: 0;
+    max-width: 1280px;
+    margin: 0 auto;
+    padding: 0 clamp(40px, 5.5vw, 80px) 120px;
+  }
+  .lineup-title {
+    flex: 0 0 100%;
+    width: 100%;
+    padding: 100px 0 48px;
+  }
+  .product {
+    flex: 1 1 0;
+    width: auto;
+    min-width: 0;
+    max-width: 370px;
+    padding: 0;
+    gap: 24px;
+  }
+  /* Figma PC order: COOL DOWN → THE LAST SET → WHAT'S NEXT (DOM order differs) */
+  .product:has(.product-image-stack--cool-down) { order: 1; }
+  .product:has(.product-image-stack--last-set)  { order: 2; }
+  .product--next { order: 3; }
+  /* Uniform image-area height so the product names align across columns. */
+  .product-image-stack--last-set,
+  .product-image-stack--cool-down,
+  .product-next__symbol { height: 372px; }
+  .product-info,
+  .product-divider,
+  .product-ingredients { width: 100%; }
+
+  /* Bottle reveal on PC: drop the scroll-driven clip — hovering a product fades
+     out the clean overlay to reveal the crumpled bottle behind. */
+  .product-image-stack .bottle-overlay {
+    clip-path: none;
+    -webkit-clip-path: none;
+    transition: opacity 400ms ease;
+  }
+  .product:hover .bottle-overlay { opacity: 0; }
 }
 
 /* =========================================================
@@ -1085,12 +1543,14 @@ button { border: 0; background: none; font: inherit; cursor: pointer; color: inh
 }
 
 /* =========================================================
-   PC responsive (>=1024px) — global desktop layout.
-   Pattern: body lifts its 480px cap, every section spans the
+   PC responsive (>=768px) — global desktop layout.
+   Pattern: body lifts its mobile cap, every section spans the
    viewport with a centered 1280px content container, and cards
    move from horizontal scroll / vertical stack to grids.
+   Breakpoint chosen per Figma 3121:471 PC spec: 768px+ PC,
+   layout scales to 1440px, then content caps with growing margins.
    ========================================================= */
-@media (min-width: 1024px) {
+@media (min-width: 768px) {
   /* --- Global container --- */
   body {
     max-width: none;
@@ -1100,101 +1560,114 @@ button { border: 0; background: none; font: inherit; cursor: pointer; color: inh
     padding: 160px 64px;
   }
   .section-title {
-    font-size: 80px;
-    line-height: 0.95;
+    font-size: 48px;
+    line-height: 1;
     margin-bottom: 100px;
   }
 
-  /* --- Hero --- */
+  /* --- Hero (PC, Figma 3121:472) ---
+     PC uses a single composed background asset (`hero-pc.png`) loaded via the
+     <picture> source in index.html. The mobile two-layer cutout (hero-bg-front
+     on top of hero-bg) is hidden on PC since the PC image bakes the full
+     scene. Background is visible immediately (no fade) so the wordmarks drop
+     onto a finished composition rather than a black void.
+     Wordmarks use clamp(min, vw, max) sizing from 768px up to a 1440px cap;
+     positioning via `left: calc()` keeps `transform` free for the drop animation. */
   .hero {
     height: 100vh;
     min-height: 800px;
   }
-  /* Hero wordmark percentages already responsive — no override needed.
-     Only chevron repositioned at desktop. */
+  /* PC: don't crop the vertical frame — letterbox with black side margins. */
+  .hero-video {
+    object-fit: contain;
+  }
+  .hero-bg {
+    opacity: 1;
+    animation: none;
+  }
+  .hero-bg-front {
+    display: none;
+  }
+  /* drop 1st ("glow like a") — Figma 3654:107: 361×83, top 503 of 877 (57.4%) */
+  .hero-wordmark__layer--1 {
+    --w: clamp(192px, 25.07vw, 361px);
+    width: var(--w);
+    height: auto;
+    left: calc((100% - var(--w)) / 2);
+    top: 57.4%;
+  }
+  /* drop 2nd ("BEAST") — Figma 3654:117: 509×254, top 545 of 877 (62.1%),
+     centered with +4.5px offset right. */
+  .hero-wordmark__layer--2 {
+    --w: clamp(271px, 35.35vw, 509px);
+    width: var(--w);
+    height: auto;
+    left: calc((100% - var(--w)) / 2 + 4.5px);
+    top: 62.1%;
+  }
   .hero-chevron { top: auto; bottom: 24px; }
-  .nav { padding: 24px 64px; }
+  /* Status bar is hidden on PC — drop the 53px mobile-status-bar offset so the
+     logo sits at the top (24px padding = Figma header logo y=24). */
+  .nav { padding: 24px 64px; top: 0; }
   .status-bar { display: none; }
 
-  /* --- After the sweat: PC list layout (4 stacked rows, no sticky) ---
-     Each row: heading "01. TITLE" left, desc top-right, image bottom-right (320×480). */
-  .after-sweat {
-    padding: 120px 80px;
+  /* --- After the sweat ---
+     PC uses the SAME pinned-stage stacking as mobile (the mobile CSS + JS
+     controller govern). Cards rise from below and accumulate as stroke-aligned
+     heading rows under the pinned title; the active card expands (desc + image).
+     Here we only widen the stage side-gutters and cap content width for desktop;
+     the bigger title/desc/image scale-up for large screens. */
+  .workout-stage {
+    padding-left: clamp(40px, 5.5vw, 80px);
+    padding-right: clamp(40px, 5.5vw, 80px);
   }
-  .after-sweat .section-title {
-    margin-bottom: 80px;
-    font-size: 48px;
+  .stacking-cards {
+    max-width: 1280px;
+    margin: 0 auto;
   }
-  .after-sweat .stacking-cards {
-    display: flex;
-    flex-direction: column;
-    gap: 0;
+  /* PC card layout differs from mobile: heading stays on the LEFT; the body
+     (sub-desc + square image) is absolutely placed on the RIGHT so it doesn't
+     add to the card's flow height — the pile offsets stay heading-based and the
+     stroke rows accumulate. The body fades in only on the active card. */
+  .stack-card__inner { position: relative; }
+  .stack-card__title { font-size: 40px; line-height: 40px; } /* Figma 4895:1418 */
+  .stack-card__kr { font-size: 16px; margin-top: 8px; }
+  /* Active card paints above the stacked/rising stroke rows; its opaque panel
+     covers any divider line behind the desc + image (so strokes only divide the
+     left heading rows, never cross the right-side content). */
+  .stack-card.is-open { z-index: 3; }
+  .stack-card__body {
+    position: absolute;
+    top: 12px;               /* align desc top with the left title start */
+    right: 0;
+    width: 50%;              /* desc starts at the section's half (Figma x=640/1280) */
+    align-items: stretch;
+    gap: 24px;
+    background: var(--bg-black);
   }
-  /* Sticky off on PC — each row is a discrete block with a top border */
-  .stack-card {
-    position: static;
-    top: auto;
-    width: 100%;
-    background: transparent;
-    display: block;
-    border-top: 1px solid var(--text-white);
-  }
-  .stack-card--first { border-top: 1px solid var(--text-white); }
-  /* Re-enable transform-based reveal on PC (sticky-only restriction lifts) */
-  .stack-card[data-reveal-item] {
-    transform: translateY(24px);
-    transition: opacity 0.7s ease-out, transform 0.7s ease-out;
-  }
-  .stack-card[data-reveal-item].is-revealed {
-    transform: translateY(0);
-  }
-  .stack-card__inner {
-    width: 100%;
-    max-width: none;
-    min-height: 0;
-    padding: 40px 0 60px;
-    display: grid;
-    grid-template-columns: 1fr 640px;
-    grid-template-rows: auto auto;
-    column-gap: 40px;
-    row-gap: 24px;
-    align-items: start;
-    border-top: 0;
-  }
-  /* Heading: number + title inline ("01. HEAT SPIKES") */
-  .stack-card__heading {
-    grid-column: 1;
-    grid-row: 1;
-    flex-direction: row;
-    align-items: baseline;
-    gap: 0.4em;
-    width: auto;
-  }
-  .stack-card__num,
-  .stack-card__title {
-    width: auto;
-    text-align: left;
-    font-size: 40px;
-    line-height: 1;
-    white-space: nowrap; /* override mobile pre-line so \n becomes a space */
-  }
-  .stack-card__num { opacity: 1; }
   .stack-card__desc {
-    grid-column: 2;
-    grid-row: 1;
-    justify-self: start;
-    width: 369px;
-    font-size: 16px;
+    align-self: flex-start;  /* desc upper-left of the right half (Figma x≈640) */
+    width: 100%;
+    max-width: 369px;
+    font-size: 20px;
     line-height: 1.4;
-    margin-top: 0;
+    white-space: normal;
   }
   .stack-card__img {
-    grid-column: 2;
-    grid-row: 2;
-    justify-self: end;
+    align-self: flex-end;    /* square image far-right (Figma x≈960) */
     width: 320px;
-    height: 480px;
-    align-self: auto;
+    height: 320px;
+  }
+  /* Closing line of the section sits BELOW the last card's image (full width),
+     not at heading level. Move the last-child divider down to the image bottom. */
+  .stack-card:last-child .stack-card__inner { border-bottom: none; }
+  .stack-card:last-child .stack-card__body::after {
+    content: "";
+    position: absolute;
+    left: -100%;             /* body is 50% wide → -100% reaches the left edge (full width) */
+    right: 0;
+    bottom: -20px;           /* 20px gap below the image (image is the body's last child) */
+    border-top: 1px solid var(--text-white);
   }
 
   /* --- Mission (That's where we start) --- */
@@ -1209,36 +1682,20 @@ button { border: 0; background: none; font: inherit; cursor: pointer; color: inh
   }
   .mission .section-title { text-align: left; }
   .mission-center { max-width: 640px; }
-  .mission-wordmark { width: 420px; }
-  .mission-statement { font-size: 32px; max-width: 640px; }
-  .mission-belief { font-size: 16px; line-height: 1.6; }
+  .mission-wordmark { width: 366px; }
+  .mission-statement { font-size: 33px; line-height: 1.21; max-width: 640px; }
+  .mission-belief { font-size: 20px; line-height: 1.2; opacity: 0.7; }
 
-  /* --- The Beast Solution: 6-card single row + integrated CTA --- */
+  /* --- The Beast Solution: full-bleed video feature (800px) --- */
   .solution {
-    padding: 120px 80px;
-    gap: 80px;
+    height: 800px;
+    padding: 0;
   }
   .solution .section-title {
     width: 100%;
-    margin-bottom: 0;
+    margin: 120px 0 0;
+    padding: 0 80px;
   }
-  .solution .scroll-x {
-    display: grid;
-    grid-template-columns: repeat(6, 1fr);
-    gap: 12px;
-    width: 100%;
-    overflow: visible;
-    cursor: default;
-    padding: 0 24px;
-    scroll-snap-type: none;
-    margin-right: 0;
-  }
-  .category-card {
-    width: 100%;
-    height: 306px;
-  }
-  .category-card .cat-title { font-size: 40px; }
-  .solution-cta { align-self: center; }
 
   /* --- Signup section (Hey Beast there) --- */
   .signup-section { padding: 120px 80px; gap: 80px; }
@@ -1246,29 +1703,82 @@ button { border: 0; background: none; font: inherit; cursor: pointer; color: inh
   .signup-block { max-width: 480px; gap: 16px; }
   .signup-cta { width: 100%; max-width: 480px; }
 
-  /* --- Footer: simplified, no form --- */
-  .site-footer { padding: 70px 80px; }
+  /* --- "Hey Beast there" section: hidden on PC (signup moves into footer) --- */
+  .signup-section { display: none; }
+
+  /* --- Footer: 3-column row (logo / menu+addr / signup) + bottom row --- */
+  .site-footer { padding: 70px clamp(40px, 5.5vw, 80px); }
   .site-footer-inner {
     max-width: 1280px;
     margin: 0 auto;
-    display: flex;
-    flex-direction: column;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    grid-template-rows: auto auto;
     gap: 40px;
   }
-  .footer-logo-block { gap: 16px; }
-  .footer-logo-stack { width: 420px; }
-  .footer-text {
-    max-width: 640px;
-    gap: 80px;
+  .footer-logo-block {
+    grid-column: 1;
+    grid-row: 1;
+    gap: 16px;
   }
-  .footer-menu { line-height: 24px; }
+  .footer-logo { width: 221px; }
+  /* Hide the email link under the logo on PC — SEND AN EMAIL in menu replaces it. */
+  .footer-logo-block .footer-email { display: none; }
+  .footer-text {
+    grid-column: 2;
+    grid-row: 1;
+    flex-direction: column;
+    gap: 20px;
+    max-width: none;
+  }
+  .footer-menu {
+    line-height: 28px;
+    font-weight: 600;
+    font-size: 14px;
+  }
+  .footer-menu a { white-space: nowrap; }
+  .footer-addr {
+    text-align: left;
+    font-size: 14px;
+  }
+  .footer-signup {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    grid-column: 3;
+    grid-row: 1;
+    align-items: stretch;
+  }
+  /* Bottom row sits under the signup column (right third), copyright/legal left +
+     socials right within it (Figma 4757:1237). */
+  .footer-bottom {
+    grid-column: 3;
+    grid-row: 2;
+    align-items: center;
+    justify-content: space-between;
+    margin-top: 0;
+  }
+  .legal-copy { font-size: 14px; }
+  .legal-links { font-size: 12px; }
+  .footer-socials a { width: 42px; height: 42px; }
+  .footer-socials { gap: 12px; }
 }
 
-/* --- Wider desktops: extend hero typography --- */
+/* --- Wider desktops (>=1440px) ---
+   Layout content caps at 1280px inner width; the extra viewport space becomes
+   lateral margins (existing inner containers like .site-footer-inner already
+   use max-width: 1280px; we extend the same pattern to other sections so the
+   background remains full-bleed while content stays centered). */
 @media (min-width: 1440px) {
-  .section-title { font-size: 96px; }
-  .after-sweat .section-title { font-size: 120px; }
-  .stack-card__title { font-size: 120px; }
+  .section-title { font-size: 48px; }
+  /* Section content centering — each black/white section keeps full-bleed bg,
+     but inner content (children of .section) is centered within 1280px. */
+  .after-sweat,
+  .solution,
+  .signup-section {
+    padding-left: calc((100vw - 1280px) / 2);
+    padding-right: calc((100vw - 1280px) / 2);
+  }
 }
 
 /* =========================================================
@@ -1321,4 +1831,541 @@ button { border: 0; background: none; font: inherit; cursor: pointer; color: inh
 }
 @media (prefers-reduced-motion: reduce) {
   .modal__card { animation: none; }
+}
+
+/* =========================================================
+   ABOUT page (Figma 3749:164) — v1.3
+   Multi-tone layout: yellow → yellow → black → black → yellow → black
+   (Hero/Q/vignettes → WHO WE ARE → WHY WE MAKE → WHO WE BUILT THIS FOR → Footer)
+   ========================================================= */
+html.about-page {
+  background: #000; /* page is dark-first now (hero photo) */
+}
+html.about-page:has(body.is-black-tone) { background: #000; }
+body.about-body {
+  background: #000;
+  color: #fff;
+  transition: background-color 600ms ease, color 600ms ease;
+}
+body.about-body.is-black-tone {
+  background: #000;
+  color: #fff;
+}
+html.about-page:has(body.is-black-tone) { background: #000; }
+
+/* Hero — full-bleed photo, nav overlaid (white) + translucent question card
+   (Figma 4757:1483 / 4757:1521) */
+.about-hero {
+  position: relative;
+  width: 100%;
+  height: min(746px, 100svh); /* ≤ viewport so the card stays visible when pinned */
+  background: #000;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  padding: 40px 16px;
+  box-sizing: border-box;
+}
+.about-hero__bg {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  z-index: 0;
+}
+/* Top scrim keeps the white nav/status legible over the photo. */
+.about-hero::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  height: 220px;
+  background: linear-gradient(180deg, rgba(0, 0, 0, 0.55), rgba(0, 0, 0, 0));
+  z-index: 1;
+  pointer-events: none;
+}
+/* Status bar + nav overlay the photo at the top, in white. */
+.about-hero .about-status,
+.about-hero .about-nav {
+  position: absolute;
+  left: 0;
+  right: 0;
+  z-index: 3;
+}
+.about-hero .about-status { top: 0; }
+.about-hero .about-nav { top: 53px; }
+.about-status .status-time { color: #fff; }
+.about-status svg rect { fill: #fff; }
+.about-status svg path { fill: #fff; }
+.about-status svg rect[stroke] { stroke: #fff; }
+.about-nav .nav-menu a { color: #fff; }
+.about-nav-logo { filter: none; } /* white wordmark over the dark photo */
+
+/* Current-page indicator — generic across all pages. */
+.nav-menu a[aria-current="page"] {
+  text-decoration: underline;
+  text-underline-offset: 4px;
+}
+
+/* Translucent white question card at the bottom of the hero. */
+.about-hero__card {
+  position: relative;
+  z-index: 2;
+  width: 100%;
+  background: rgba(255, 255, 255, 0.7);
+  padding: 32px 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  box-sizing: border-box;
+}
+.about-hero__q {
+  margin: 0;
+  font-family: "Helvetica Neue Condensed", "Archivo Black", Impact, sans-serif;
+  font-weight: 900;
+  font-size: 32px;
+  line-height: 32px;
+  letter-spacing: -0.32px;
+  text-transform: uppercase;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  color: #000;
+}
+.about-hero__intro {
+  margin: 0;
+  font-family: "Pretendard", "Pretendard Variable", "Helvetica Neue", Inter, system-ui, sans-serif;
+  font-weight: 500;
+  font-size: 17px;
+  line-height: 20px;
+  letter-spacing: -0.34px;
+  color: #000;
+  opacity: 0.7;
+  white-space: pre-line;
+}
+
+/* Sections — Figma uses pt-100 / pb-70 / px-16 on every section */
+.about-section {
+  position: relative;
+  width: 100%;
+  padding: 70px 16px 100px; /* Figma 4757:1482 — pt-70 / pb-100 per section */
+  overflow-x: clip; /* contain edge-bleeding content (e.g. WHO WE ARE ID cards)
+                       so it doesn't create page-wide horizontal overflow.
+                       `clip` (not hidden) is safe with position:sticky. */
+}
+.about-section--yellow { background: #ffff33; color: #000; }
+.about-section--black  { background: #000;     color: #fff; }
+
+/* Page-view stacking: each content section pins to the top and the next section
+   rises up and covers it (opaque backgrounds + DOM order do the covering). The
+   hero is intentionally NOT sticky so its scroll-typing card isn't covered early. */
+html.about-page .about-hero,
+html.about-page .about-section,
+html.about-page .site-footer {
+  position: sticky;
+  top: 0;
+}
+
+/* Cover dim/blur: as the next section rises and covers the one behind it, the
+   behind section recedes — slightly darkened + blurred. `--cover` (0→1) is set
+   per section by the scroll handler in about.html. brightness(1)/blur(0) at
+   rest is a no-op, so uncovered sections are untouched. */
+html.about-page .about-hero,
+html.about-page .about-section {
+  --cover: 0;
+  filter: brightness(calc(1 - var(--cover) * 0.5)) blur(calc(var(--cover) * 2px));
+  will-change: filter;
+}
+@media (prefers-reduced-motion: reduce) {
+  html.about-page .about-hero,
+  html.about-page .about-section { filter: none; }
+}
+
+/* Eyebrow labels — Figma 4396:230 sizes all section eyebrows to 32px
+   condensed black, underlined. Color follows the section ancestor. */
+.about-eyebrow {
+  display: inline-block;
+  font-family: "Helvetica Neue Condensed", "Roboto Condensed", "Archivo Black", Impact, sans-serif;
+  font-weight: 900;
+  font-size: 32px;
+  line-height: 1;
+  letter-spacing: -0.32px;
+  margin: 0;
+  color: currentColor;
+}
+.about-eyebrow--underline {
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+/* =========================================================
+   Section 2 — WHO WE ARE  (black) — 3 rotated ID-badge cards
+   Figma 4396:282
+   ========================================================= */
+.about-who {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start; /* Figma: eyebrow + body left-aligned (cards stay centered) */
+  gap: 12px;
+  text-align: left;
+  padding-top: 70px; /* Figma 4770:1630 py-70 */
+}
+.about-who .about-eyebrow { color: #fff; }
+/* Horizontal-scroll carousel of equal-size ID cards that gently drift (JS auto-
+   scroll, looping over a duplicated set) and bob up/down (둥실둥실). Full-bleed
+   so it scrolls edge to edge; the parent section's overflow-x:clip keeps it from
+   creating page-wide horizontal overflow. */
+.about-idcards {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  width: 100vw;
+  margin-left: calc(50% - 50vw);
+  margin-right: calc(50% - 50vw);
+  padding: 16px max(16px, calc(50% - 50vw));
+  overflow-x: auto;
+  overflow-y: visible;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none;
+}
+.about-idcards::-webkit-scrollbar { display: none; }
+.about-idcard {
+  flex: 0 0 auto;
+  width: 180px;       /* all three cards identical size */
+  height: auto;
+  will-change: transform;
+  animation: id-bob 3.6s ease-in-out infinite;
+}
+/* Stagger the bob so the cards float out of sync. */
+.about-idcard:nth-child(3n+2) { animation-delay: -1.2s; }
+.about-idcard:nth-child(3n)   { animation-delay: -2.4s; }
+
+/* Gentle vertical float. */
+@keyframes id-bob {
+  0%, 100% { transform: translateY(0); }
+  50%      { transform: translateY(-8px); }
+}
+.about-who__body {
+  font-family: "Pretendard", "Pretendard Variable", "Helvetica Neue", Inter, system-ui, sans-serif;
+  font-weight: 500;
+  font-size: 17px;
+  line-height: 20px;
+  letter-spacing: -0.34px;
+  color: #fff;
+  opacity: 0.7;
+  margin: 0;
+  width: 100%;
+  max-width: 370px;
+  white-space: pre-line;
+}
+
+/* =========================================================
+   Section 3 — WHY WE MAKE  (yellow)
+   Figma 4396:291 — photo + overlaid science callout, body, Slack capture.
+   ========================================================= */
+.about-why {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 40px;
+}
+/* img + body grouped tight (gap-12), separate from the bongjin group */
+.about-why__group {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 12px;
+  width: 370px;
+  max-width: 100%;
+}
+.about-why__figure {
+  position: relative;
+  width: 100%;
+}
+.about-why__img {
+  display: block;
+  width: 100%;
+  aspect-ratio: 370 / 240; /* Figma 4888:1363/1364 */
+  height: auto;
+  object-fit: cover;
+}
+.about-why__body {
+  font-family: "Pretendard", "Pretendard Variable", "Helvetica Neue", Inter, system-ui, sans-serif;
+  font-weight: 500;
+  font-size: 17px;
+  line-height: 20px;
+  letter-spacing: -0.34px;
+  color: #000;
+  opacity: 0.7; /* Figma 4936:1102 — body at 70% */
+  margin: 0;
+  width: 100%;
+  white-space: pre-line;
+}
+.about-why__bongjin {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 12px;
+  width: 370px;
+  max-width: 100%;
+}
+.about-why__bongjin-img {
+  display: block;
+  width: 100%;
+  height: auto; /* full-width Slack capture; height follows asset aspect (≈370/92) */
+}
+.about-why__bongjin-text {
+  font-family: "Pretendard", "Pretendard Variable", "Helvetica Neue", Inter, system-ui, sans-serif;
+  font-weight: 500;
+  font-size: 17px;
+  line-height: 20px;
+  letter-spacing: -0.34px;
+  color: #000;
+  opacity: 0.7; /* Figma 4916:1080 — at 70% */
+  margin: 0;
+  white-space: pre-line;
+}
+
+/* =========================================================
+   Section 4 — WHO WE BUILT THIS FOR  (black)
+   Figma 4396:311 — eyebrow + body + single image.
+   ========================================================= */
+.about-builtfor {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 40px;
+}
+.about-builtfor .about-eyebrow { color: #fff; }
+.about-builtfor__body {
+  font-family: "Pretendard", "Pretendard Variable", "Helvetica Neue", Inter, system-ui, sans-serif;
+  font-weight: 500;
+  font-size: 17px;
+  line-height: 20px;
+  letter-spacing: -0.34px;
+  color: #fff;
+  opacity: 0.7; /* Figma 4916:1085 — body at 70% */
+  margin: 0;
+  width: 370px;
+  max-width: 100%;
+  white-space: pre-line;
+}
+.about-builtfor__img {
+  display: block;
+  width: 100%;
+  max-width: 370px;
+  height: 360px;
+  object-fit: cover;
+}
+
+/* =========================================================
+   Section 5 — Formula line + final headline  (black)
+   Figma 4396:320 — plain formula copy + 32px closing headline.
+   ========================================================= */
+.about-formula {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 40px;
+}
+.about-formula__final {
+  font-family: "Helvetica Neue Condensed", "Archivo Black", Impact, sans-serif;
+  font-weight: 900;
+  font-size: 32px;
+  line-height: 32px;
+  color: #fff;
+  text-transform: uppercase;
+  margin: 0;
+  width: 100%;
+  white-space: pre-line;
+}
+
+/* =========================================================
+   ABOUT page — PC responsive (>=768px)
+   Figma 3839:115 — full PC variant. Scopes via html.about-page to avoid
+   bleeding into home/lineup. Sizes scale linearly to 1440px; the 1440+ block
+   below pins lateral padding so content caps at 1280px.
+   ========================================================= */
+@media (min-width: 768px) {
+  /* Hero — taller photo; status bar (phone chrome) hidden, nav stays white. */
+  html.about-page .about-hero {
+    height: 60.9vw;        /* Figma 1440×877 aspect (877/1440) */
+    min-height: 560px;
+    max-height: 877px;
+    padding: 40px clamp(20px, 5.5vw, 80px);
+  }
+  html.about-page .about-status { display: none; }
+  html.about-page .about-nav { padding: 4px clamp(20px, 2.78vw, 40px); }
+
+  /* All about sections — 80px horizontal padding base (capped via 1440+) */
+  html.about-page .about-section {
+    padding-left: clamp(40px, 5.5vw, 80px);
+    padding-right: clamp(40px, 5.5vw, 80px);
+  }
+  html.about-page .about-eyebrow { font-size: 32px; } /* Figma 4916: 32px/24 */
+
+  /* Section 1 — Hero question card */
+  html.about-page .about-hero__card {
+    max-width: 720px;
+    align-self: flex-start;
+    padding: 32px;
+    gap: 16px;
+  }
+  html.about-page .about-hero__q {
+    font-size: 48px;
+    line-height: 48px;
+    letter-spacing: -0.48px;
+  }
+  html.about-page .about-hero__intro {
+    font-size: 20px;
+    line-height: 22px;
+    letter-spacing: -0.4px;
+  }
+
+  /* Section 2 — WHO WE ARE (Figma 4916:1043): left = 3 tilted ID cards,
+     right column = eyebrow (top) + body (bottom). */
+  html.about-page .about-who {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: auto 1fr;
+    column-gap: 40px;
+    align-items: start;
+  }
+  html.about-page .about-idcards {
+    grid-column: 1;
+    grid-row: 1 / 3;
+    align-self: start;
+    width: 100%;
+    margin: 0;
+    padding: 0;
+    overflow: visible;
+    justify-content: center;
+    gap: 8px;
+  }
+  html.about-page .about-idcard {
+    width: 200px;
+    animation: none;           /* static tilt on PC instead of bob/drift */
+  }
+  html.about-page .about-idcard:nth-child(1) { transform: rotate(-3deg); }
+  html.about-page .about-idcard:nth-child(2) { transform: rotate(0deg); }
+  html.about-page .about-idcard:nth-child(3) { transform: rotate(3deg); }
+  html.about-page .about-idcard:nth-child(n+4) { display: none; } /* hide loop dupes */
+  html.about-page .about-who .about-eyebrow {
+    grid-column: 2;
+    grid-row: 1;
+    justify-self: start;
+  }
+  html.about-page .about-who__body {
+    grid-column: 2;
+    grid-row: 2;
+    align-self: end;
+    font-size: 20px;
+    line-height: 24px;
+    letter-spacing: -0.4px;
+    max-width: 620px;
+  }
+
+  /* Section 3 — WHY WE MAKE (Figma 4916:1052): left = image (620×420),
+     right column = eyebrow + body + bongjin. Unwrap the mobile group/figure
+     so the image can be grid-placed on the left. */
+  html.about-page .about-why {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: auto auto 1fr;
+    column-gap: 40px;
+    row-gap: 24px;
+    align-items: start;
+  }
+  html.about-page .about-why__group,
+  html.about-page .about-why__figure { display: contents; }
+  html.about-page .about-why__img {
+    grid-column: 1; grid-row: 1 / 4;
+    width: 100%; max-width: 620px; height: 420px; object-fit: cover; align-self: start;
+  }
+  html.about-page .about-why .about-eyebrow { grid-column: 2; grid-row: 1; margin-bottom: 64px; }
+  html.about-page .about-why__body {
+    grid-column: 2; grid-row: 2;
+    font-size: 20px; line-height: 26px; letter-spacing: -0.4px;
+    max-width: 620px;
+  }
+  html.about-page .about-why__bongjin {
+    grid-column: 2; grid-row: 3;
+    align-self: start;
+    width: 100%; max-width: 620px;
+  }
+  html.about-page .about-why__bongjin-text {
+    font-size: 20px; line-height: 26px; letter-spacing: -0.4px;
+  }
+
+  /* Section 4 — WHO WE BUILT THIS FOR (Figma 4916:1069): left column = eyebrow
+     + body + final headline, right = image (458×446). */
+  html.about-page .about-builtfor {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) 458px;
+    grid-template-rows: auto auto 1fr;
+    column-gap: clamp(40px, 5vw, 80px);
+    row-gap: 24px;
+    align-items: start;
+  }
+  html.about-page .about-builtfor .about-eyebrow { grid-column: 1; grid-row: 1; margin-bottom: 64px; }
+  html.about-page .about-builtfor__body {
+    grid-column: 1; grid-row: 2;
+    font-size: 20px; line-height: 26px; letter-spacing: -0.4px;
+    max-width: 620px;
+  }
+  html.about-page .about-builtfor .about-formula__final {
+    grid-column: 1; grid-row: 3;
+    align-self: start;
+    margin-top: 16px;
+    font-size: 40px; line-height: 48px;
+  }
+  html.about-page .about-builtfor__img {
+    grid-column: 2; grid-row: 1 / 4;
+    width: 458px; height: 446px; max-width: none; object-fit: cover; align-self: start;
+  }
+}
+
+/* =========================================================
+   ABOUT page — 1440+ cap. Content area max 1280px, lateral
+   padding grows to fill the rest of the viewport.
+   ========================================================= */
+@media (min-width: 1440px) {
+  html.about-page .about-section,
+  html.about-page .site-footer {
+    padding-left: calc((100vw - 1280px) / 2);
+    padding-right: calc((100vw - 1280px) / 2);
+  }
+}
+
+/* =========================================================
+   Typewriter accent — last-word color shift for [data-accent-last]
+   ========================================================= */
+[data-scroll-reveal="typing"] .ch {
+  transition: color 400ms ease;
+}
+[data-scroll-reveal="typing"] .ch--accent.is-visible {
+  color: #ffff33;
+}
+
+/* =========================================================
+   Reduced motion — kill all custom transitions, show content directly
+   ========================================================= */
+@media (prefers-reduced-motion: reduce) {
+  .about-eyebrow,
+  .about-status,
+  .about-nav,
+  .nav-logo-flip,
+  .about-idcard,
+  body.about-body {
+    transition: none !important;
+    animation: none !important;
+  }
+  /* Logo flip — freeze on the English face (back stays rotated/hidden). */
+  .nav-logo-flip { transform: none !important; }
+  [data-scroll-reveal="typing"] .ch {
+    opacity: 1 !important;
+  }
+  [data-scroll-reveal="typing"] .ch--accent { color: #ffff33; }
 }

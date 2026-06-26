@@ -1,0 +1,608 @@
+<!doctype html>
+<html lang="en" class="about-page">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <title>About — Glowbeast</title>
+  <meta name="description" content="Why isn't there a beauty brand for people who actually sweat? Glowbeast — active beauty for the Beasts." />
+  <meta name="theme-color" content="#ffff33" />
+  <link rel="icon" href="assets/favicon.png" type="image/png" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=Playfair+Display:ital,wght@1,400;1,600&family=Inter:wght@400;500;700&family=Roboto+Condensed:wght@900&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.css" />
+  <script>
+    (function(d) {
+      var config = { kitId: 'mma0jnp', scriptTimeout: 3000, async: true },
+      h=d.documentElement,t=setTimeout(function(){h.className=h.className.replace(/\bwf-loading\b/g,"")+" wf-inactive";},config.scriptTimeout),tk=d.createElement("script"),f=false,s=d.getElementsByTagName("script")[0],a;h.className+=" wf-loading";tk.src='https://use.typekit.net/'+config.kitId+'.js';tk.async=true;tk.onload=tk.onreadystatechange=function(){a=this.readyState;if(f||a&&a!="complete"&&a!="loaded")return;f=true;clearTimeout(t);try{Typekit.load(config)}catch(e){}};s.parentNode.insertBefore(tk,s)
+    })(document);
+  </script>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body class="about-body">
+
+  <!-- =========================================================
+       Hero — nav only (yellow tone)  (Figma 3749:165)
+       ========================================================= -->
+  <!-- =========================================================
+       Hero — full-bleed photo + overlaid nav (white) + translucent
+       question card (Figma 4757:1483 / 4757:1521)
+       ========================================================= -->
+  <header class="about-hero" id="top" data-node-id="4757:1483">
+    <picture>
+      <source media="(min-width: 768px)" srcset="assets/about/hero-question-pc.jpg" />
+      <img class="about-hero__bg" src="assets/about/hero-question.png" alt="" />
+    </picture>
+
+    <div class="status-bar about-status" aria-hidden="true">
+      <span class="status-time">9:41</span>
+      <div class="status-icons">
+        <svg class="s-signal" viewBox="0 0 18 10" xmlns="http://www.w3.org/2000/svg">
+          <rect x="0"  y="6" width="3" height="4"  rx="0.5" fill="#000"/>
+          <rect x="5"  y="4" width="3" height="6"  rx="0.5" fill="#000"/>
+          <rect x="10" y="2" width="3" height="8"  rx="0.5" fill="#000"/>
+          <rect x="15" y="0" width="3" height="10" rx="0.5" fill="#000"/>
+        </svg>
+        <svg class="s-wifi" viewBox="0 0 16 11" xmlns="http://www.w3.org/2000/svg" fill="#000">
+          <path d="M8 11a1.3 1.3 0 1 0 0-2.6 1.3 1.3 0 0 0 0 2.6z"/>
+          <path d="M4.7 7.8a4.7 4.7 0 0 1 6.6 0l-1.1 1.1a3.1 3.1 0 0 0-4.4 0L4.7 7.8z"/>
+          <path d="M1.8 4.9a8.7 8.7 0 0 1 12.4 0l-1.1 1.1a7.1 7.1 0 0 0-10.2 0L1.8 4.9z"/>
+        </svg>
+        <svg class="s-battery" viewBox="0 0 26 12" xmlns="http://www.w3.org/2000/svg">
+          <rect x="0.5" y="0.5" width="22" height="11" rx="2.8" ry="2.8" fill="none" stroke="#000" stroke-opacity="0.55"/>
+          <rect x="2"   y="2"   width="19" height="8"  rx="1.2" fill="#000"/>
+          <rect x="23"  y="4"   width="1.5" height="4" rx="0.5" fill="#000" fill-opacity="0.55"/>
+        </svg>
+      </div>
+    </div>
+
+    <nav class="nav about-nav" aria-label="Primary" data-node-id="4757:1501">
+      <div class="nav-inner">
+        <a href="index.html" aria-label="Glowbeast home" class="nav-logo-link">
+          <span class="nav-logo-flip about-nav-logo">
+            <img class="nav-logo nav-logo--front" src="assets/Logo%20KR.png" alt="Glowbeast" />
+            <img class="nav-logo nav-logo--back" src="assets/logo.svg" alt="" aria-hidden="true" />
+          </span>
+        </a>
+        <div class="nav-menu" role="menubar">
+          <a href="about.html" role="menuitem" aria-current="page">ABOUT</a>
+          <a href="lineup.html" role="menuitem">PRODUCT</a>
+        </div>
+      </div>
+    </nav>
+
+    <div class="about-hero__card" data-node-id="4757:1617">
+      <h1 class="about-hero__q" data-scroll-reveal="typing" data-typing-from-top>Why is beauty
+always clean
+and polished?</h1>
+      <p class="about-hero__intro">The one who runs until her face turns red-
+The one stepping out of the ring after sparring- The one adding more weight even when her hands are torn up- The one drenched in sweat, going for one more set-
+
+So we made one.</p>
+    </div>
+  </header>
+
+  <!-- =========================================================
+       Section 2 — WHO WE ARE (Figma 4396:282)  black tone
+       3 rotated ID-badge cards + body.
+       ========================================================= -->
+  <section class="about-section about-section--black about-who" data-node-id="4396:282" data-tone="black">
+    <p class="about-eyebrow about-eyebrow--underline" data-node-id="4396:284">WHO WE ARE</p>
+
+    <div class="about-idcards" data-node-id="4396:286">
+      <img class="about-idcard" src="assets/about/id-card-1.png" alt="Team ID badge — Art Director, HYROX Athlete" loading="lazy" />
+      <img class="about-idcard" src="assets/about/id-card-2.png" alt="Team ID badge — Copywriter, Pro Kickboxer" loading="lazy" />
+      <img class="about-idcard" src="assets/about/id-card-3.png" alt="Team ID badge" loading="lazy" />
+      <img class="about-idcard" src="assets/about/id-card-1.png" alt="" aria-hidden="true" loading="lazy" />
+      <img class="about-idcard" src="assets/about/id-card-2.png" alt="" aria-hidden="true" loading="lazy" />
+      <img class="about-idcard" src="assets/about/id-card-3.png" alt="" aria-hidden="true" loading="lazy" />
+    </div>
+
+    <p class="about-who__body" data-node-id="4396:285">People who just love training too much.
+Then the side hustle won.
+The creative we sharpened in advertising—
+now we spend it on beauty for people like us.
+
+REWRITING BEAUTY
+FOR THE ONES WHO SWEAT.</p>
+  </section>
+
+  <!-- =========================================================
+       Section 3 — WHY WE MAKE (Figma 4396:291)  yellow tone
+       Photo + overlaid science callout, body, Slack screenshot + caption.
+       ========================================================= -->
+  <section class="about-section about-section--yellow about-why" data-node-id="4396:291" data-tone="yellow">
+    <p class="about-eyebrow about-eyebrow--underline" data-node-id="4396:293">WHY WE MAKE</p>
+
+    <div class="about-why__group" data-node-id="4910:1566">
+      <div class="about-why__figure" data-node-id="4888:1363">
+        <img class="about-why__img" src="assets/about/why-img8174.png" alt="Research papers spread across a desk" loading="lazy" data-node-id="4888:1364" />
+      </div>
+      <p class="about-why__body" data-node-id="4888:1365">There was a catch. The more we trained, the more our skin broke down. AGING FASTER. So we studied. The answer was obvious :
+Just like training needs food, SKIN NEED CARE!</p>
+    </div>
+
+    <div class="about-why__bongjin" data-node-id="4888:1366">
+      <img class="about-why__bongjin-img" src="assets/about/bongjin-slack.png" alt="Slack message from Bongjin Kim: Sell the culture, not the cream" loading="lazy" data-node-id="4895:1434" />
+      <p class="about-why__bongjin-text" data-node-id="4396:310">Then, Bongjin Kim, founder of Korea&rsquo;s biggest delivery unicorn— and our former client bet on us.</p>
+    </div>
+  </section>
+
+  <!-- =========================================================
+       Section 4 — WHO WE BUILT THIS FOR (Figma 4396:311)  black tone
+       ========================================================= -->
+  <section class="about-section about-section--black about-builtfor" data-node-id="4888:1369" data-tone="black">
+    <p class="about-eyebrow about-eyebrow--underline" data-node-id="4888:1371">WHO WE BUILT THIS FOR</p>
+
+    <img class="about-builtfor__img" src="assets/about/builtfor-gobeast.jpg" alt="Go Beast Go" loading="lazy" data-node-id="4888:1372" />
+
+    <p class="about-builtfor__body" data-node-id="4888:1373">In Seoul, city of GLASS SKIN, the world&rsquo;s most obsessive beauty labs, WE STARTED ACTIVE BEAUTY.<br />K-BEAUTY + BEAST = ACTIVE BEAUTY<br />We put these two together and set a whole new standard.</p>
+
+    <!-- Final headline — Figma 4916 merges it into WHO WE BUILT THIS FOR (left col) -->
+    <p class="about-formula__final" data-node-id="4888:1377">BEAUTY FOR
+THOSE WHO TRAIN.
+BEAUTY FOR BEASTS.</p>
+  </section>
+
+  <!-- =========================================================
+       Footer (Figma 3749:246) — reused from landing
+       ========================================================= -->
+  <footer class="site-footer about-section--black" data-node-id="3749:246">
+    <div class="site-footer-inner">
+      <div class="footer-logo-block" data-node-id="3749:248">
+        <img class="footer-logo" src="assets/footer-logo.png" alt="Glowbeast" />
+        <a class="footer-email" href="mailto:hello@glowbeast.co">hello@glowbeast.co</a>
+      </div>
+
+      <div class="footer-text">
+        <nav class="footer-menu" aria-label="Footer">
+          <a href="about.html" aria-current="page">ABOUT</a>
+          <a href="lineup.html">LINEUP</a>
+          <a href="mailto:hello@glowbeast.co">SEND AN EMAIL</a>
+        </nav>
+        <address class="footer-addr">
+          <strong class="footer-addr__co">Grande Clip Korea, LLC.</strong><br />
+          14-4, Garosu-gil,<br />
+          Gangnam-gu, Seoul, Korea
+        </address>
+      </div>
+
+      <!-- PC footer signup (Figma 3839:374) — replaces standalone signup section.
+           Hidden on mobile via CSS. Modal logic mirrors index.html. -->
+      <div class="footer-signup" data-node-id="3839:374">
+        <p class="footer-signup__lead" data-node-id="3839:375">
+          HEY BEAST THERE, YOU SWEAT TOO? GOOD!<br />
+          TRAIN WITH US &amp; GLOW TOGETHER!
+        </p>
+        <form class="footer-signup__form" id="footer-signup-form" action="#" method="post" novalidate>
+          <label class="sr-only" for="footer-signup-contact">Email</label>
+          <input class="footer-signup__input" id="footer-signup-contact" type="email" name="email" placeholder="PHONE OR EMAIL" autocomplete="email" required />
+          <button class="footer-signup__cta" type="submit" aria-label="Submit">
+            <svg viewBox="0 0 32 32" aria-hidden="true" focusable="false">
+              <path d="M12 8 L20 16 L12 24" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round" />
+            </svg>
+          </button>
+        </form>
+      </div>
+
+      <div class="footer-bottom">
+        <div class="legal">
+          <p class="legal-copy">2026 GRANDE CLIP KOREA, LLC.</p>
+          <p class="legal-links">
+            <span>TERMS OF SERVICE</span>
+            <span class="sep" aria-hidden="true"></span>
+            <span>PRIVACY POLICY</span>
+          </p>
+        </div>
+        <div class="footer-socials">
+          <a href="#" aria-label="Instagram"><img src="assets/icon-instagram.svg" alt="" /></a>
+          <a href="#" aria-label="Amazon"><img src="assets/icon-amazon.svg" alt="" /></a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Signup success modal — shown after valid email submit via footer-signup-form -->
+  <div class="modal" id="signup-modal" role="dialog" aria-modal="true" aria-labelledby="signup-modal-title" hidden>
+    <div class="modal__backdrop" data-modal-close></div>
+    <div class="modal__card">
+      <p class="modal__title" id="signup-modal-title">등록되었습니다</p>
+      <p class="modal__body">Welcome, Beast.<br/>First access 메일을 보내드릴게요.</p>
+      <button class="btn-yellow modal__cta" type="button" data-modal-close>OK</button>
+    </div>
+  </div>
+
+  <!-- Footer signup form handler — mirrors index.html signup behavior -->
+  <script>
+    (function () {
+      const modal = document.getElementById('signup-modal');
+      const form  = document.getElementById('footer-signup-form');
+      const input = document.getElementById('footer-signup-contact');
+      if (!modal || !form || !input) return;
+
+      const EMAIL = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+      const openModal = () => {
+        modal.hidden = false;
+        const cta = modal.querySelector('.modal__cta');
+        if (cta) cta.focus();
+      };
+      const closeModal = () => {
+        modal.hidden = true;
+        input.focus();
+      };
+
+      form.addEventListener('submit', (e) => {
+        e.preventDefault();
+        const v = (input.value || '').trim();
+        if (!EMAIL.test(v)) {
+          input.setCustomValidity('이메일 형식으로 입력해주세요');
+          input.reportValidity();
+          input.addEventListener('input', () => input.setCustomValidity(''), { once: true });
+          return;
+        }
+        openModal();
+        form.reset();
+      });
+      modal.addEventListener('click', (e) => {
+        if (e.target.closest('[data-modal-close]')) closeModal();
+      });
+      document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape' && !modal.hidden) closeModal();
+      });
+    })();
+  </script>
+
+  <!-- =========================================================
+       Interactions
+       ========================================================= -->
+  <script>
+    (function () {
+      const REDUCE = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+      // ---------- Typewriter reveal (data-scroll-reveal="typing") ----------
+      // Unified pattern matching index.html: split text into <span class="ch">,
+      // toggle .is-visible per scroll progress. Extended: data-accent-last marks
+      // the final N chars with .ch--accent so they shift to yellow as they reveal.
+      const typingTargets = document.querySelectorAll('[data-scroll-reveal="typing"]');
+      const typingItems = [];
+      typingTargets.forEach((el) => {
+        const text = el.textContent;
+        const accentLast = el.getAttribute('data-accent-last');
+        el.textContent = '';
+        const chars = [];
+        for (const c of text) {
+          if (c === '\n') {
+            el.appendChild(document.createElement('br'));
+          } else {
+            const span = document.createElement('span');
+            span.className = 'ch';
+            span.textContent = c;
+            el.appendChild(span);
+            chars.push(span);
+          }
+        }
+        if (accentLast) {
+          const target = accentLast.toUpperCase();
+          let joined = '';
+          let startIdx = -1;
+          for (let i = chars.length - 1; i >= 0; i--) {
+            joined = chars[i].textContent + joined;
+            if (joined.toUpperCase() === target) { startIdx = i; break; }
+            if (joined.length > target.length) break;
+          }
+          if (startIdx >= 0) {
+            for (let i = startIdx; i < chars.length; i++) {
+              chars[i].classList.add('ch--accent');
+            }
+          }
+        }
+        typingItems.push({ el, chars, fromTop: el.hasAttribute('data-typing-from-top') });
+      });
+
+      if (typingItems.length && !REDUCE) {
+        // Non-from-top titles type on scroll as they enter view.
+        const scrollItems = typingItems.filter((it) => !it.fromTop);
+        let tTicking = false;
+        function updateTyping() {
+          const vh = window.innerHeight;
+          const startY = vh * 1.0;
+          const endY = vh * 0.2;
+          const span = startY - endY;
+          scrollItems.forEach((item) => {
+            const top = item.el.getBoundingClientRect().top;
+            const p = Math.min(1, Math.max(0, (startY - top) / span));
+            const visibleCount = Math.round(p * item.chars.length);
+            for (let i = 0; i < item.chars.length; i++) {
+              const shouldShow = i < visibleCount;
+              const isShown = item.chars[i].classList.contains('is-visible');
+              if (shouldShow !== isShown) item.chars[i].classList.toggle('is-visible', shouldShow);
+            }
+          });
+          tTicking = false;
+        }
+        if (scrollItems.length) {
+          window.addEventListener('scroll', () => {
+            if (!tTicking) { requestAnimationFrame(updateTyping); tTicking = true; }
+          }, { passive: true });
+          window.addEventListener('resize', updateTyping);
+          updateTyping();
+        }
+
+        // From-top items (hero question → description) AUTO-PLAY sequentially on
+        // load, so they're readable before WHO WE ARE scrolls up to cover the hero
+        // (scroll-driven typing would be wiped as the card gets covered).
+        const seq = [];
+        typingItems.filter((it) => it.fromTop).forEach((it) => it.chars.forEach((c) => seq.push(c)));
+        if (seq.length) {
+          const PER = 13; // ms per character
+          let start = 0;
+          function play(ts) {
+            if (!start) start = ts;
+            const due = Math.floor((ts - start) / PER);
+            for (let i = 0; i < Math.min(due, seq.length); i++) {
+              if (!seq[i].classList.contains('is-visible')) seq[i].classList.add('is-visible');
+            }
+            if (due < seq.length) requestAnimationFrame(play);
+          }
+          setTimeout(() => requestAnimationFrame(play), 350);
+        }
+      } else if (typingItems.length && REDUCE) {
+        typingItems.forEach(({ chars }) => chars.forEach((c) => c.classList.add('is-visible')));
+      }
+
+      // ---------- Eyebrow underline draw (page-load) ----------
+      window.addEventListener('load', () => {
+        const eyebrow = document.querySelector('.about-q .about-eyebrow');
+        if (eyebrow) setTimeout(() => eyebrow.classList.add('is-in'), 200);
+      });
+
+      // ---------- Vignette cards ----------
+      const vignettes = document.querySelectorAll('[data-vignette]');
+      if ('IntersectionObserver' in window) {
+        const vio = new IntersectionObserver((entries) => {
+          entries.forEach((entry) => {
+            if (entry.isIntersecting) {
+              entry.target.classList.add('is-in');
+              vio.unobserve(entry.target);
+            }
+          });
+        }, { threshold: 0.4 });
+        vignettes.forEach((v) => vio.observe(v));
+      } else {
+        vignettes.forEach((v) => v.classList.add('is-in'));
+      }
+
+      // ---------- Polaroid scroll-x (manual drag + scroll-linked hint sweep) ----------
+      const polaroidRail = document.querySelector('.about-polaroids');
+      const whoSection = document.querySelector('.about-who');
+      let polaroidUserInteracted = false;
+      if (polaroidRail) {
+        let isDown = false, startX = 0, startScroll = 0, moved = false;
+        const markUserInteraction = () => { polaroidUserInteracted = true; };
+        polaroidRail.addEventListener('mousedown', (e) => {
+          isDown = true; moved = false;
+          startX = e.pageX; startScroll = polaroidRail.scrollLeft;
+          polaroidRail.classList.add('grabbing');
+          markUserInteraction();
+        });
+        polaroidRail.addEventListener('mousemove', (e) => {
+          if (!isDown) return;
+          const dx = e.pageX - startX;
+          if (Math.abs(dx) > 4) moved = true;
+          polaroidRail.scrollLeft = startScroll - dx;
+        });
+        const end = () => { isDown = false; polaroidRail.classList.remove('grabbing'); };
+        polaroidRail.addEventListener('mouseup', end);
+        polaroidRail.addEventListener('mouseleave', end);
+        polaroidRail.addEventListener('touchstart', markUserInteraction, { passive: true });
+        polaroidRail.addEventListener('wheel', (e) => {
+          // horizontal wheel (trackpad) → manual interaction
+          if (Math.abs(e.deltaX) > Math.abs(e.deltaY)) markUserInteraction();
+        }, { passive: true });
+      }
+
+      // ---------- Polaroid auto hint sweep ----------
+      // When the WHO WE ARE section is in view, map vertical page scroll
+      // progress to the polaroid rail's scrollLeft so the cards sweep left↔right
+      // automatically, hinting at horizontal interactivity. Disabled the moment
+      // the user drags/touches/wheels the rail themselves.
+      if (polaroidRail && whoSection && !REDUCE) {
+        let pTicking = false;
+        function updatePolaroidHint() {
+          if (polaroidUserInteracted) { pTicking = false; return; }
+          const rect = whoSection.getBoundingClientRect();
+          const vh = window.innerHeight;
+          // Section progress 0 (just entering from below) → 1 (about to exit at top)
+          const startY = vh * 0.8;
+          const endY   = -rect.height * 0.2;
+          const raw = (startY - rect.top) / (startY - endY);
+          const progress = Math.min(1, Math.max(0, raw));
+          const maxScroll = polaroidRail.scrollWidth - polaroidRail.clientWidth;
+          // Sweep: 0 → 1 (full right) → 0.5 (settle back near center)
+          let frac;
+          if (progress < 0.55) {
+            frac = progress / 0.55;            // 0 → 1
+          } else {
+            frac = 1 - (progress - 0.55) / 0.9; // 1 → ~0.5
+          }
+          frac = Math.min(1, Math.max(0, frac));
+          polaroidRail.scrollLeft = frac * maxScroll;
+          pTicking = false;
+        }
+        window.addEventListener('scroll', () => {
+          if (!pTicking && !polaroidUserInteracted) {
+            requestAnimationFrame(updatePolaroidHint); pTicking = true;
+          }
+        }, { passive: true });
+        window.addEventListener('resize', updatePolaroidHint);
+        updatePolaroidHint();
+      }
+
+      // ---------- Multi-section tone transition ----------
+      // Each section declares [data-tone="yellow|black"]. The section currently
+      // centered in the viewport drives the body tone — controls desktop column
+      // outside background and nav color flip.
+      const toneSections = document.querySelectorAll('[data-tone]');
+      if (toneSections.length && 'IntersectionObserver' in window) {
+        const tio = new IntersectionObserver((entries) => {
+          entries.forEach((entry) => {
+            if (entry.isIntersecting) {
+              const tone = entry.target.dataset.tone;
+              if (tone) document.body.classList.toggle('is-black-tone', tone === 'black');
+            }
+          });
+        }, { rootMargin: '-35% 0px -35% 0px' });
+        toneSections.forEach((s) => tio.observe(s));
+      }
+
+      // ---------- Scroll-linked vignette reveal ----------
+      // Each .about-vignette__img scales from 0 (anchored at top-right corner)
+      // to 1 (full size, expanding toward bottom-left) as it scrolls into view.
+      const vignetteImgs = document.querySelectorAll('.about-vignette__img');
+      if (vignetteImgs.length && !REDUCE) {
+        let vTicking = false;
+        function updateVignetteReveal() {
+          const vh = window.innerHeight;
+          const startY = vh;         // image top at viewport bottom → progress 0
+          const endY   = vh * 0.4;   // image top at 40% of viewport → progress 1
+          const span = startY - endY;
+          vignetteImgs.forEach((img) => {
+            const rect = img.getBoundingClientRect();
+            const raw = (startY - rect.top) / span;
+            const progress = Math.min(1, Math.max(0, raw));
+            // easeOutCubic so the photo settles softly at full size
+            const eased = 1 - Math.pow(1 - progress, 3);
+            img.style.setProperty('--reveal', eased.toFixed(3));
+          });
+          vTicking = false;
+        }
+        window.addEventListener('scroll', () => {
+          if (!vTicking) { requestAnimationFrame(updateVignetteReveal); vTicking = true; }
+        }, { passive: true });
+        window.addEventListener('resize', updateVignetteReveal);
+        updateVignetteReveal();
+      } else if (vignetteImgs.length && REDUCE) {
+        vignetteImgs.forEach((img) => img.style.setProperty('--reveal', '1'));
+      }
+
+      // ---------- Parallax mood photo ----------
+      const parallaxEls = document.querySelectorAll('[data-parallax]');
+      if (parallaxEls.length && !REDUCE) {
+        let ticking = false;
+        function updateParallax() {
+          const vh = window.innerHeight;
+          parallaxEls.forEach((el) => {
+            const rect = el.getBoundingClientRect();
+            if (rect.bottom < 0 || rect.top > vh) return;
+            const progress = (vh - rect.top) / (vh + rect.height);
+            const shift = (progress - 0.5) * 60; // -30 → +30
+            el.style.transform = `translate3d(0, ${(-shift).toFixed(1)}px, 0)`;
+          });
+          ticking = false;
+        }
+        window.addEventListener('scroll', () => {
+          if (!ticking) { requestAnimationFrame(updateParallax); ticking = true; }
+        }, { passive: true });
+        updateParallax();
+      }
+
+      // ---------- Fade+scale mood photo ----------
+      const fadeScaleEls = document.querySelectorAll('[data-fade-scale]');
+      if (fadeScaleEls.length && 'IntersectionObserver' in window) {
+        const fsio = new IntersectionObserver((entries) => {
+          entries.forEach((entry) => {
+            if (entry.isIntersecting) {
+              entry.target.classList.add('is-in');
+              fsio.unobserve(entry.target);
+            }
+          });
+        }, { threshold: 0.2 });
+        fadeScaleEls.forEach((el) => fsio.observe(el));
+      }
+
+      // ---------- Footer logo intro (matches home page) ----------
+      const footerLogo = document.querySelector('.footer-logo');
+      if (footerLogo) {
+        if (REDUCE) {
+          footerLogo.classList.add('is-revealed');
+        } else {
+          const flio = new IntersectionObserver((entries) => {
+            entries.forEach((entry) => {
+              if (entry.isIntersecting) {
+                footerLogo.classList.add('is-revealed');
+                flio.disconnect();
+              }
+            });
+          }, { threshold: 0.3 });
+          flio.observe(footerLogo);
+        }
+      }
+    })();
+  </script>
+
+  <script>
+    // WHO WE ARE ID cards — continuous gentle horizontal drift (둥실둥실 흘러가게).
+    // Cards are duplicated (2 sets) so wrapping by one set width loops seamlessly.
+    // Pauses while the user is interacting, then resumes.
+    (function () {
+      const track = document.querySelector('.about-idcards');
+      if (!track) return;
+      if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+      let paused = false;
+      let resumeTimer = 0;
+      const pause = () => {
+        paused = true;
+        clearTimeout(resumeTimer);
+        resumeTimer = setTimeout(() => { paused = false; }, 2500);
+      };
+      ['pointerdown', 'touchstart', 'wheel'].forEach((ev) =>
+        track.addEventListener(ev, pause, { passive: true }));
+      function tick() {
+        if (!paused) {
+          const half = track.scrollWidth / 2;
+          track.scrollLeft += 0.5;
+          if (half > 0 && track.scrollLeft >= half) track.scrollLeft -= half;
+        }
+        requestAnimationFrame(tick);
+      }
+      requestAnimationFrame(tick);
+    })();
+  </script>
+
+  <script>
+    // Cover dim/blur: as each section rises to cover the one behind it (sticky
+    // stack), the behind section recedes — darkened + slightly blurred. Sets
+    // `--cover` (0→1) per section based on how far the NEXT section has risen.
+    (function () {
+      if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+      const stack = Array.from(
+        document.querySelectorAll('.about-hero, .about-section, .site-footer')
+      );
+      if (stack.length < 2) return;
+      let ticking = false;
+      function update() {
+        for (let i = 0; i < stack.length - 1; i++) {
+          const cur = stack[i];
+          const next = stack[i + 1];
+          const h = cur.offsetHeight || 1;
+          // next.top runs from h (next just below the pinned cur) down to 0
+          // (next fully covering cur) → cover 0→1.
+          let cover = 1 - next.getBoundingClientRect().top / h;
+          cover = Math.min(1, Math.max(0, cover));
+          cur.style.setProperty('--cover', cover.toFixed(3));
+        }
+        stack[stack.length - 1].style.setProperty('--cover', '0');
+        ticking = false;
+      }
+      function onScroll() {
+        if (!ticking) { requestAnimationFrame(update); ticking = true; }
+      }
+      window.addEventListener('scroll', onScroll, { passive: true });
+      window.addEventListener('resize', onScroll);
+      if (document.fonts && document.fonts.ready) document.fonts.ready.then(update);
+      update();
+    })();
+  </script>
+
+</body>
+</html>

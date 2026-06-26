@@ -6,10 +6,20 @@
   <title>Glowbeast — Active Beauty for Those Who Sweat</title>
   <meta name="description" content="Active beauty for those who sweat — the Beasts. Discover Glowbeast's solution lineup for heat, hydration, elasticity, recovery, and more." />
   <meta name="theme-color" content="#000000" />
-  <link rel="icon" href="assets/logo.svg" type="image/svg+xml" />
+  <link rel="icon" href="assets/favicon.png" type="image/png" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=Playfair+Display:ital,wght@1,400;1,600&family=Inter:wght@400;500;700&display=swap" rel="stylesheet" />
+  <script>
+    (function(d) {
+      var config = {
+        kitId: 'mma0jnp',
+        scriptTimeout: 3000,
+        async: true
+      },
+      h=d.documentElement,t=setTimeout(function(){h.className=h.className.replace(/\bwf-loading\b/g,"")+" wf-inactive";},config.scriptTimeout),tk=d.createElement("script"),f=false,s=d.getElementsByTagName("script")[0],a;h.className+=" wf-loading";tk.src='https://use.typekit.net/'+config.kitId+'.js';tk.async=true;tk.onload=tk.onreadystatechange=function(){a=this.readyState;if(f||a&&a!="complete"&&a!="loaded")return;f=true;clearTimeout(t);try{Typekit.load(config)}catch(e){}};s.parentNode.insertBefore(tk,s)
+    })(document);
+  </script>
   <link rel="stylesheet" href="styles.css" />
 </head>
 <body>
@@ -18,7 +28,13 @@
        Hero (Figma 2120:3)
        ========================================================= -->
   <section class="hero" id="top" data-node-id="3089:3">
-    <img class="hero-bg" src="assets/hero-bg.png" alt="" role="presentation" />
+    <!-- Hero motion (replaces the static bg + cutout + wordmark drop sequence).
+         Autoplay muted loop, plays inline on iOS. Poster = first frame so the
+         paint matches playback start. cover on mobile, contain on PC. -->
+    <video class="hero-video" autoplay muted loop playsinline preload="auto"
+           poster="assets/hero-poster.jpg" aria-hidden="true">
+      <source src="assets/hero.mp4" type="video/mp4" />
+    </video>
 
     <!-- iPhone status bar mockup (Figma 2120:31) -->
     <div class="status-bar" aria-hidden="true" data-node-id="2120:31">
@@ -45,26 +61,18 @@
 
     <nav class="nav" aria-label="Primary">
       <div class="nav-inner">
-        <a href="#top" aria-label="Glowbeast home">
-          <img class="nav-logo" src="assets/logo.svg" alt="Glowbeast" />
+        <a href="#top" aria-label="Glowbeast home" class="nav-logo-link">
+          <span class="nav-logo-flip">
+            <img class="nav-logo nav-logo--front" src="assets/Logo%20KR.png" alt="Glowbeast" />
+            <img class="nav-logo nav-logo--back" src="assets/logo.svg" alt="" aria-hidden="true" />
+          </span>
         </a>
         <div class="nav-menu" role="menubar">
-          <a href="#top" role="menuitem">ABOUT</a>
-          <a href="lineup.html" role="menuitem">LINEUP</a>
+          <a href="about.html" role="menuitem">ABOUT</a>
+          <a href="lineup.html" role="menuitem">PRODUCT</a>
         </div>
       </div>
     </nav>
-
-    <!-- drop 1st ("glow like a") — sits BEHIND the foreground cutout (model). -->
-    <div class="hero-wordmark" role="img" aria-label="glow like a">
-      <img class="hero-wordmark__layer hero-wordmark__layer--1" src="assets/drop%201st.svg" alt="" aria-hidden="true" />
-    </div>
-
-    <!-- Foreground cutout (model + ring elements). -->
-    <img class="hero-bg-front" src="assets/hero-bg-front.png" alt="" role="presentation" />
-
-    <!-- drop 2nd ("BEAST") — sits IN FRONT of the foreground cutout (top of Z stack). -->
-    <img class="hero-wordmark__layer hero-wordmark__layer--2" src="assets/drop%202nd.svg" alt="BEAST" />
 
     <img class="hero-chevron" src="assets/chevron-down.svg" alt="" role="presentation" aria-hidden="true" />
   </section>
@@ -73,66 +81,74 @@
        After the sweat: (Figma 3089:49) — sticky stacking cards
        ========================================================= -->
   <section class="section section--black after-sweat" data-node-id="3089:49">
-    <h2 class="section-title" data-scroll-reveal="typing">After the
-sweat:</h2>
+   <div class="workout-track">
+    <div class="workout-stage">
+    <h2 class="section-title">Under the
+workout:</h2>
 
     <div class="stacking-cards" role="list">
-      <article class="stack-card stack-card--first" role="listitem" data-stacking-cards-item data-reveal-item data-node-id="3089:51">
+      <article class="stack-card stack-card--first" role="listitem" data-stacking-cards-item data-node-id="3089:51">
         <div class="stack-card__inner">
           <div class="stack-card__heading">
-            <p class="stack-card__num">01.</p>
-            <h3 class="stack-card__title">HEAT
-SPIKES</h3>
+            <h3 class="stack-card__title">HEAT SPIKES<sup class="stack-card__num">1</sup></h3>
+            <p class="stack-card__kr" lang="ko">열노화</p>
           </div>
-          <p class="stack-card__desc">Collagen breaks,<br />Aging begins.</p>
-          <div class="stack-card__img">
-            <img src="assets/heat-spikes.gif" alt="" />
+          <div class="stack-card__body">
+            <p class="stack-card__desc">Collagen breaks, Aging begins.</p>
+            <div class="stack-card__img">
+              <img src="assets/heat-spikes.gif" alt="" />
+            </div>
           </div>
         </div>
       </article>
 
-      <article class="stack-card" role="listitem" data-stacking-cards-item data-reveal-item data-node-id="3089:188">
+      <article class="stack-card" role="listitem" data-stacking-cards-item data-node-id="3089:188">
         <div class="stack-card__inner">
           <div class="stack-card__heading">
-            <p class="stack-card__num">02.</p>
-            <h3 class="stack-card__title">SWEAT
-DRAINS</h3>
+            <h3 class="stack-card__title">SWEAT OUT<sup class="stack-card__num">2</sup></h3>
+            <p class="stack-card__kr" lang="ko">흘린 건 땀만이 아니다</p>
           </div>
-          <p class="stack-card__desc">Moisture gone. Amino Acid gone. Electrolyte gone.</p>
-          <div class="stack-card__img">
-            <img src="assets/sweat-drains.png" alt="" />
+          <div class="stack-card__body">
+            <p class="stack-card__desc">Moisture gone. Amino Acid, Electrolyte out too.</p>
+            <div class="stack-card__img">
+              <img src="assets/sweat-drains.png" alt="" />
+            </div>
           </div>
         </div>
       </article>
 
-      <article class="stack-card" role="listitem" data-stacking-cards-item data-reveal-item data-node-id="3089:195">
+      <article class="stack-card" role="listitem" data-stacking-cards-item data-node-id="3089:195">
         <div class="stack-card__inner">
           <div class="stack-card__heading">
-            <p class="stack-card__num">03.</p>
-            <h3 class="stack-card__title">BACTERIA
-PARTY</h3>
+            <h3 class="stack-card__title">BACTERIA PARTY<sup class="stack-card__num">3</sup></h3>
+            <p class="stack-card__kr" lang="ko">박테리아가 좋아하는 피부로</p>
           </div>
-          <p class="stack-card__desc">They multiply, mingle, and break out.</p>
-          <div class="stack-card__img">
-            <img src="assets/bacteria.png" alt="" onerror="this.style.opacity='0';this.parentElement.classList.add('is-placeholder')" />
+          <div class="stack-card__body">
+            <p class="stack-card__desc">They multiply, mingle, and break out.</p>
+            <div class="stack-card__img">
+              <img src="assets/bacteria.png" alt="" onerror="this.style.opacity='0';this.parentElement.classList.add('is-placeholder')" />
+            </div>
           </div>
         </div>
       </article>
 
-      <article class="stack-card" role="listitem" data-stacking-cards-item data-reveal-item data-node-id="3089:202">
+      <article class="stack-card" role="listitem" data-stacking-cards-item data-node-id="3089:202">
         <div class="stack-card__inner">
           <div class="stack-card__heading">
-            <p class="stack-card__num">04.</p>
-            <h3 class="stack-card__title">ELASTICITY
-DROPS</h3>
+            <h3 class="stack-card__title">ELASTICITY DROPS<sup class="stack-card__num">4</sup></h3>
+            <p class="stack-card__kr" lang="ko">갈수록 떨어지는 탄력</p>
           </div>
-          <p class="stack-card__desc">Every workout, skin sags.</p>
-          <div class="stack-card__img">
-            <img src="assets/elasticity.png" alt="" onerror="this.style.opacity='0';this.parentElement.classList.add('is-placeholder')" />
+          <div class="stack-card__body">
+            <p class="stack-card__desc">Every workout, skin sags.</p>
+            <div class="stack-card__img">
+              <img src="assets/elasticity.png" alt="" onerror="this.style.opacity='0';this.parentElement.classList.add('is-placeholder')" />
+            </div>
           </div>
         </div>
       </article>
     </div>
+    </div>
+   </div>
   </section>
 
   <!-- =========================================================
@@ -161,63 +177,26 @@ we start:</h2>
        The Beast Solution: (Figma 3089:87)
        ========================================================= -->
   <section class="section section--black solution" data-node-id="3089:87">
+    <!-- Full-bleed brand video background (water droplet morphing). -->
+    <video class="solution-video" autoplay muted loop playsinline preload="auto" poster="assets/solution-bg-poster.jpg">
+      <source src="assets/solution-bg.mp4" type="video/mp4" />
+    </video>
+
     <h2 class="section-title" data-scroll-reveal="typing">The Beast
 Solution:</h2>
 
-    <div class="scroll-x" role="list">
-      <article class="category-card" role="listitem" data-reveal-item data-node-id="3584:314">
-        <img class="cat-bg" src="assets/category-1.png" alt="" />
-        <div class="cat-content">
-          <h3 class="cat-title">SOOTHING</h3>
-          <p class="cat-subtitle" lang="ko">진정</p>
-        </div>
-        <p class="cat-ingredients">Yellow cica, Eucalyptol,<br />Xylitol, Erythritol</p>
-      </article>
-
-      <article class="category-card" role="listitem" data-reveal-item data-node-id="3584:319">
-        <img class="cat-bg" src="assets/category-2.png" alt="" />
-        <div class="cat-content">
-          <h3 class="cat-title">HYDRATION</h3>
-          <p class="cat-subtitle" lang="ko">수분</p>
-        </div>
-        <p class="cat-ingredients">AMINO-NF, Acetyl, Glutamine</p>
-      </article>
-
-      <article class="category-card" role="listitem" data-reveal-item data-node-id="3584:324">
-        <img class="cat-bg" src="assets/category-3.png" alt="" />
-        <div class="cat-content">
-          <h3 class="cat-title">ELASTICITY</h3>
-          <p class="cat-subtitle" lang="ko">탄력</p>
-        </div>
-        <p class="cat-ingredients">PoreTect&trade;</p>
-      </article>
-
-      <article class="category-card" role="listitem" data-reveal-item data-node-id="3584:329">
-        <img class="cat-bg" src="assets/category-4.png" alt="" />
-        <div class="cat-content">
-          <h3 class="cat-title">RECOVERY</h3>
-          <p class="cat-subtitle" lang="ko">회복</p>
-        </div>
-        <p class="cat-ingredients">Aqua Ceramide</p>
-      </article>
-
-      <article class="category-card" role="listitem" data-reveal-item data-node-id="3584:334">
-        <img class="cat-bg" src="assets/category-5.png" alt="" />
-        <div class="cat-content">
-          <h3 class="cat-title">PURIFYING</h3>
-          <p class="cat-subtitle" lang="ko">향균향염</p>
-        </div>
-        <p class="cat-ingredients">Yellow cica</p>
-      </article>
-
-      <article class="category-card" role="listitem" data-reveal-item data-node-id="3584:339">
-        <img class="cat-bg" src="assets/category-6.png" alt="" />
-        <div class="cat-content">
-          <h3 class="cat-title">ANTIOXIDANT</h3>
-          <p class="cat-subtitle" lang="ko">항산화</p>
-        </div>
-        <p class="cat-ingredients">Acai berry</p>
-      </article>
+    <!-- 6 category blocks (title + KR + ingredients) whoosh across the centre, one
+         at a time, pausing briefly in the middle. Labels cloned in JS for a
+         seamless loop. Figma 4912:1764. -->
+    <div class="solution-labels" role="list">
+      <div class="solution-labeltrack">
+        <div class="solution-label" role="listitem"><h3 class="solution-card__title">SOOTHING</h3><p class="solution-card__kr" lang="ko">진정</p><p class="solution-card__ing">Yellow cica, Eucalyptol,<br />Xylitol, Erythritol</p></div>
+        <div class="solution-label" role="listitem"><h3 class="solution-card__title">HYDRATION</h3><p class="solution-card__kr" lang="ko">수분</p><p class="solution-card__ing">AMINO-NF, Acetyl,<br />Glutamine</p></div>
+        <div class="solution-label" role="listitem"><h3 class="solution-card__title">ELASTICITY</h3><p class="solution-card__kr" lang="ko">탄력</p><p class="solution-card__ing">PoreTect&trade;</p></div>
+        <div class="solution-label" role="listitem"><h3 class="solution-card__title">RECOVERY</h3><p class="solution-card__kr" lang="ko">회복</p><p class="solution-card__ing">Aqua Ceramide</p></div>
+        <div class="solution-label" role="listitem"><h3 class="solution-card__title">PURIFYING</h3><p class="solution-card__kr" lang="ko">항균항염</p><p class="solution-card__ing">Yello Cica</p></div>
+        <div class="solution-label" role="listitem"><h3 class="solution-card__title">ANTIOXIDANT</h3><p class="solution-card__kr" lang="ko">항산화</p><p class="solution-card__ing">Acai Berry</p></div>
+      </div>
     </div>
 
     <a class="btn-yellow solution-cta" href="lineup.html" data-node-id="3105:410">
@@ -267,25 +246,42 @@ Beast there,</h2>
 
       <div class="footer-text" data-node-id="3255:81">
         <nav class="footer-menu" aria-label="Footer" data-node-id="3255:82">
-          <a href="#top">ABOUT</a>
+          <a href="about.html">ABOUT</a>
           <a href="lineup.html">LINEUP</a>
           <a href="mailto:hello@glowbeast.co">SEND AN EMAIL</a>
         </nav>
-        <address class="footer-addr" data-node-id="3255:86">
-          GRANDE CLIP PTE. LTD.<br />
-          1 RAFFLES PLACE,<br />
-          #36-02, ONE RAFFLES PLACE,<br />
-          SINGAPORE 048616
+        <address class="footer-addr" data-node-id="4757:1227">
+          <strong class="footer-addr__co">Grande Clip Korea, LLC.</strong><br />
+          14-4, Garosu-gil,<br />
+          Gangnam-gu, Seoul, Korea
         </address>
+      </div>
+
+      <!-- PC footer signup (Figma 3250:38) — replaces the standalone Hey Beast
+           there section on PC. Hidden on mobile via .footer-signup display:none. -->
+      <div class="footer-signup" data-node-id="3250:38">
+        <p class="footer-signup__lead" data-node-id="3250:39">
+          HEY BEAST THERE, YOU SWEAT TOO? GOOD!<br />
+          TRAIN WITH US &amp; GLOW TOGETHER!
+        </p>
+        <form class="footer-signup__form" id="footer-signup-form" action="#" method="post" novalidate>
+          <label class="sr-only" for="footer-signup-contact">Email</label>
+          <input class="footer-signup__input" id="footer-signup-contact" type="email" name="email" placeholder="PHONE OR EMAIL" autocomplete="email" required />
+          <button class="footer-signup__cta" type="submit" aria-label="Submit">
+            <svg viewBox="0 0 32 32" aria-hidden="true" focusable="false">
+              <path d="M12 8 L20 16 L12 24" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round" />
+            </svg>
+          </button>
+        </form>
       </div>
 
       <div class="footer-bottom" data-node-id="3255:87">
         <div class="legal">
-          <p class="legal-copy">2026 glowbeast All rights reserved.</p>
+          <p class="legal-copy">2026 GRANDE CLIP KOREA, LLC.</p>
           <p class="legal-links">
-            <span>Terms of Service</span>
+            <span>TERMS OF SERVICE</span>
             <span class="sep" aria-hidden="true"></span>
-            <span>Privacy Policy</span>
+            <span>PRIVACY POLICY</span>
           </p>
         </div>
         <div class="footer-socials">
@@ -393,6 +389,91 @@ Beast there,</h2>
   </script>
 
   <script>
+    // Pinned-stage sticky stack for "Under the workout" (mobile).
+    // The .workout-stage is sticky for the whole (tall) .workout-track. As you
+    // scroll the track, each card slides up from the bottom into a pile under the
+    // title (positions set by scroll progress). The active card shows its body.
+    // Once all cards are stacked and the track ends, the stage un-pins and the
+    // ENTIRE pile lifts up together — instead of cards covering one another out.
+    // PC dissolves the wrappers (display:contents) and uses its own grid, so this
+    // controller only runs on mobile and clears its inline styles otherwise.
+    (function () {
+      const track = document.querySelector('.workout-track');
+      const stage = document.querySelector('.workout-stage');
+      if (!track || !stage) return;
+      const title = stage.querySelector('.section-title');
+      const cards = Array.from(stage.querySelectorAll('[data-stacking-cards-item]'));
+      if (!title || !cards.length) return;
+      const N = cards.length;
+      // Pinned-stage runs on ALL widths now (PC uses the same stacking as mobile).
+      const mq = { matches: true };
+      const REDUCE = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      let offsets = [];
+
+      function clearInline() {
+        track.style.height = '';
+        cards.forEach((c) => { c.style.transform = ''; });
+        title.style.fontSize = '';
+        title.style.paddingTop = '';
+        title.style.paddingBottom = '';
+      }
+
+      function layout() {
+        if (!mq.matches) { clearInline(); offsets = []; return; }
+        const vh = window.innerHeight;
+        // ~0.75 viewport of scroll dedicated to each card entering the pile.
+        track.style.height = Math.round(vh * (1 + N * 0.75)) + 'px';
+        // Stacked offset of each card, measured from the top of .stacking-cards
+        // (which sits just under the title) = cumulative heading-band heights.
+        let acc = 0;
+        offsets = [];
+        cards.forEach((c, i) => {
+          offsets[i] = acc;
+          const h = c.querySelector('.stack-card__heading');
+          acc += (h ? h.getBoundingClientRect().height : 30) + 24; // + py-12 ×2
+        });
+      }
+
+      let ticking = false;
+      function update() {
+        if (!mq.matches) { ticking = false; return; }
+        const vh = window.innerHeight;
+        const max = track.offsetHeight - vh;
+        const scrolled = Math.min(Math.max(-track.getBoundingClientRect().top, 0), Math.max(max, 1));
+        const p = max > 0 ? scrolled / max : 0;
+        const seg = p * N;
+        // Shrink the "Under the workout" title (~half) as the 2nd card rises
+        // (seg 0→1) so it occupies less height and the stack gets more room.
+        const tScale = REDUCE ? 0 : Math.min(1, Math.max(0, seg));
+        title.style.fontSize = (48 - 24 * tScale) + 'px';
+        title.style.paddingTop = (56 - 28 * tScale) + 'px';
+        title.style.paddingBottom = (20 - 10 * tScale) + 'px';
+        cards.forEach((c, i) => {
+          // card i is fully stacked once seg >= i (card 0 starts stacked), and
+          // slides in from the stage bottom over the preceding 0.75-vh window.
+          const local = Math.min(Math.max(seg - i + 1, 0), 1);
+          const ty = offsets[i] + (1 - local) * (vh - offsets[i]);
+          c.style.transform = 'translateY(' + ty + 'px)';
+        });
+        const active = Math.min(N - 1, Math.max(0, Math.round(seg)));
+        cards.forEach((c, i) => c.classList.toggle('is-open', i === active));
+        ticking = false;
+      }
+      function onScroll() {
+        if (!ticking) { requestAnimationFrame(update); ticking = true; }
+      }
+      function refresh() { layout(); update(); }
+
+      window.addEventListener('scroll', onScroll, { passive: true });
+      window.addEventListener('resize', refresh);
+      if (mq.addEventListener) mq.addEventListener('change', refresh);
+      if (document.fonts && document.fonts.ready) document.fonts.ready.then(refresh);
+      window.addEventListener('load', refresh);
+      refresh();
+    })();
+  </script>
+
+  <script>
     // Footer logo entry — fade + scale-in via IntersectionObserver, fires once.
     (function () {
       const logo = document.querySelector('.footer-logo');
@@ -414,45 +495,16 @@ Beast there,</h2>
   </script>
 
   <script>
-    // Hero entry choreography on page load:
-    //   t=0.00s  foreground cutout (person) drops with 쿵 squash + rebound
-    //   t=0.20s  background dissolves in (fade)
-    //   t=0.85s  "glow like a" wordmark drops 툭
-    //   t=1.13s  "BEAST" wordmark drops 툭 (existing squash)
-    // All delays live in CSS animation-delay; JS just attaches trigger classes
-    // in the same requestAnimationFrame tick so timings share one baseline.
-    (function () {
-      const layers = document.querySelectorAll('.hero-wordmark__layer');
-      const front  = document.querySelector('.hero-bg-front');
-      const bg     = document.querySelector('.hero-bg');
-      if (!layers.length) return;
-
-      if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
-        layers.forEach((l) => { l.style.opacity = '1'; l.style.transform = 'none'; });
-        if (front) { front.style.opacity = '1'; front.style.transform = 'none'; }
-        if (bg)    { bg.style.opacity = '1'; }
-        return;
-      }
-
-      // Defer one frame so initial CSS state paints before animation starts.
-      requestAnimationFrame(() => {
-        if (front) front.classList.add('is-dropping');
-        if (bg)    bg.classList.add('is-fading-in');
-        layers.forEach((l) => l.classList.add('is-dropped'));
-      });
-    })();
-  </script>
-
-  <script>
     // Signup form: validate email → show success modal. Pure native validation
     // for errors (setCustomValidity), custom modal only for success.
+    // Attaches to both #signup-form (mobile standalone section) and
+    // #footer-signup-form (PC footer column) — same modal, same validation.
     (function () {
-      const form  = document.getElementById('signup-form');
-      const input = document.getElementById('signup-contact');
       const modal = document.getElementById('signup-modal');
-      if (!form || !input || !modal) return;
+      if (!modal) return;
 
       const EMAIL = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+      let lastInput = null;
 
       const openModal = () => {
         modal.hidden = false;
@@ -461,27 +513,50 @@ Beast there,</h2>
       };
       const closeModal = () => {
         modal.hidden = true;
-        input.focus();
+        if (lastInput) lastInput.focus();
       };
 
-      form.addEventListener('submit', (e) => {
-        e.preventDefault();
-        const v = (input.value || '').trim();
-        if (!EMAIL.test(v)) {
-          input.setCustomValidity('이메일 형식으로 입력해주세요');
-          input.reportValidity();
-          input.addEventListener('input', () => input.setCustomValidity(''), { once: true });
-          return;
-        }
-        openModal();
-        form.reset();
-      });
+      function attachForm(formId, inputId) {
+        const form  = document.getElementById(formId);
+        const input = document.getElementById(inputId);
+        if (!form || !input) return;
+        form.addEventListener('submit', (e) => {
+          e.preventDefault();
+          const v = (input.value || '').trim();
+          if (!EMAIL.test(v)) {
+            input.setCustomValidity('이메일 형식으로 입력해주세요');
+            input.reportValidity();
+            input.addEventListener('input', () => input.setCustomValidity(''), { once: true });
+            return;
+          }
+          lastInput = input;
+          openModal();
+          form.reset();
+        });
+      }
+      attachForm('signup-form', 'signup-contact');
+      attachForm('footer-signup-form', 'footer-signup-contact');
 
       modal.addEventListener('click', (e) => {
         if (e.target.closest('[data-modal-close]')) closeModal();
       });
       document.addEventListener('keydown', (e) => {
         if (e.key === 'Escape' && !modal.hidden) closeModal();
+      });
+    })();
+  </script>
+
+  <script>
+    // The Beast Solution — labels whoosh/pause on a layer in front; clone the set
+    // once so the marquee's translateX(-50%) loops seamlessly.
+    (function () {
+      const track = document.querySelector('.solution-labeltrack');
+      if (!track) return;
+      if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+      Array.from(track.children).forEach((l) => {
+        const clone = l.cloneNode(true);
+        clone.setAttribute('aria-hidden', 'true');
+        track.appendChild(clone);
       });
     })();
   </script>
