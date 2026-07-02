@@ -129,17 +129,12 @@
     <!-- ========================================================= -->
     <section class="product product--next" data-reveal-item data-node-id="4914:1803">
       <div class="product-image-stack product-next__symbol" aria-hidden="true">
-        <svg viewBox="0 0 120 200" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Undecided next product">
-          <!-- dashed bottle silhouette: cap, neck, body -->
-          <path d="M46 8 H74 V20 H46 Z M52 20 H68 V32 C68 32 88 40 88 70 V176 C88 188 80 192 70 192 H50 C40 192 32 188 32 176 V70 C32 40 52 32 52 32 Z"
-                stroke="rgba(255,255,255,0.5)" stroke-width="2" stroke-dasharray="6 7" stroke-linejoin="round" />
-          <text x="60" y="130" text-anchor="middle" font-family="'Helvetica Neue Condensed','Archivo Black',Impact,sans-serif" font-weight="900" font-size="68" fill="rgba(255,255,255,0.4)">?</text>
-        </svg>
+        <p class="product-next__bigtext">WHAT&rsquo;S<br />NEXT?</p>
       </div>
 
       <div class="product-info">
         <h2 class="product-name" data-node-id="4914:1809">WHAT&rsquo;S NEXT?</h2>
-        <a class="btn-yellow product-next-cta" href="mailto:official@glowbeast.co?subject=My%20next%20Glowbeast%20idea">DROP YOUR IDEA!</a>
+        <button class="btn-yellow product-next-cta" type="button" data-idea-open aria-haspopup="dialog" aria-controls="idea-modal">DROP YOUR IDEA!</button>
         <hr class="product-divider" />
         <p class="product-desc" data-node-id="4914:1813">
           Tell us what sucks about your workout.<br />The top answer becomes our next product.
@@ -215,6 +210,45 @@
       <p class="modal__title" id="signup-modal-title">등록되었습니다</p>
       <p class="modal__body">Welcome, Beast.<br/>First access 메일을 보내드릴게요.</p>
       <button class="btn-yellow modal__cta" type="button" data-modal-close>OK</button>
+    </div>
+  </div>
+
+  <!-- DROP YOUR IDEA modal (Figma 5137:902). Scrollable body + sticky submit;
+       JS fits the card to the visual viewport so the keyboard never hides the
+       focused field or the DROP IT button. -->
+  <div class="idea-modal" id="idea-modal" role="dialog" aria-modal="true" aria-labelledby="idea-modal-title" hidden>
+    <div class="idea-modal__backdrop" data-modal-close></div>
+    <div class="idea-modal__card">
+      <div class="idea-modal__head">
+        <button class="idea-modal__close" type="button" data-modal-close aria-label="Close">&times;</button>
+      </div>
+      <form class="idea-modal__body" id="idea-form" novalidate>
+        <div class="idea-modal__intro">
+          <h2 class="idea-modal__title" id="idea-modal-title">DROP YOUR IDEA</h2>
+          <p class="idea-modal__sub">Your answer could become our next drop.</p>
+        </div>
+        <div class="idea-field">
+          <label class="idea-field__label" for="idea-name">YOUR NAME / NICKNAME</label>
+          <input class="idea-field__input" id="idea-name" name="name" type="text" autocomplete="nickname" enterkeyhint="next" />
+        </div>
+        <div class="idea-field">
+          <label class="idea-field__label" for="idea-train">WHAT YOU TRAIN</label>
+          <input class="idea-field__input" id="idea-train" name="train" type="text" placeholder="Running / CrossFit / Pilates ..." enterkeyhint="next" />
+        </div>
+        <div class="idea-field">
+          <label class="idea-field__label" for="idea-pain">YOUR PAIN POINTS</label>
+          <input class="idea-field__input" id="idea-pain" name="pain" type="text" placeholder="Face goes red / Tightens up / Bounce gone..." enterkeyhint="next" />
+        </div>
+        <div class="idea-field">
+          <label class="idea-field__label" for="idea-want">WHAT YOU WANT</label>
+          <input class="idea-field__input" id="idea-want" name="want" type="text" placeholder="Sweat-proof sunscreen / Cooling mist after shower..." enterkeyhint="next" />
+        </div>
+        <div class="idea-field">
+          <label class="idea-field__label" for="idea-email">EMAIL (optional)</label>
+          <input class="idea-field__input" id="idea-email" name="email" type="email" placeholder="your@email.com" autocomplete="email" inputmode="email" enterkeyhint="send" />
+        </div>
+      </form>
+      <button class="idea-modal__submit" type="submit" form="idea-form">DROP IT</button>
     </div>
   </div>
 
@@ -415,6 +449,94 @@
       });
       document.addEventListener('keydown', (e) => {
         if (e.key === 'Escape' && !modal.hidden) closeModal();
+      });
+    })();
+  </script>
+
+  <script>
+    // DROP YOUR IDEA modal — open/close + keyboard-aware sizing.
+    (function () {
+      const modal = document.getElementById('idea-modal');
+      const opener = document.querySelector('[data-idea-open]');
+      if (!modal || !opener) return;
+      const form = modal.querySelector('#idea-form');
+      const inputs = Array.from(modal.querySelectorAll('.idea-field__input'));
+      const vv = window.visualViewport;
+      let lastFocused = null;
+
+      // Pin the overlay to the *visual* viewport so it shrinks above the
+      // keyboard — the card (and its sticky DROP IT button) stay fully visible.
+      function fitViewport() {
+        if (!vv) return;
+        modal.style.height = vv.height + 'px';
+        modal.style.top = vv.offsetTop + 'px';
+        modal.style.bottom = 'auto';
+      }
+      function clearViewport() {
+        modal.style.height = '';
+        modal.style.top = '';
+        modal.style.bottom = '';
+      }
+
+      function open() {
+        lastFocused = document.activeElement;
+        modal.hidden = false;
+        document.body.style.overflow = 'hidden';
+        if (vv) {
+          vv.addEventListener('resize', fitViewport);
+          vv.addEventListener('scroll', fitViewport);
+          fitViewport();
+        }
+        setTimeout(() => { const f = inputs[0]; if (f) f.focus(); }, 60);
+      }
+      function close() {
+        modal.hidden = true;
+        document.body.style.overflow = '';
+        clearViewport();
+        if (vv) {
+          vv.removeEventListener('resize', fitViewport);
+          vv.removeEventListener('scroll', fitViewport);
+        }
+        if (lastFocused && lastFocused.focus) lastFocused.focus();
+      }
+
+      opener.addEventListener('click', open);
+      modal.addEventListener('click', (e) => {
+        if (e.target.closest('[data-modal-close]')) close();
+      });
+      document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape' && !modal.hidden) close();
+      });
+
+      // Keep the focused field centred in the visible area (above the keyboard),
+      // and let Enter advance to the next field.
+      inputs.forEach((input, i) => {
+        input.addEventListener('focus', () => {
+          setTimeout(() => input.scrollIntoView({ block: 'center', behavior: 'smooth' }), 140);
+        });
+        input.addEventListener('keydown', (e) => {
+          if (e.key === 'Enter' && input.type !== 'submit' && i < inputs.length - 1) {
+            e.preventDefault();
+            inputs[i + 1].focus();
+          }
+        });
+      });
+
+      // DROP IT → hand the collected idea to the user's mail client.
+      form.addEventListener('submit', (e) => {
+        e.preventDefault();
+        const val = (id) => (modal.querySelector('#' + id)?.value || '').trim();
+        const body = [
+          'NAME: ' + val('idea-name'),
+          'WHAT YOU TRAIN: ' + val('idea-train'),
+          'YOUR PAIN POINTS: ' + val('idea-pain'),
+          'WHAT YOU WANT: ' + val('idea-want'),
+          'EMAIL: ' + val('idea-email'),
+        ].join('\n');
+        window.location.href = 'mailto:official@glowbeast.co'
+          + '?subject=' + encodeURIComponent('My next Glowbeast idea')
+          + '&body=' + encodeURIComponent(body);
+        close();
       });
     })();
   </script>

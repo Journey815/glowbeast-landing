@@ -1330,11 +1330,13 @@ button { border: 0; background: none; font: inherit; cursor: pointer; color: inh
   display: block;
 }
 
-/* THE LAST SET — Figma 3601:460 / 3585:443.
-   Container 187×352; both bottle layers cover the full stack. */
+/* THE LAST SET — Figma img-cleanser 3872:254 = 150×296 (aspect 0.507).
+   Lineup renders bottles at ~1.25× (spray 80→100), so 150×296 → 187×370.
+   (Was 187×352 — too short, which cramped the crumpled bottle and made it read
+   too wide/large vs Figma; 370 restores the Figma aspect + framing.) */
 .product-image-stack--last-set {
   width: 187px;
-  height: 352px;
+  height: 370px;
 }
 
 /* COOL DOWN — Figma 3621:64 / 3621:63.
@@ -1344,18 +1346,27 @@ button { border: 0; background: none; font: inherit; cursor: pointer; color: inh
   height: 372px;
 }
 
-/* WHAT'S NEXT? teaser — dashed "undecided bottle" placeholder + idea CTA. */
+/* WHAT'S NEXT? teaser — big faded "WHAT'S NEXT?" text in the image area
+   (Figma 5055:830), replacing the old dashed-bottle placeholder. + idea CTA. */
 .product-next__symbol {
   width: 150px;
-  height: 352px;
+  height: 370px;
   display: flex;
   align-items: center;
   justify-content: center;
 }
-.product-next__symbol svg {
-  width: 116px;
-  height: auto;
-  display: block;
+.product-next__bigtext {
+  margin: 0;
+  font-family: var(--font-heading);
+  font-weight: 900;
+  font-size: 58.667px;
+  line-height: 55px;
+  letter-spacing: -1.173px;
+  text-align: center;
+  text-transform: uppercase;
+  color: #fff;
+  opacity: 0.2;
+  white-space: nowrap;
 }
 .product-next-cta {
   align-self: center;
@@ -1833,6 +1844,125 @@ button { border: 0; background: none; font: inherit; cursor: pointer; color: inh
   .modal__card { animation: none; }
 }
 
+/* DROP YOUR IDEA modal (Figma 5137:902) — form modal with a scrollable body and
+   a sticky DROP IT button. JS constrains the card to window.visualViewport so
+   the on-screen keyboard never covers the focused field or the submit button. */
+.idea-modal[hidden] { display: none; }
+.idea-modal {
+  position: fixed;
+  inset: 0;
+  z-index: 200;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 12px;
+}
+.idea-modal__backdrop {
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.7);
+  cursor: pointer;
+}
+.idea-modal__card {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  width: min(400px, calc(100vw - 24px));
+  max-height: 100%;                 /* fit the (visual) viewport; body scrolls */
+  background: var(--bg-black);
+  border: 1px solid var(--text-white);
+  animation: modal-pop 220ms cubic-bezier(.2, .8, .2, 1) forwards;
+}
+.idea-modal__head {
+  position: relative;
+  flex: 0 0 auto;
+  height: 48px;
+}
+.idea-modal__close {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  width: 28px;
+  height: 28px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: none;
+  border: 0;
+  color: var(--text-white);
+  font-size: 26px;
+  line-height: 1;
+  cursor: pointer;
+}
+.idea-modal__body {
+  flex: 1 1 auto;
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+  overscroll-behavior: contain;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  padding: 0 16px 40px;
+}
+.idea-modal__title {
+  margin: 0;
+  font-family: var(--font-heading);
+  font-weight: 900;
+  font-size: 32px;
+  line-height: 36px;
+  letter-spacing: -0.64px;
+  text-transform: uppercase;
+  color: var(--text-white);
+}
+.idea-modal__sub {
+  margin: 6px 0 0;
+  font-family: var(--font-body);
+  font-size: 14px;
+  letter-spacing: 0.14px;
+  color: #999;
+}
+.idea-field {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+.idea-field__label {
+  font-family: var(--font-body);
+  font-size: 14px;
+  color: var(--text-white);
+}
+.idea-field__input {
+  width: 100%;
+  height: 49px;
+  padding: 0 16px;
+  background: #fff;
+  border: 1px solid #fff;
+  border-radius: 0;
+  color: #000;
+  font-family: var(--font-body);
+  font-size: 16px;                  /* ≥16px stops iOS zoom-on-focus (UX) */
+  -webkit-appearance: none;
+  appearance: none;
+}
+.idea-field__input::placeholder { color: #777; }
+.idea-field__input:focus-visible { outline: 2px solid var(--accent-yellow); outline-offset: 2px; }
+.idea-modal__submit {
+  flex: 0 0 auto;
+  width: 100%;
+  height: 50px;
+  background: var(--accent-yellow);
+  border: 0;
+  color: var(--bg-black);
+  font-family: var(--font-body);
+  font-weight: 700;
+  font-size: 17px;
+  letter-spacing: -0.34px;
+  cursor: pointer;
+}
+@media (prefers-reduced-motion: reduce) {
+  .idea-modal__card { animation: none; }
+}
+
 /* =========================================================
    ABOUT page (Figma 3749:164) — v1.3
    Multi-tone layout: yellow → yellow → black → black → yellow → black
@@ -2267,9 +2397,9 @@ html.about-page .about-section {
     max-width: 620px;
   }
 
-  /* Section 3 — WHY WE MAKE (Figma 4916:1052): left = image (620×420),
-     right column = eyebrow + body + bongjin. Unwrap the mobile group/figure
-     so the image can be grid-placed on the left. */
+  /* Section 3 — WHY WE MAKE (Figma 4916:1052): right = image (620×420),
+     left column = eyebrow + body + bongjin. Unwrap the mobile group/figure
+     so the image can be grid-placed on the right. */
   html.about-page .about-why {
     display: grid;
     grid-template-columns: 1fr 1fr;
@@ -2281,17 +2411,17 @@ html.about-page .about-section {
   html.about-page .about-why__group,
   html.about-page .about-why__figure { display: contents; }
   html.about-page .about-why__img {
-    grid-column: 1; grid-row: 1 / 4;
+    grid-column: 2; grid-row: 1 / 4;
     width: 100%; max-width: 620px; height: 420px; object-fit: cover; align-self: start;
   }
-  html.about-page .about-why .about-eyebrow { grid-column: 2; grid-row: 1; margin-bottom: 64px; }
+  html.about-page .about-why .about-eyebrow { grid-column: 1; grid-row: 1; margin-bottom: 64px; }
   html.about-page .about-why__body {
-    grid-column: 2; grid-row: 2;
+    grid-column: 1; grid-row: 2;
     font-size: 20px; line-height: 26px; letter-spacing: -0.4px;
     max-width: 620px;
   }
   html.about-page .about-why__bongjin {
-    grid-column: 2; grid-row: 3;
+    grid-column: 1; grid-row: 3;
     align-self: start;
     width: 100%; max-width: 620px;
   }
@@ -2299,30 +2429,30 @@ html.about-page .about-section {
     font-size: 20px; line-height: 26px; letter-spacing: -0.4px;
   }
 
-  /* Section 4 — WHO WE BUILT THIS FOR (Figma 4916:1069): left column = eyebrow
-     + body + final headline, right = image (458×446). */
+  /* Section 4 — WHO WE BUILT THIS FOR (Figma 4916:1069): left = image (458×446),
+     right column = eyebrow + body + final headline. */
   html.about-page .about-builtfor {
     display: grid;
-    grid-template-columns: minmax(0, 1fr) 458px;
+    grid-template-columns: 458px minmax(0, 1fr);
     grid-template-rows: auto auto 1fr;
     column-gap: clamp(40px, 5vw, 80px);
     row-gap: 24px;
     align-items: start;
   }
-  html.about-page .about-builtfor .about-eyebrow { grid-column: 1; grid-row: 1; margin-bottom: 64px; }
+  html.about-page .about-builtfor .about-eyebrow { grid-column: 2; grid-row: 1; margin-bottom: 64px; }
   html.about-page .about-builtfor__body {
-    grid-column: 1; grid-row: 2;
+    grid-column: 2; grid-row: 2;
     font-size: 20px; line-height: 26px; letter-spacing: -0.4px;
     max-width: 620px;
   }
   html.about-page .about-builtfor .about-formula__final {
-    grid-column: 1; grid-row: 3;
+    grid-column: 2; grid-row: 3;
     align-self: start;
     margin-top: 16px;
     font-size: 40px; line-height: 48px;
   }
   html.about-page .about-builtfor__img {
-    grid-column: 2; grid-row: 1 / 4;
+    grid-column: 1; grid-row: 1 / 4;
     width: 458px; height: 446px; max-width: none; object-fit: cover; align-self: start;
   }
 }
